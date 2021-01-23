@@ -33,13 +33,13 @@
 						<h3 class="title"><img src="images/icon_27.png"/>{searchpage:typename}</h3>
 					</div>
 					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
-						<li><span class="text-muted">按剧情</span></li>
+						<li><span class="text-muted">按分类</span></li>
 						{seacms:jqitemlist}
 						<li {if:[jqitemlist:value]=={searchpage:jq}}class="active"{end if}><a href="[jqitemlist:link]" title="[jqitemlist:value]">[jqitemlist:value]</a></li>
 						{/seacms:jqitemlist}
 					</ul>
 					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
-						<li><span class="text-muted">按地区</span></li>
+						<li><span class="text-muted">按年级</span></li>
 						{seacms:areaitemlist}
 						<li {if:[areaitemlist:value]=={searchpage:area}}class="active"{end if}><a href="[areaitemlist:link]" title="[areaitemlist:value]">[areaitemlist:value]</a></li>
 						{/seacms:areaitemlist}
@@ -51,7 +51,7 @@
 						{/seacms:yearitemlist}
 					</ul>
 					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
-						<li><span class="text-muted">按语言</span></li>
+						<li><span class="text-muted">按学期</span></li>
 						{seacms:langitemlist}
 						<li {if:[langitemlist:value]=={searchpage:lang}}class="active"{end if}><a href="[langitemlist:link]" title="[langitemlist:value]">[langitemlist:value]</a></li>
 						{/seacms:langitemlist}

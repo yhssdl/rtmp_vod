@@ -12,7 +12,7 @@ if(empty($action))
 
 if($action=="add")
 {
-$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect(""));
+$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("CKplayer"));
 $makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
 
 include(sea_ADMIN.'/templets/admin_video.htm');
@@ -36,7 +36,7 @@ elseif($action=="edit")
 	$v_playdata=$vrow['v_playdata'];
 	$v_content=$vrow['v_content'];
 	$v_downdata=$vrow['v_downdata'];
-	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect(""));
+	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("CKplayer"));
 	$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
 	include(sea_ADMIN.'/templets/admin_video_edit.htm');
 	exit();

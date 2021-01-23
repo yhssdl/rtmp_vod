@@ -119,14 +119,17 @@ var stui = {
 			})
 		},
 		qrcode: function() {
-			var qrcode = new QRCode(document.getElementById("qrcode"), {
-				text: stui.browser.url,
-				width: 180,
-				height: 180,
-				colorDark : "#000000",
-				colorLight : "#ffffff",
-				correctLevel : QRCode.CorrectLevel.H
-			});
+			var attList=document.getElementsByName("qrcode");
+			for(var i=0;i<attList.length;i++){
+				var qrcode = new QRCode(attList[i], {
+					text: stui.browser.url,
+					width: 180,
+					height: 180,
+					colorDark : "#000000",
+					colorLight : "#ffffff",
+					correctLevel : QRCode.CorrectLevel.H
+				});	
+			}
 		}
 	},
 	common: {

@@ -119,7 +119,14 @@ var stui = {
 			})
 		},
 		qrcode: function() {
-			$("img.qrcode").attr("src", "http://pan.baidu.com/share/qrcode?w=300&h=300&url=" + encodeURIComponent(stui.browser.url) + "")
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				text: stui.browser.url,
+				width: 180,
+				height: 180,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.H
+			});
 		}
 	},
 	common: {

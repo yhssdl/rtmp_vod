@@ -22,24 +22,29 @@ INSERT INTO `sea_myad` VALUES (2,'channel200x200top','channel200x200top',1344397
 INSERT INTO `sea_myad` VALUES (3,'channel728x90','channel728x90',1344397299,'测试广告3','document.writeln(\"<div class=\\\"guanggao_neirong\\\"><\\/div>\")');
 
 INSERT INTO `sea_type` VALUES
-(1,0,'课堂实录','ketang',1,'channel.html','content.html','play.html','','','',0,'31_1',0),
-(2,0,'综艺比赛','zhongyi',2,'channel.html','content.html','play.html','','','',0,'',0),
-(3,0,'其它','qita',3,'channel.html','content.html','play.html','','','',0,'',0),
-(4,1,'语文','yuwen',4,'channel.html','content.html','play.html','','','',0,'',0),
-(5,1,'数学','shuxue',5,'channel.html','content.html','play.html','','','',0,'',0),
-(6,1,'英语','yingyu',6,'channel.html','content.html','play.html','','','',0,'',0),
-(7,1,'科学','kexue',7,'channel.html','content.html','play.html','','','',0,'',0),
-(8,1,'社会','shehui',8,'channel.html','content.html','play.html','','','',0,'',0),
-(9,1,'道法','daofa',9,'channel.html','content.html','play.html','','','',0,'',0),
-(10,1,'音乐','yinyue',10,'channel.html','content.html','play.html','','','',0,'',0),
-(11,1,'美术','meishu',11,'channel.html','content.html','play.html','','','',0,'',0),
-(12,1,'劳技','laoji',12,'channel.html','content.html','play.html','','','',0,'',0),
-(13,1,'书法','shufa',13,'channel.html','content.html','play.html','','','',0,'',0),
-(14,1,'信息','it',14,'channel.html','content.html','play.html','','','',0,'',0),
-(15,2,'运动会','yundong',15,'channel.html','content.html','play.html','','','',0,'',0),
+(1,0,'课堂实录','ketang',1,'channel.html','content.html','play.html','','','',0,'',0),
+(2,0,'综艺表演','zhongyi',2,'channel.html','content.html','play.html','','','',0,'',0),
+(3,0,'活动比赛','bisai',3,'channel.html','content.html','play.html','','','',0,'',0),
+(4,0,'其它','qita',4,'channel.html','content.html','play.html','','','',0,'',0),
+(5,1,'语文','yuwen',5,'channel.html','content.html','play.html','','','',0,'',0),
+(6,1,'数学','shuxue',6,'channel.html','content.html','play.html','','','',0,'',0),
+(7,1,'英语','yingyu',7,'channel.html','content.html','play.html','','','',0,'',0),
+(8,1,'科学','kexue',8,'channel.html','content.html','play.html','','','',0,'',0),
+(9,1,'社会','shehui',9,'channel.html','content.html','play.html','','','',0,'',0),
+(10,1,'道法','daofa',10,'channel.html','content.html','play.html','','','',0,'',0),
+(11,1,'音乐','yinyue',11,'channel.html','content.html','play.html','','','',0,'',0),
+(12,1,'美术','meishu',12,'channel.html','content.html','play.html','','','',0,'',0),
+(13,1,'劳技','laoji',13,'channel.html','content.html','play.html','','','',0,'',0),
+(14,1,'书法','shufa',14,'channel.html','content.html','play.html','','','',0,'',0),
+(15,1,'信息','it',15,'channel.html','content.html','play.html','','','',0,'',0),
 (16,2,'艺术节','yishu',16,'channel.html','content.html','play.html','','','',0,'',0),
 (17,2,'演讲','yanjiang',17,'channel.html','content.html','play.html','','','',0,'',0),
-(18,2,'汇演','huiyan',18,'channel.html','content.html','play.html','','','',0,'',0);
+(18,2,'汇演','huiyan',18,'channel.html','content.html','play.html','','','',0,'',0),
+(19,3,'运动会','yundong',19,'channel.html','content.html','play.html','','','',0,'',0),
+(20,3,'各类活动','huodong',20,'channel.html','content.html','play.html','','','',0,'',0),
+(21,4,'电影','dianying',21,'channel.html','content.html','play.html','','','',0,'',0),
+(22,4,'记录片','jilupian',22,'channel.html','content.html','play.html','','','',0,'',0);
+;
 
 INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('1', '游客用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2', '0');
 INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('2', '注册用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2', '0');
@@ -51,3 +56,4 @@ INSERT INTO `sea_jqtype` (`tid`,`upid`, `tname`, `ishidden`) VALUES
 (3,0,'探究', 0),
 (4,0, '实验', 0),
 (5,0, '活动', 0);
+(6,0, '比赛', 0);

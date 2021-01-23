@@ -1,166 +1,97 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		{seacms:load seo/channel.html}
-		{seacms:load public/include.html}
-		{seacms:load public/style.html}
-	</head>
-	<body class="active">
-		<div class="myui-topbg clearfix"></div>
-		{seacms:top}	
-		<div class="myui-panel radius-0 clearfix" id="type-hot" style="padding: 15px 0;">
-			<div class="myui-panel-box clearfix">
-				<div class="container">
-					<div class="row">
-						<div class="myui-panel_bd">
-							<div class="flickity next clearfix" data-align="left" data-next="1" data-play="1500">
-								{seacms:videolist num=15 order=dayhit type=current}
-								<div class="col-lg-6  col-md-6 col-sm-4 col-xs-3">
-									<div class="myui-vodlist__box">
-										<a href="[videolist:link]" class="myui-vodlist__thumb" title="[videolist:name]" style="background: url([videolist:pic]);">
-											<span class="play hidden-xs"></span>
-											<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
-												[videolist:score]分
-											</span>
-											<span class="pic-text text-right">
-												[videolist:note]
-											</span>
-										</a>
-										<div class="myui-vodlist__detail">
-											<h4 class="title text-overflow"><a href="[videolist:link]" class="text-fff" title="[videolist:name]">[videolist:name]</a></h4>
-											<p class="text text-overflow text-muted hidden-xs">
-												执教：[videolist:nolinkactor]
-											</p>
-										</div>
-									</div>
-								</div>
-								{/seacms:videolist}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{channelpage:title}-{seacms:sitename}</title>
+<meta name="keywords" content="{channelpage:keywords}">
+<meta name="description" content="{channelpage:description}">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10"/>
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="images/iconfont.css" type="text/css"/>
+<link rel="stylesheet" href="images/stui_block.css" type="text/css"/>
+<link rel="stylesheet" href="images/stui_default.css" type="text/css"/>
+<link rel="stylesheet" href="images/stui_custom.css" type="text/css"/>
+<script type="text/javascript" src="images/jquery.min.js"></script>
+<script type="text/javascript" src="images/stui_default.js"></script>
+<script type="text/javascript">var sitePath='{seacms:sitepath}', siteUrl='{seacms:siteurl}', sitepath='{seacms:sitepath}'</script>
+<!--[if lt IE 9]>
+<script src="https://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+{seacms:top}
+<div class="container">
+	<div class="row">
+		<div class="stui-pannel stui-pannel-bg clearfix">
+			<div class="stui-pannel-box">
+				<div class="stui-pannel_hd">
+					<div class="stui-pannel__head active bottom-line clearfix">
+						<h3 class="title"><img src="images/icon_25.png"/>{channelpage:typename}</h3>
+						<ul class="nav nav-page pull-right">
+							<li>{if:{channellist:page}==1}<a><i class="icon iconfont icon-back"></i></a>{else}<a href="{channellist:backlink}"><i class="icon iconfont icon-back"></i></a>{end if}</li>
+							<li>{if:{channellist:page}=={channellist:pagecount}}<a><i class="icon iconfont icon-more"></i></a>{else}<a href="{channellist:nextlink}"><i class="icon iconfont icon-more"></i></a>{end if}</i></a></li>
+						</ul>
+						<span class="more text-muted pull-right hidden-xs">共有{channellist:recordcount}部影片，当前第{channellist:page}页</span>
+					</div>{if:{seacms:currenttypeid}>4}
+					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
+						<li><span class="text-muted">按分类</span></li>
+						{seacms:menulist type={seacms:currenttypeid}}{seacms:smallmenulist type=[menulist:upid]}
+						<li {subif:{seacms:currenttypeid}==[smallmenulist:typeid]}class="active"{end subif}><a href="[smallmenulist:link]">[smallmenulist:typename]</a></li>
+						{/seacms:smallmenulist}{/seacms:menulist}
+					</ul>{else}
+					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
+						<li><span class="text-muted">按分类</span></li>
+						{seacms:smallmenulist type={seacms:currenttypeid}}
+						<li><a href="[smallmenulist:link]">[smallmenulist:typename]</a></li>
+						{/seacms:smallmenulist}
+					</ul>{end if}
+					<ul class="stui-screen__list type-slide bottom-line-dot clearfix">
+						<li><span class="text-muted">按地区</span></li>
+						{seacms:areacaslist}
+						<li><a href="[areacaslist:link]" title="[areacaslist:value]">[areacaslist:value]</a></li>
+						{/seacms:areacaslist}
+					</ul>
+					<ul class="stui-screen__list type-slide clearfix">
+						<li><span class="text-muted">按年份</span></li>
+						{seacms:yearcaslist}
+						<li><a href="[yearcaslist:link]" title="[yearcaslist:value]">[yearcaslist:value]</a></li>
+						{/seacms:yearcaslist}
+					</ul>
+				</div>
+				<div class="stui-pannel_bd">
+					<ul class="stui-vodlist clearfix">
+					{seacms:channellist size=30 order=time}
+						<li class="col-md-6 col-sm-4 col-xs-3">
+						<div class="stui-vodlist__box">
+							<a class="stui-vodlist__thumb lazyload" href="[channellist:link]" title="[channellist:name]" data-original="[channellist:pic]"><span class="play hidden-xs"></span><span class="pic-text text-right">{if:[channellist:state]<1}[channellist:note]{elseif:[channellist:state]<1000 and [channellist:state]>0}更新至第[channellist:state]集{elseif:[channellist:state]>1000}第[channellist:state]期{elseif:[channellist:state]=0 and "[channellist:note]"=""}[channellist:note]{end if}</span></a>
+							<div class="stui-vodlist__detail">
+								<h4 class="title text-overflow"><a href="[channellist:link]" title="[channellist:name]">[channellist:name]</a></h4>
+								<p class="text text-overflow text-muted hidden-xs">[channellist:nolinkactor]</p>
 							</div>
 						</div>
-					</div>
+						</li>
+					{/seacms:channellist}
+					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				
-				<!-- 推荐 -->
-				<div class="myui-panel active myui-panel-bg2 clearfix">
-					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_hd">
-							<div class="myui-panel__head active bottom-line clearfix">
-								<a class="slideDown-btn more pull-right" href="javascript:;">收起 <i class="fa fa-angle-up"></i></a>
-								<h3 class="title">
-									{channelpage:typename} 
-								</h3>
-							</div>
-						</div>
-						<div class="myui-panel_bd">
-							<div class="slideDown-box">
-								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
-									<li>
-										<a class="text-muted btn">类型</a>
-									</li>
-									{seacms:smallmenulist type=son}
-									<li><a class="btn {if: {channelpage:typeid} = [smallmenulist:typeid]}btn-warm{end if}" href="[smallmenulist:link]">[smallmenulist:typename]</a></li>
-									{/seacms:smallmenulist}
-								</ul>
-								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
-									<li>
-										<a class="btn text-muted">年级</a>
-									</li>
-									<li>
-										<a class="btn btn-warm">全部</a>
-									</li>
-									{seacms:areacaslist}<li><a class="btn" href="[areacaslist:link]">[areacaslist:value]</a></li>{/seacms:areacaslist}
-								</ul>
-								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
-									<li>
-										<a class="btn text-muted">年份</a>
-									</li>
-									<li>
-										<a class="btn btn-warm">全部</a>
-									</li>
-									{seacms:yearcaslist}<li><a class="btn" href="[yearcaslist:link]">[yearcaslist:value]</a></li>{/seacms:yearcaslist}
-
-								</ul>
-								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
-									<li>
-										<a class="btn text-muted">学期</a>
-									</li>
-									<li>
-										<a class="btn btn-warm">全部</a>
-									</li>
-									{seacms:langcaslist}<li><a class="btn" href="[langcaslist:link]">[langcaslist:value]</a></li>{/seacms:langcaslist}
-
-								</ul>
-							</div>
-
-							<ul class="myui-screen__list nav-slide clearfix" data-align="left">
-								<li>
-									<a class="btn text-muted">排序</a>
-								</li>
-								<li><a class="btn btn-warm" href="{channelpage:order-time-link}">时间</a></li>
-								<li><a class="btn" href="{channelpage:order-hit-link}">人气</a></li>
-								<li><a class="btn" href="{channelpage:order-commend-link}">评分</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<!-- 筛选 -->
-				<div class="myui-panel myui-panel-bg clearfix">
-					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd">
-							<ul class="myui-vodlist clearfix">
-								{seacms:channellist size=48 order=time}
-								<li class="col-lg-6  col-md-6 col-sm-4 col-xs-3">
-									<div class="myui-vodlist__box">
-										<a class="myui-vodlist__thumb lazyload" href="[channellist:link]" title="[channellist:name]" data-original="[channellist:pic]">
-											<span class="play hidden-xs"></span>
-											<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
-												[channellist:score]
-											</span>
-											<span class="pic-text text-right">
-												[channellist:note]
-											</span>
-										</a>
-										<div class="myui-vodlist__detail">
-											<h4 class="title text-overflow"><a href="[channellist:link]" title="[channellist:name]">[channellist:name]</a></h4>
-											<p class="text text-overflow text-muted hidden-xs">
-												执教：[channellist:nolinkactor]
-											</p>
-										</div>
-									</div>
-								</li>
-								{/seacms:channellist}
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<ul class="myui-page text-center clearfix">
-					<li><a class="btn btn-default" href="{channellist:firstlink}">首页</a></li>
-					<li><a class="btn btn-default" href="{channellist:backlink}">上一页</a></li>
-					{channellist:pagenumber len=5}
-					<li class="hidden-xs"><a class="btn{if:{channellist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
-					{/channellist:pagenumber}
-					<li class="visible-xs"><a class="btn btn-warm">{channellist:page}/{channellist:pagecount}</a></li>
-					<li><a class="btn btn-default" href="{channellist:nextlink}">下一页</a></li>
-					<li><a class="btn btn-default" href="{channellist:lastlink}">尾页</a></li>
-				</ul>
-				<!-- 翻页-->
-	<!--			<div class="myui-panel myui-panel-bg clearfix">
-					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd">
-							<div class="col-xs-1">
-								<div style="padding: 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位01</h5></div>
-							</div>
-						</div>
-					</div>				
-				</div> -->
-			</div>
-		</div>
-<script type="text/javascript">Myui.Other.Topbg($("#type-hot").outerHeight()+110);</script>
-		{seacms:foot}
-	</body>
+		<!-- 筛选列表 -->
+		<ul class="stui-page text-center cleafix">
+			<li>{if:{channellist:page}==1}<a>首页</a>{else}<a href="{channellist:firstlink}">首页</a>{end if}</li>
+			<li>{if:{channellist:page}==1}<a>上一页</a>{else}<a href="{channellist:backlink}">上一页</a>{end if}</li>
+			{channellist:pagenumber len=6}
+			{if:{channellist:page}<>[pagenumber:page]}<li class="hidden-xs"><a href="[pagenumber:link]">[pagenumber:page]</a></li>{else}<li class="hidden-xs active"><a>[pagenumber:page]</a></li>{end if}
+			{/channellist:pagenumber}
+			<li class="active visible-xs"><span class="num">{channellist:page}/{channellist:pagecount}</span></li>
+			<li>{if:{channellist:page}=={channellist:pagecount}}<a>下一页</a>{else}<a href="{channellist:nextlink}">下一页</a>{end if}</li>
+			<li>{if:{channellist:page}=={channellist:pagecount}}<a>尾页</a>{else}<a href="{channellist:lastlink}">尾页</a>{end if}</li>
+		</ul>
+		<!-- 列表翻页-->
+	</div>
+</div>
+{seacms:foot}
+</body>
 </html>

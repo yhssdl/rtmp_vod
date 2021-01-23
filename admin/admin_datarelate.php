@@ -741,7 +741,7 @@ function echoFieldOptions()
 	$fieldOptionArray[4][0]="数据添加时间" ; $fieldOptionArray[4][1]="v_addtime";
 	$fieldOptionArray[5][0]="数据标题颜色" ; $fieldOptionArray[5][1]="v_color";
 	$fieldOptionArray[6][0]="数据发行年份" ; $fieldOptionArray[6][1]="v_publishyear";
-	$fieldOptionArray[7][0]="数据发行地区" ; $fieldOptionArray[7][1]="v_publisharea";
+	$fieldOptionArray[7][0]="数据发行年级" ; $fieldOptionArray[7][1]="v_publisharea";
 	$fieldOptionArray[8][0]="主分类ID" ; $fieldOptionArray[8][1]="tid";
 	$fieldOptionArray[9][0]="扩展分类ID" ; $fieldOptionArray[9][1]="v_extratype";
 	$fieldOptionArray[10][0]="数据推荐" ; $fieldOptionArray[10][1]="v_commend";
@@ -749,7 +749,7 @@ function echoFieldOptions()
 	$fieldOptionArray[12][0]="播放地址/来源" ; $fieldOptionArray[12][1]="v_playdata";
 	$fieldOptionArray[13][0]="下载地址" ; $fieldOptionArray[13][1]="v_downdata";
 	$fieldOptionArray[14][0]="影片导演" ; $fieldOptionArray[14][1]="v_director";
-	$fieldOptionArray[15][0]="数据语言" ; $fieldOptionArray[15][1]="v_lang";
+	$fieldOptionArray[15][0]="数据学期" ; $fieldOptionArray[15][1]="v_lang";
 	$fieldOptionArray[16][0]="顶的次数" ; $fieldOptionArray[16][1]="v_digg";
 	$fieldOptionArray[17][0]="踩的次数" ; $fieldOptionArray[17][1]="v_tread";
 	$fieldOptionArray[18][0]="总评分"; $fieldOptionArray[18][1]="v_score";

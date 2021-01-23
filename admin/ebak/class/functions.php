@@ -1256,7 +1256,7 @@ function Ebak_ChangeChar($str,$oldchar,$newchar){
 	return $str;
 }
 
-//返回语言目录
+//返回学期目录
 function Ebak_ReturnLang(){
 	global $ebaklang,$langcharr;
 	$count=count($langcharr);

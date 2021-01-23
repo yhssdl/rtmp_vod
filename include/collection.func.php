@@ -172,9 +172,9 @@ function getTestItemRule($tid,$previewurl,$previewpic='')
 	}
 	getTestAreaValue($loopstr,"actor","影片演员",$html,$removecode);
 	getTestAreaValue($loopstr,"director","影片导演",$html,$removecode);
-	getTestAreaValue($loopstr,"parea","影片地区",$html,$removecode);
+	getTestAreaValue($loopstr,"parea","影片年级",$html,$removecode);
 	getTestAreaValue($loopstr,"pyear","影片年份",$html,$removecode);
-	getTestAreaValue($loopstr,"plang","影片语言",$html,$removecode);
+	getTestAreaValue($loopstr,"plang","影片学期",$html,$removecode);
 	getTestAreaValue($loopstr,"state","影片连载",$html,$removecode);
 	getTestAreaValue($loopstr,"note","影片备注",$html,$removecode);
 	getTestAreaValue($loopstr,"des","影片介绍",$html,$removecode);

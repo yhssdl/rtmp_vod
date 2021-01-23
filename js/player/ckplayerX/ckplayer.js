@@ -5,7 +5,7 @@
 	软件网站：http://www.ckplayer.com
 	--------------------------------------------------------------------------------------------------------------------
 	开发说明：
-	使用的主要程序语言：javascript(js)及actionscript3.0(as3.0)(as3.0主要用于flashplayer部分的开发，不在该页面呈现)
+	使用的主要程序学期：javascript(js)及actionscript3.0(as3.0)(as3.0主要用于flashplayer部分的开发，不在该页面呈现)
 	功能：播放视频
 	特点：兼容HTML5-VIDEO(优先)以及FlashPlayer
 	--------------------------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@
 function ckplayerConfig() {
 	return {
 		flashvars: {},//用来补充flashvars里的对象
-		languagePath: '',//语言包文件地址
+		languagePath: '',//学期包文件地址
 		stylePath: '',//风格包文件地址
 		config: {
 			fullInteractive: true,//是否开启交互功能
@@ -199,7 +199,7 @@ function ckplayerConfig() {
 			adendlink: '',
 			advertisements: ''
 		};
-		this.vars = {};//全局变量：语言配置
+		this.vars = {};//全局变量：学期配置
 		this.language = {
 			volume: '音量：',
 			play: '点击播放',

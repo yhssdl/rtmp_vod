@@ -292,7 +292,7 @@ elseif($phome=="PathGotoRedata")//目录转向
 	$mypath=$_GET['mypath'];
 	Ebak_PathGotoRedata($mypath);
 }
-elseif($phome=="ChangeLanguage")//选择语言
+elseif($phome=="ChangeLanguage")//选择学期
 {
 	Ebak_ChangeLanguage($_GET);
 }

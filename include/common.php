@@ -269,7 +269,7 @@ require_once(sea_INC.'/collection.class.php');
 require_once(sea_INC.'/link.func.php');
 require_once(sea_INC.'/mkhtml.func.php');
 
-//引入语言包
+//引入学期包
 require_once(sea_INC.'/lang.php');
 //计划任务
 include sea_DATA.'/cron.cache.php';

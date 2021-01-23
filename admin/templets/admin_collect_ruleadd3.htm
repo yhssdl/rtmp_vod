@@ -133,11 +133,11 @@ function hide(){
                 <input type="checkbox" class="checkbox" name="fields[]" value="note" onclick="if(this.checked){show('notebody')}else{hide('notebody')}"/>
                 备注
                 <input type="checkbox" class="checkbox" name="fields[]2" value="area" onclick="if(this.checked){show('areabody')}else{hide('areabody')}"/>
-                地区
+                年级
                 <input type="checkbox" class="checkbox" name="fields[]" value="year" onclick="if(this.checked){show('yearbody')}else{hide('yearbody')}"/>
                 年份
                 <input type="checkbox" class="checkbox" name="fields[]" value="lang" onclick="if(this.checked){show('langbody')}else{hide('langbody')}"/>
-                语言
+                学期
                 <input type="checkbox" class="checkbox" name="fields[]" value="des" onclick="if(this.checked){show('desbody')}else{hide('desbody')}" checked/>
                 介绍 
                 <input type="checkbox" class="checkbox" name="fields[]" value="jq" onclick="if(this.checked){show('jqbody')}else{hide('jqbody')}" />
@@ -302,17 +302,17 @@ function hide(){
           <tbody id="areabody" style="display:none">
           <input type='checkbox' name='item[]' checked='1'  value='parea' style='display:none' />
           <tr>
-            <td class="label">地区开始代码：</td>
+            <td class="label">年级开始代码：</td>
             <td><textarea name="pareaa" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">地区结束代码：
+            <td class="label">年级结束代码：
               <div class="blue">开始标签 和 结束标签<br />
-                为空不截取地区</div></td>
+                为空不截取年级</div></td>
             <td><textarea name="pareab" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">地区替换规则：</td>
+            <td class="label">年级替换规则：</td>
             <td><textarea name="parea_trim" id="parea_trim" rows="3" cols="50" wrap="off"></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('parea_trim')" /></td>
           </tr>
@@ -340,17 +340,17 @@ function hide(){
           <tbody id="langbody" style="<?php if(strpos($flds,"lang")===false) echo "display:none";?>">
           <input type='checkbox' name='item[]' checked='1'  value='plang' style='display:none' />
           <tr>
-            <td class="label">语言开始代码：</td>
+            <td class="label">学期开始代码：</td>
             <td><textarea name="planga" rows="4" cols="80" wrap="off"><?php echo getrulevalue($itemloopstr,"planga");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">语言结束代码：
+            <td class="label">学期结束代码：
               <div class="blue">开始标签 和 结束标签<br />
-                为空不截取语言</div></td>
+                为空不截取学期</div></td>
             <td><textarea name="plangb" rows="4" cols="80" wrap="off"><?php echo getrulevalue($itemloopstr,"plangb");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">语言替换规则：</td>
+            <td class="label">学期替换规则：</td>
             <td><textarea name="plang_trim" id="plang_trim" rows="3" cols="50" wrap="off"><?php echo getrulevalue($itemloopstr,"plang_trim");?></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('plang_trim')" /></td>
           </tr>

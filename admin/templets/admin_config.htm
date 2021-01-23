@@ -377,10 +377,10 @@ $(function() {
             <input type="checkbox" name="edit___cfg_gatherset[]" value="4" id="gatherset1" <?php if(strpos($cfg_gatherset,'4')!==false)echo 'checked'?> />年代识别</label>
 			&nbsp;&nbsp;
 		  <label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="5" id="gatherset1" <?php if(strpos($cfg_gatherset,'5')!==false)echo 'checked'?> />地区识别</label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="5" id="gatherset1" <?php if(strpos($cfg_gatherset,'5')!==false)echo 'checked'?> />年级识别</label>
 			&nbsp;&nbsp;
 		  <label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="6" id="gatherset1" <?php if(strpos($cfg_gatherset,'6')!==false)echo 'checked'?> />语言识别</label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="6" id="gatherset1" <?php if(strpos($cfg_gatherset,'6')!==false)echo 'checked'?> />学期识别</label>
 			&nbsp;&nbsp;
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="7" id="gatherset1" <?php if(strpos($cfg_gatherset,'7')!==false)echo 'checked'?> />导演识别</label>
@@ -407,8 +407,8 @@ $(function() {
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="B" id="gatherset1" <?php if(strpos($cfg_gatherset,'B')!==false)echo 'checked'?> />下载地址</label>&nbsp;&nbsp;				
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="C" id="gatherset1" <?php if(strpos($cfg_gatherset,'C')!==false)echo 'checked'?> />图片</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="D" id="gatherset1" <?php if(strpos($cfg_gatherset,'D')!==false)echo 'checked'?> />连载状态</label>&nbsp;&nbsp;
-			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="E" id="gatherset1" <?php if(strpos($cfg_gatherset,'E')!==false)echo 'checked'?> />语言</label>&nbsp;&nbsp;
-			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="F" id="gatherset1" <?php if(strpos($cfg_gatherset,'F')!==false)echo 'checked'?> />地区</label>&nbsp;&nbsp;
+			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="E" id="gatherset1" <?php if(strpos($cfg_gatherset,'E')!==false)echo 'checked'?> />学期</label>&nbsp;&nbsp;
+			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="F" id="gatherset1" <?php if(strpos($cfg_gatherset,'F')!==false)echo 'checked'?> />年级</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="G" id="gatherset1" <?php if(strpos($cfg_gatherset,'G')!==false)echo 'checked'?> />年份</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="H" id="gatherset1" <?php if(strpos($cfg_gatherset,'H')!==false)echo 'checked'?> />备注</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="I" id="gatherset1" <?php if(strpos($cfg_gatherset,'I')!==false)echo 'checked'?> />关键词</label>&nbsp;&nbsp;
@@ -791,7 +791,7 @@ $(function() {
           请以'|'分离</td>
       </tr>
       <tr>
-        <td>影片地区</td>
+        <td>影片年级</td>
         <td><input type="text" name="publisharea" size="80" value="<?php 
 	$publisharea = array();
 	if(filesize($publishareatxt)>0)
@@ -817,7 +817,7 @@ $(function() {
           请以'|'分离</td>
       </tr>
       <tr>
-        <td>影片语言</td>
+        <td>影片学期</td>
         <td><input type="text" name="publishyuyan" size="80" value="<?php 
 	$publishyuyan = array();
 	if(filesize($publishyuyantxt)>0)

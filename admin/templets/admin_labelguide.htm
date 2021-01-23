@@ -93,7 +93,7 @@ if($action=="videolist"){
 		if($("state").checked){wherestr+="&nbsp;&nbsp;[videolist:state]表示状态<br>"}
 		if($("vcommend").checked){wherestr+="&nbsp;&nbsp;[videolist:commend]表示推荐级别<br>"}
 		if($("vfrom").checked){wherestr+="&nbsp;&nbsp;[videolist:from]表示来源<br>"}
-		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[videolist:publisharea]表示发行地区<br>"}
+		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[videolist:publisharea]表示发行年级<br>"}
 		if($("publishtime").checked){wherestr+="&nbsp;&nbsp;[videolist:publishtime]表示发行日期<br>"}
 		wherestr=wherestr+"{/seacms:videolist}"
 		set($("labelcontent"),wherestr)
@@ -140,7 +140,7 @@ if($action=="videolist"){
 <label><input  type="checkbox" id="state"  name="state"  value="1" class="radio" />状态</label><br />
 <label><input  type="checkbox" id="vcommend"  name="vcommend"  value="1" class="radio" />推荐级别</label>&nbsp;&nbsp;
 <label><input  type="checkbox" id="vfrom"  name="vfrom"  value="1" class="radio" />来源</label>&nbsp;&nbsp;
-<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行地区</label>&nbsp;&nbsp; 
+<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行年级</label>&nbsp;&nbsp; 
 <label><input id="publishtime"  name="publishtime"  type="checkbox" value="1" class="radio" />发行日期</label>
 </td></tr>
     <tr><td colspan="2"><input type="button"  class="rb1" value="按上述我设置的条件生成标签"  onclick="videolist_create()"/></td></tr>
@@ -350,7 +350,7 @@ if($action=="videolist"){
 		if($("state").checked){wherestr+="&nbsp;&nbsp;[channellist:state]表示状态<br>"}
 		if($("vcommend").checked){wherestr+="&nbsp;&nbsp;[channellist:commend]表示推荐级别<br>"}
 		if($("vfrom").checked){wherestr+="&nbsp;&nbsp;[channellist:from]表示来源<br>"}
-		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[channellist:publisharea]表示发行地区<br>"}
+		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[channellist:publisharea]表示发行年级<br>"}
 		if($("publishtime").checked){wherestr+="&nbsp;&nbsp;[channellist:publishtime]表示发行日期<br>"}
 		wherestr=wherestr+"{/seacms:channellist}"
 		
@@ -400,7 +400,7 @@ if($action=="videolist"){
 <label><input  type="checkbox" id="state"  name="state"  value="1" class="radio" />状态</label>&nbsp;&nbsp; &nbsp;&nbsp;
 <label><input  type="checkbox" id="vcommend"  name="vcommend"  value="1" class="radio" />推荐级别</label>&nbsp;&nbsp;
 <label><input  type="checkbox" id="vfrom"  name="vfrom"  value="1" class="radio" />来源</label>&nbsp;&nbsp;
-<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行地区</label>&nbsp;&nbsp; 
+<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行年级</label>&nbsp;&nbsp; 
 <label><input id="publishtime"  name="publishtime"  type="checkbox" value="1" class="radio" />发行日期</label>
 </td></tr>
     <tr><td colspan="2"><font color="#FF0000">页码列表</font>(可放置于channellist外部) <input id="pagelist"  name="pagelist" checked type="checkbox" value="1" class="radio" />长度<input  type="text" id="pagelistlen" name="pagelistlen"  size="4"  value="10"  /></td></tr>
@@ -519,7 +519,7 @@ if($action=="videolist"){
 		if($("state").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:state]表示状态<br>"}
 		if($("vcommend").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:commend]表示推荐级别<br>"}
 		if($("vfrom").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:from]表示来源<br>"}
-		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:publisharea]表示发行地区<br>"}
+		if($("publisharea").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:publisharea]表示发行年级<br>"}
 		if($("publishtime").checked){wherestr+="&nbsp;&nbsp;[topicpagelist:publishtime]表示发行日期<br>"}
 		wherestr=wherestr+"{/seacms:topicpagelist}"
 		
@@ -569,7 +569,7 @@ if($action=="videolist"){
 <label><input  type="checkbox" id="state"  name="state"  value="1" class="radio" />状态</label>&nbsp;&nbsp; &nbsp;&nbsp;
 <label><input  type="checkbox" id="vcommend"  name="vcommend"  value="1" class="radio" />推荐级别</label>&nbsp;&nbsp;
 <label><input  type="checkbox" id="vfrom"  name="vfrom"  value="1" class="radio" />来源</label>&nbsp;&nbsp;
-<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行地区</label>&nbsp;&nbsp; 
+<label><input id="publisharea"  name="publisharea"  type="checkbox" value="1" class="radio" />发行年级</label>&nbsp;&nbsp; 
 <label><input id="publishtime"  name="publishtime"  type="checkbox" value="1" class="radio" />发行日期</label>
 </td></tr>
     <tr><td colspan="2"><font color="#FF0000">页码列表</font>(可放置于topicpagelist外部) <input id="pagelist"  name="pagelist" checked type="checkbox" value="1" class="radio" />长度<input  type="text" id="pagelistlen" name="pagelistlen"  size="4"  value="10"  /></td></tr>

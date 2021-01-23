@@ -18,8 +18,8 @@ class Collect
 		$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
 		$v_data['v_pic'] = (String)$video->pic;//影片图片地址
 		$v_data['v_state'] = (String)$video->state;//影片连载状态
-		$v_data['v_lang'] = (String)$video->lang;//影片语言
-		$v_data['v_publisharea'] =(String) $video->area;//影片地区
+		$v_data['v_lang'] = (String)$video->lang;//影片学期
+		$v_data['v_publisharea'] =(String) $video->area;//影片年级
 		$v_data['v_publishyear'] = (String)$video->year;//影片年份
 		$v_data['v_note'] = (String)$video->note;//影片备注
 		$v_data['v_tags'] = htmlspecialchars($video->keywords);//影片关键词
@@ -421,12 +421,12 @@ class Collect
 					if($v_data['v_publisharea'] != $rs1['v_publisharea'] && (strpos($cfg_gatherset,'5')!==false))
 					{
 						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//地区 新增数据
+						return $autocol_str.$this->_insert_database($v_data);//年级 新增数据
 					}
 					if($v_data['v_lang'] != $rs1['v_lang'] && (strpos($cfg_gatherset,'6')!==false))
 					{
 						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
+						return $autocol_str.$this->_insert_database($v_data);//学期 新增数据
 					}
 					$v_data['v_director']=str_replace(array(' ',',','/'),'',$v_data['v_director']);
 					$rs1['v_director']=str_replace(array(' ',',','/'),'',$rs1['v_director']);
@@ -478,12 +478,12 @@ class Collect
 				if($v_data['v_publisharea'] != $rs['v_publisharea'] && (strpos($cfg_gatherset,'5')!==false))
 				{
 					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//地区 新增数据
+					return $autocol_str.$this->_insert_database($v_data);//年级 新增数据
 				}
 				if($v_data['v_lang'] != $rs['v_lang'] && (strpos($cfg_gatherset,'6')!==false))
 				{
 					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
+					return $autocol_str.$this->_insert_database($v_data);//学期 新增数据
 				}
 				$v_data['v_director']=str_replace(array(' ',',','/'),'',$v_data['v_director']);
 				$rs['v_director']=str_replace(array(' ',',','/'),'',$rs['v_director']);

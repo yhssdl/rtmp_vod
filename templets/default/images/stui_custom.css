@@ -62,7 +62,6 @@ a:hover{ color: #FF9900;}
 /* pic-tag */
 .pic-tag{ background-color: rgba(0,0,0,0.6); color: #FFFFFF;}
 .pic-tag.active,.pic-tag-h{ background-color: #FF9900; color: #FFFFFF;}
-.pic-text{ background-repeat: no-repeat; background-image: linear-gradient(transparent,rgba(0,0,0,.5)); color: #FFFFFF;}
 .pic-text.active{ background: rgba(0,0,0,0.6); color: #FFFFFF;}
 
 /* pannel */

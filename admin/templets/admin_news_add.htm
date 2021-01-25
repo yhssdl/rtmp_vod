@@ -22,7 +22,41 @@ function commendVideo(id,level)
                 fileManagerJson : 'editor/php/file_manager_json.php',
                 allowFileManager : true,
 				afterBlur: function(){this.sync();}
-        });
+		});
+
+        K('#upButton1').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_pic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_pic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton2').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_spic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_spic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton3').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_gpic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_gpic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          }); 
         });
 </script>
 </head>
@@ -61,7 +95,8 @@ function commendVideo(id,level)
 	</tr>
 	<tr>
 	  <td height="30" class="td_border">&nbsp;图片地址：</td>
-	  <td height="30" class="td_border"><input name="v_pic" type="text" id="v_pic" value="" size="30"/>&nbsp; ← <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_pic.value='';"/> &nbsp; <iframe src="upload.htm" scrolling="No" topmargin="0" width="300" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+	  <td height="30" class="td_border"><input name="v_pic" type="text" id="v_pic" value="" size="30"/>&nbsp; ← <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_pic.value='';"/> &nbsp; 
+		<input name="upButton1" type="button" class="rb1" id="upButton1" value="选择图片"/></td>
 	</tr>
 	 <tr>
             <td height="30" class="td_border">&nbsp;幻灯图片：</td>
@@ -69,7 +104,7 @@ function commendVideo(id,level)
               &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_spic.value='';"/>
               &nbsp;
-              <iframe src="uploads.htm" scrolling="No" topmargin="0" width="320" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+              <input name="upButton2" type="button" class="rb1" id="upButton2" value="选择图片"/></td>
           </tr>
 		  <tr>
             <td height="30" class="td_border">&nbsp;背景图片：</td>
@@ -77,7 +112,7 @@ function commendVideo(id,level)
               &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_gpic.value='';"/>
               &nbsp;
-              <iframe src="uploadg.htm" scrolling="No" topmargin="0" width="320" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+              <input name="upButton3" type="button" class="rb1" id="upButton3" value="选择图片"/></td>
           </tr>
 	<tr>
 	  <td  height="30" class="td_border">&nbsp;作者：</td>

@@ -12,12 +12,47 @@
 <script charset="utf-8" src="editor/lang/zh-CN.js"></script>
 <script>
         KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id', {
-                uploadJson : 'editor/php/upload_json.php',
-                fileManagerJson : 'editor/php/file_manager_json.php',
-                allowFileManager : true,
-				afterBlur: function(){this.sync();}
-        });
+            window.editor = K.create('#editor_id', {
+            uploadJson : 'editor/php/upload_json.php',
+            fileManagerJson : 'editor/php/file_manager_json.php',
+            allowFileManager : true,
+            afterBlur: function(){this.sync();}
+          });
+          K('#upButton1').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_pic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_pic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton2').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_spic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_spic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton3').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#v_gpic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#v_gpic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });          
+
+        
         });
 </script>
 </head>
@@ -72,7 +107,7 @@
               &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_pic.value='';"/>
               &nbsp;
-              <iframe src="upload.htm" scrolling="No" topmargin="0" width="320" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+              <input name="upButton1" type="button" class="rb1" id="upButton1" value="选择图片"/></td>
           </tr>
 		  <tr>
             <td height="30" class="td_border">&nbsp;幻灯图片：</td>
@@ -80,7 +115,7 @@
               &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_spic.value='';"/>
               &nbsp;
-              <iframe src="uploads.htm" scrolling="No" topmargin="0" width="320" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+              <input name="upButton2" type="button" class="rb1" id="upButton2" value="选择图片"/></td>
           </tr>
 		  <tr>
             <td height="30" class="td_border">&nbsp;背景图片：</td>
@@ -88,7 +123,7 @@
               &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_gpic.value='';"/>
               &nbsp;
-              <iframe src="uploadg.htm" scrolling="No" topmargin="0" width="320" height="30" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe></td>
+              <input name="upButton3" type="button" class="rb1" id="upButton3" value="选择图片"/></td>
           </tr>
           <tr>
             <td  height="30" class="td_border">&nbsp;执 教：</td>

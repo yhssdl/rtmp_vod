@@ -225,10 +225,10 @@ $cfg_phpurl = '/'.$cfg_cmspath;
 $cfg_medias_dir = '/'.$cfg_cmspath.$cfg_upload_dir;
 
 //上传的普通图片的路径,建议按默认
-$cfg_image_dir = $cfg_medias_dir.'/allimg';
+$cfg_image_dir = $cfg_medias_dir.'/images';
 
 //上传的缩略图
-$ddcfg_image_dir = $cfg_medias_dir.'/litimg';
+$ddcfg_image_dir = $cfg_medias_dir.'/images';
 
 //系统摘要信息，****请不要删除本项**** 否则系统无法正确接收系统漏洞或升级信息
 $verLockFile = sea_ROOT.'/data/admin/ver.txt';

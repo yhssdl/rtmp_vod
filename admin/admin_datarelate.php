@@ -684,9 +684,7 @@ elseif($action=="delByFrom")
         '/data/cache',
         '/data/mark',
 		'/install',
-        '/uploads/allimg',
-        '/uploads/editor',
-        '/uploads/litimg',
+        '/uploads/images',
 		'/js',
 		'/js/player',
 		'/js/ads'

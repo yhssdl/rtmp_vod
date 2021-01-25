@@ -16,6 +16,39 @@
                 allowFileManager : true,
 				afterBlur: function(){this.sync();}
         });
+        K('#upButton1').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#pic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#pic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton2').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#spic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#spic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });
+          K('#upButton3').click(function() {
+            editor.loadPlugin('image', function() {
+              editor.plugin.imageDialog({
+                imageUrl : K('#gpic').val(),
+                clickFn : function(url, title, width, height, border, align) {
+                  K('#gpic').val(url);
+                  editor.hideDialog();
+                }
+              });
+            });
+          });           
         });
 </script>
 <style type="text/css">
@@ -72,18 +105,23 @@ function onUploadBack(fn){
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;图片地址：</td>
-            <td height="30" class="td_border"><input type="text" name="pic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['pic'])">浏览..</button>
-              </td>
-</tr>
+            <td height="30" class="td_border"><input type="text" name="pic" id="pic" value="" /> &nbsp;←
+              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.pic.value='';"/>
+              &nbsp;
+              <input name="upButton1" type="button" class="rb1" id="upButton1" value="选择图片"/></td>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;幻灯图片：</td>
-            <td height="30" class="td_border"><input type="text" name="spic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['spic'])">浏览..</button>
-              </td>
+            <td height="30" class="td_border"><input type="text" name="spic" id="spic" value="" />&nbsp;←
+              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.spic.value='';"/>
+              &nbsp;
+              <input name="upButton2" type="button" class="rb1" id="upButton2" value="选择图片"/></td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;背景图片：</td>
-            <td height="30" class="td_border"><input type="text" name="gpic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['gpic'])">浏览..</button>
-              </td>
+            <td height="30" class="td_border"><input type="text" name="gpic" id="gpic" value="" />&nbsp;←
+              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.gpic.value='';"/>
+              &nbsp;
+              <input name="upButton3" type="button" class="rb1" id="upButton3" value="选择图片"/></td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;SEO关键词：</td>

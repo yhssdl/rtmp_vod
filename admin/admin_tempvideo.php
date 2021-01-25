@@ -75,7 +75,7 @@ elseif($action=="edit")
 	$v_playdata=$vrow['v_playdata'];
 	$v_downdata=$vrow['v_downdata'];
 	$v_content=$vrow['v_des'];
-	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("CKplayer"));
+	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Dplayer"));
 	$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
 	include(sea_ADMIN.'/templets/admin_tempvideo_edit.htm');
 	exit();

@@ -89,7 +89,7 @@ elseif($action=="topicdelall")
 
 elseif($action=="add")
 {
-$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("CKplayer"));
+$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Dplayer"));
 $makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
 
 include(sea_ADMIN.'/templets/admin_topic_vod.htm');

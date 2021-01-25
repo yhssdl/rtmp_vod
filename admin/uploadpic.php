@@ -13,8 +13,8 @@ $config['message']="上传成功"; //上传成功后显示的消息，若为空�
 
 $config['name']=mktime(); //上传后的文件命名规则 这里以unix时间戳来命名
 
-$config['flash_dir']="../uploads/editor"; //上传flash文件地址 采用绝对地址 方便upload.php文件放在站内的任何位置 后面不加"/"
-$config['img_dir']="../uploads/editor"; //上传img文件地址 采用绝对地址 采用绝对地址 方便upload.php文件放在站内的任何位置 后面不加"/"
+$config['flash_dir']="../uploads/images"; //上传flash文件地址 采用绝对地址 方便upload.php文件放在站内的任何位置 后面不加"/"
+$config['img_dir']="../uploads/images"; //上传img文件地址 采用绝对地址 采用绝对地址 方便upload.php文件放在站内的任何位置 后面不加"/"
 
 $config['site_url']=""; //网站的网址 这与图片上传后的地址有关 最后不加"/" 可留空
 

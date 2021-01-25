@@ -46,7 +46,7 @@ var stui = {
 			})
 		},
 		slide: function() {
-			$.getScript("flickity.pkgd.min.js", function() {
+			$.getScript("/templets/default/images/flickity.pkgd.min.js", function() {
 				$(".type-slide").each(function(a) {
 					$index = $(this).find('.active').index()*1;
 					if($index > 3){
@@ -77,7 +77,7 @@ var stui = {
 	},
 	flickity: {
 		carousel: function() {
-			$.getScript("flickity.pkgd.min.js", function() {
+			$.getScript("/templets/default/images/flickity.pkgd.min.js", function() {
 				$('.carousel_default').flickity({
 				  	cellAlign: 'left',
 				  	contain: true,
@@ -109,7 +109,7 @@ var stui = {
 	},
 	images: {
 		lazyload: function() {
-			$.getScript("jquery.lazyload.js", function() {
+			$.getScript("/templets/default/images/jquery.lazyload.js", function() {
 				$(".lazyload").lazyload({
 					effect: "fadeIn",
 					threshold: 200,
@@ -134,7 +134,7 @@ var stui = {
 	},
 	common: {
 		bootstrap: function() {
-			$.getScript("bootstrap.min.js", function() {
+			$.getScript("/templets/default/images/bootstrap.min.js", function() {
 				$('a[data-toggle="tab"]').on("shown.bs.tab", function(a) {
 					var b = $(a.target).text();
 					$(a.relatedTarget).text();
@@ -143,7 +143,7 @@ var stui = {
 			})
 		},
 		headroom: function() {
-			$.getScript("headroom.min.js", function() {
+			$.getScript("/templets/default/images/headroom.min.js", function() {
 				$("#header-top", function() {
 					(new Headroom(document.querySelector("#header-top"), {
 						tolerance: 5,

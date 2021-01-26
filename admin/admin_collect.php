@@ -534,7 +534,7 @@ elseif($action=="editVideo")
 	$vtype = $vrow['tid'];
 	$v_playdata=$vrow['v_playdata'];
 	$v_content=$vrow['v_des'];
-	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("CKplayer"));
+	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Xgplayer"));
 	include(sea_ADMIN.'/templets/admin_co_editvideo.htm');
 	exit();
 }

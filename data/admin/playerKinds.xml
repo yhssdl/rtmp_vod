@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <playerkinds>
-<player open="1" sort="0" postfix="xg" flag="Xglayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
+<player open="1" sort="0" postfix="xg" flag="Xgplayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="dp" flag="Dplayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="ck" flag="CKplayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="jiexi" flag="解析播放" des=""><intro>无需安装任何插件，即可快速播放</intro></player>

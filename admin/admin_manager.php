@@ -8,9 +8,9 @@ if(empty($action))
 
 if($action=="add")
 {
-	if(m_ereg("[^0-9a-zA-Z_@!\.-]",$pwd) || m_ereg("[^0-9a-zA-Z_@!\.-]",$username) || m_ereg("[^0-9a-zA-Z_@!\.-]",$pwd2))
+	if(m_ereg("[^0-9a-zA-Z_@&*#$%^()+=~`!\.-]",$pwd) || m_ereg("[^0-9a-zA-Z_@!\.-]",$username) || m_ereg("[^0-9a-zA-Z_@&*#$%^()+=~`!\.-]",$pwd2))
 	{
-		ShowMsg("密码或用户名不合法，<br />请使用[0-9a-zA-Z_@!.-]内的字符！","-1",0,3000);
+		ShowMsg("密码或用户名不合法，<br />用户名可以用数字与英文字母字符！","-1",0,3000);
 		exit();
 	}
 	if($pwd!=$pwd2)
@@ -37,9 +37,9 @@ elseif($action=="save")
 {
 	$pwd = trim($pwd);
 	$pwd2 = trim($pwd2);
-	if(m_ereg("[^0-9a-zA-Z_@!\.-]",$pwd) || m_ereg("[^0-9a-zA-Z_@!\.-]",$username) || m_ereg("[^0-9a-zA-Z_@!\.-]",$pwd2))
+	if(m_ereg("[^0-9a-zA-Z_@&*#$%^()+=~`!\.-]",$pwd) || m_ereg("[^0-9a-zA-Z_@!\.-]",$username) || m_ereg("[^0-9a-zA-Z_@&*#$%^()+=~`!\.-]",$pwd2))
 	{
-		ShowMsg("密码或用户名不合法，<br />请使用[0-9a-zA-Z_@!.-]内的字符！","-1",0,3000);
+		ShowMsg("密码或用户名不合法，<br />用户名可以用数字与英文字母字符！","-1",0,3000);
 		exit();
 	}
 	if($pwd!=$pwd2)

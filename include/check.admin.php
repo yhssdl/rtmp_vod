@@ -66,7 +66,7 @@ class userLogin
 
 		//只允许用户名和密码用0-9,a-z,A-Z,'@','_','.','-'这些字符
 		$this->userName = m_ereg_replace("[^0-9a-zA-Z_@!\.-]",'',$username);
-		$this->userPwd = m_ereg_replace("[^0-9a-zA-Z_@!\.-]",'',$userpwd);
+		$this->userPwd = m_ereg_replace("[^0-9a-zA-Z_@&*#$%^()+=~`!\.-]",'',$userpwd);
 		$pwd = substr(md5($this->userPwd),5,20);
 		$dsql->SetQuery("Select * From `sea_admin` where name like '".$this->userName."' and state='1' limit 0,1");
 		$dsql->Execute();

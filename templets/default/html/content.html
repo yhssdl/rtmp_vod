@@ -36,7 +36,7 @@
 							<div class="stui-content__thumb">
 								<a class="stui-vodlist__thumb v-thumb lazyload" href="{playpage:playlink}" title="{playpage:name}" data-original="{playpage:pic}"><span class="play active hidden-xs"></span><span class="pic-text text-right">{if:{playpage:state}<1}{playpage:note}{elseif:{playpage:state}<1000 and {playpage:state}>0}更新至{playpage:state}集{elseif:{playpage:state}>1000}第{playpage:state}期{elseif:{playpage:state}=0 and "{playpage:note}"=""}{playpage:note}{end if}</span></a>
 							</div>
-							<div class="stui-content__detail">
+							<div class="stui-content__detail detail">
 								<h3 class="title">{playpage:name}</h3>
 								<p class="data"><span class="text-muted">执教：</span>{playpage:actor}</p>
 								<p class="data"><span class="text-muted">班级：</span>{playpage:director}</p>
@@ -44,7 +44,7 @@
 									<span class="text-muted">类型：</span>{playpage:jqtype}<span class="split-line"></span><span class="text-muted hidden-xs">年级：</span>{playpage:publisharea}<span class="split-line"></span><span class="text-muted hidden-xs">年份：</span>{playpage:publishtime}
 								</p>
 								<p class="desc detail hidden-xs">
-									<span class="left text-muted">简介：</span><span class="detail-sketch">{playpage:des len=100}</span><span class="detail-content" style="display: none;"><span style="font-size:12px">{playpage:des}</span></span><a class="detail-more" href="javascript:;">详情 <i class="icon iconfont icon-moreunfold"></i></a>
+									<span class="left text-muted">简介：</span><span class="detail-sketch">{playpage:des len=100}</span><div class="detail-content" style="display: none;"><span style="font-size:12px">{playpage:des}</span></div><a class="detail-more" href="javascript:;">详情 <i class="icon iconfont icon-moreunfold"></i></a>
 								</p>
 								<div class="play-btn clearfix">
 									<div class="share bdsharebuttonbox hidden-sm hidden-xs pull-right">

@@ -172,18 +172,16 @@
 
 
 			//绑定播放结束回调
-			xg.on("ended", function () { endedHandler(xg); });
+			xg.on("ended", function () { endedHandler(); });
 
 
 
 			//播放结束回调		
-			function endedHandler(xg) {
+			function endedHandler() {
 
 				if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video) {
 					if (Number(xyplay.part) + 1 <= xyplay.video.length) {
-						
-						//setTimeout(function () { video_next(xg); }, 500);
-						top.location.href = nextpage;
+						setTimeout(function () { video_next(); }, 100);
 					} 
 
 				} else {
@@ -193,7 +191,6 @@
 				}
 
 			}
-			return xg;
 		}
 
 		createPlayer(videoUrl);
@@ -207,49 +204,17 @@
 			}
 			return false;
 		}
-		function video_next(xg) {
+		function video_next() {
 			if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video)
 				if (Number(xyplay.part) + 1 >= xyplay.video.length) {
-					//xg.notice("已经是最后一集");
-
+					//已经是最后一集;
 					return false;
 				}
 			xyplay.part++;
-			myplay(xyplay.video[xyplay.part],xg);
-
-		}
-
-
-		//播放上集	
-		function video_front() {
-			if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video)
-				if (Number(xyplay.part) <= 0) {
-					xg.notice("已经是最前一集");
-					return false;
-				}
-			xyplay.part--;
-			myplay(xyplay.video[xyplay.part],xg);
-
-		}
-
-
-		//调用播放
-		function myplay(url,xg) {
-			var vippart = parseInt(xyplay.part) + 1;
-			var houz = xyplay['houz'];
-			var vtry = xyplay['try'];
-			var viparr2 = xyplay.vipp;
-			var viparr = Object.values(viparr2);
-			if (IsInArray(viparr, vippart) && vtry == '0') { top.location.href = "/video/?" + vid + "-" + vfrom + "-" + vpart2 + houz; }
-			videoUrl = url;
-			xg.destroy(false);
-			createPlayer(videoUrl);
+			top.location.href = nextpage;
 		}
 
 	</script>
-
-
-
 </body>
 
 </html>

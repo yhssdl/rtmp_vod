@@ -181,11 +181,10 @@
 
 				if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video) {
 					if (Number(xyplay.part) + 1 <= xyplay.video.length) {
-						//xg.notice("视频已结束,为您跳到下一集");
-						setTimeout(function () { video_next(xg); }, 500);
-					} //else {
-					//xg.notice("视频播放已结束");
-					//}
+						
+						//setTimeout(function () { video_next(xg); }, 500);
+						top.location.href = nextpage;
+					} 
 
 				} else {
 

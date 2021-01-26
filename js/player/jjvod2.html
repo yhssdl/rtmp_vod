@@ -13,7 +13,7 @@ var jjvod_adh = jjvod_h-40;//广告高度
 var jjvod_ad = parent.adsPage;//缓冲和暂停调用广告地址
 var jjvod_c = 'seacms'; //吉吉影音推广渠道，一般为域名简写，如baidu
 var jjvod_install = 'http://player.jjvod.com/js/jjplayer_install.html?v=1&c='+jjvod_c;
-var jjvod_weburl = unescape(window.location.href);
+var jjvod_weburl = decodeURI(window.location.href);
 var jjvod_nextpage = parent.nextPage;
 
 function jjvodstatus(offest){

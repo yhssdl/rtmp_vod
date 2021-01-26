@@ -91,7 +91,7 @@ else if($step==2)
         '/data/cache',
         '/data/mark',
 		'/install',
-        '/uploads/images',
+        '/uploads',
 		'/admin',
 		'/admin/ebak/bdata',
 		'/admin/ebak/zip',

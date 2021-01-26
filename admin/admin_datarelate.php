@@ -274,7 +274,7 @@ elseif($action=="CAN")
 //清除多余数据图片
 elseif($action=="sumitcheck"){
 	echoHead();
-	$pre = array('lit','all');
+	$pre = array('image','media');
 	foreach ($pre as $p){
 		$dir = '../uploads/'.$p.'img';
 		$folder = getFolderList($dir);
@@ -684,7 +684,7 @@ elseif($action=="delByFrom")
         '/data/cache',
         '/data/mark',
 		'/install',
-        '/uploads/images',
+        '/uploads',
 		'/js',
 		'/js/player',
 		'/js/ads'

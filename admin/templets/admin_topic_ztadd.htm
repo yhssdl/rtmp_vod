@@ -9,47 +9,89 @@
 <script charset="utf-8" src="editor/kindeditor-min.js"></script>
 <script charset="utf-8" src="editor/lang/zh-CN.js"></script>
 <script>
-        KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id', {
-                uploadJson : 'editor/php/upload_json.php',
-                fileManagerJson : 'editor/php/file_manager_json.php',
-                allowFileManager : true,
-				afterBlur: function(){this.sync();}
+  KindEditor.ready(function (K) {
+    window.editor = K.create('#editor_id', {
+      uploadJson: 'editor/php/upload_json.php',
+      fileManagerJson: 'editor/php/file_manager_json.php',
+      allowFileManager: true,
+      afterBlur: function () { this.sync(); }
+    });
+
+    K('#upButton11').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showLocal: false,
+          imageUrl: K('#pic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#pic').val(url);
+            editor.hideDialog();
+          }
         });
-        K('#upButton1').click(function() {
-            editor.loadPlugin('image', function() {
-              editor.plugin.imageDialog({
-                imageUrl : K('#pic').val(),
-                clickFn : function(url, title, width, height, border, align) {
-                  K('#pic').val(url);
-                  editor.hideDialog();
-                }
-              });
-            });
-          });
-          K('#upButton2').click(function() {
-            editor.loadPlugin('image', function() {
-              editor.plugin.imageDialog({
-                imageUrl : K('#spic').val(),
-                clickFn : function(url, title, width, height, border, align) {
-                  K('#spic').val(url);
-                  editor.hideDialog();
-                }
-              });
-            });
-          });
-          K('#upButton3').click(function() {
-            editor.loadPlugin('image', function() {
-              editor.plugin.imageDialog({
-                imageUrl : K('#gpic').val(),
-                clickFn : function(url, title, width, height, border, align) {
-                  K('#gpic').val(url);
-                  editor.hideDialog();
-                }
-              });
-            });
-          });           
+      });
+    });
+    K('#upButton12').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showRemote: false,
+          imageUrl: K('#pic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#pic').val(url);
+            editor.hideDialog();
+          }
         });
+      });
+    });
+    K('#upButton21').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showLocal: false,
+          imageUrl: K('#spic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#spic').val(url);
+            editor.hideDialog();
+          }
+        });
+      });
+    });
+    K('#upButton22').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showRemote: false,
+          imageUrl: K('#spic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#spic').val(url);
+            editor.hideDialog();
+          }
+        });
+      });
+    });
+    K('#upButton31').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showLocal: false,
+          imageUrl: K('#gpic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#gpic').val(url);
+            editor.hideDialog();
+          }
+        });
+      });
+    });
+
+    K('#upButton32').click(function () {
+      editor.loadPlugin('image', function () {
+        editor.plugin.imageDialog({
+          showRemote: false,
+          imageUrl: K('#gpic').val(),
+          clickFn: function (url, title, width, height, border, align) {
+            K('#gpic').val(url);
+            editor.hideDialog();
+          }
+        });
+      });
+    });
+
+  });
 </script>
 <style type="text/css">
 select {
@@ -108,20 +150,23 @@ function onUploadBack(fn){
             <td height="30" class="td_border"><input type="text" name="pic" id="pic" value="" /> &nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.pic.value='';"/>
               &nbsp;
-              <input name="upButton1" type="button" class="rb1" id="upButton1" value="选择图片"/></td>
+              <input name="upButton11" type="button" class="rb1" id="upButton11" value="选择图片"/>
+              <input name="upButton12" type="button" class="rb1" id="upButton12" value="上传图片"/></td>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;幻灯图片：</td>
             <td height="30" class="td_border"><input type="text" name="spic" id="spic" value="" />&nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.spic.value='';"/>
               &nbsp;
-              <input name="upButton2" type="button" class="rb1" id="upButton2" value="选择图片"/></td>
+              <input name="upButton21" type="button" class="rb1" id="upButton21" value="选择图片"/>
+              <input name="upButton22" type="button" class="rb1" id="upButton22" value="上传图片"/></td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;背景图片：</td>
             <td height="30" class="td_border"><input type="text" name="gpic" id="gpic" value="" />&nbsp;←
               <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.gpic.value='';"/>
               &nbsp;
-              <input name="upButton3" type="button" class="rb1" id="upButton3" value="选择图片"/></td>
+              <input name="upButton31" type="button" class="rb1" id="upButton31" value="选择图片"/>
+              <input name="upButton32" type="button" class="rb1" id="upButton32" value="上传图片"/></td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;SEO关键词：</td>

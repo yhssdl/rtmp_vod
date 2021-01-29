@@ -23,6 +23,31 @@
 <![endif]-->
 <script type="text/javascript" src="/{seacms:sitepath}js/common.js"></script>
 <script type="text/javascript" src="/{seacms:sitepath}js/function.js"></script>
+<script>
+	$(document).ready(function(){
+		var ts = 3;
+		var timer=setInterval(function(){
+            ts--;
+            if(ts==0){
+				
+				window.location.href = "{playpage:playlink}";
+                clearInterval(timer);   //定时器清除；
+            }else{
+				$("#playbutton").text(ts+"秒后自动播放，点击取消");
+			}
+        },1000);
+		$("#playbutton").click(function(){
+			if(ts==0){
+				window.location.href = "{playpage:playlink}";
+			}else {
+				$("#playbutton").text("立即播放");
+				clearInterval(timer);   //定时器清除；
+				ts = 0;
+			}
+		});
+
+	});
+</script>
 </head>
 <body>
 {seacms:load head2.html}
@@ -50,7 +75,7 @@
 									<div class="share bdsharebuttonbox hidden-sm hidden-xs pull-right">
 										<span class="bds_shere"></span><a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a class="bds_tqf" data-cmd="tqf" title="分享到腾讯朋友"></a><a class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a class="bds_more" data-cmd="more" title="更多"></a>
 									</div>
-									<a class="btn btn-primary" href="{playpage:playlink}">立即播放</a>
+									<button class="btn btn-primary" id="playbutton">3秒后自动播放，点击取消</button>
 								</div>
 							</div>
 						</div>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta name="robots" content="noindex,nofollow">
@@ -18,7 +17,10 @@ select {font-size:12px;}
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;数据&nbsp;&raquo;&nbsp;新闻管理 ';</script>
 <?php
 $numPerPage=20;
+echo $order;
 if(empty($order)) $order="n_addtime";
+$order=trim(str_replace("desc","",$order));
+if($order =='id')$order="n_id";
 $orderStr= " order by d.$order desc";
 $page = isset($page) ? intval($page) : 1;
 if($page==0) $page=1;

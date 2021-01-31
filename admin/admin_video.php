@@ -13,7 +13,7 @@ if(empty($action))
 if($action=="add")
 {
 $makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Xgplayer"));
-$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
+$makeDownSelectStr = str_replace("'","\'",makedownSelect("下载地址一"));
 
 include(sea_ADMIN.'/templets/admin_video.htm');
 exit();
@@ -37,7 +37,7 @@ elseif($action=="edit")
 	$v_content=$vrow['v_content'];
 	$v_downdata=$vrow['v_downdata'];
 	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Xgplayer"));
-	$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
+	$makeDownSelectStr = str_replace("'","\'",makedownSelect("下载地址一"));
 	include(sea_ADMIN.'/templets/admin_video_edit.htm');
 	exit();
 }

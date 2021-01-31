@@ -76,18 +76,32 @@ function onUploadBack(fn){
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;图片地址：</td>
-            <td height="30" class="td_border"><input type="text" name="pic" value="<?php echo $row['pic'];?>" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['pic'])">浏览..</button>
-              </td>
+            <td height="30" class="td_border"><input type="text" name="pic" value="<?php echo $row['pic'];?>" />
+              &nbsp;←
+              <input name="doClear1" type="button" class="rb1" id="doClear1" value=" 清  除 " onclick="javascript:document.topicform.pic.value='';"/>
+              &nbsp;
+              <input name="upButton11" type="button" class="rb1" id="upButton11" value="选择图片"/>
+              <input name="upButton12" type="button" class="rb1" id="upButton12" value="上传图片"/></td> 
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;幻灯图片：</td>
-            <td height="30" class="td_border"><input type="text" name="spic" value="<?php echo $row['spic'];?>" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['spic'])">浏览..</button>
-              </td>
+            <td height="30" class="td_border"><input type="text" name="spic" value="<?php echo $row['spic'];?>" />&nbsp;←
+              <input name="doClear2" type="button" class="rb1" id="doClear2" value=" 清  除 "
+                onclick="javascript:document.topicform.spic.value='';" />
+              &nbsp;
+              <input name="upButton21" type="button" class="rb1" id="upButton21" value=" 选择图片 " />
+              <input name="upButton22" type="button" class="rb1" id="upButton22" value=" 上传图片 " />
+            </td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;背景图片：</td>
-            <td height="30" class="td_border"><input type="text" name="gpic" value="<?php echo $row['gpic'];?>" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['gpic'])">浏览..</button>
-              </td>
+            <td height="30" class="td_border"><input type="text" name="gpic" value="<?php echo $row['gpic'];?>" />&nbsp;←
+              <input name="doClear3" type="button" class="rb1" id="doClear3" value=" 清  除 "
+                onclick="javascript:document.topicform.gpic.value='';" />
+              &nbsp;
+              <input name="upButton31" type="button" class="rb1" id="upButton31" value=" 选择图片 " />
+              <input name="upButton32" type="button" class="rb1" id="upButton32" value=" 上传图片 " />
+            </td>
 </tr>
 <tr>
             <td width="90" height="30" align="right" class="td_border">&nbsp;SEO关键词：</td>
@@ -123,5 +137,22 @@ function onUploadBack(fn){
 <?php
 viewFoot();
 ?>
+<script>
+  window.editor = KindEditor.create('#editor_id', {
+    uploadJson: 'editor/php/upload_json.php',
+    fileManagerJson: 'editor/php/file_manager_json.php',
+    allowFileManager: true,
+    afterBlur: function () { this.sync(); }
+  });
+
+  bindButtonFile('#upButton11', '#pic');
+  bindButtonUpImage('#upButton12', '#pic');
+
+  bindButtonFile('#upButton21', '#spic');
+  bindButtonUpImage('#upButton22', '#spic');
+
+  bindButtonFile('#upButton31', '#gpic');
+  bindButtonUpImage('#upButton32', '#gpic');
+</script>
 </body>
 </html>

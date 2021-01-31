@@ -8,91 +8,6 @@
 <script src="js/main.js" type="text/javascript"></script>
 <script charset="utf-8" src="editor/kindeditor-min.js"></script>
 <script charset="utf-8" src="editor/lang/zh-CN.js"></script>
-<script>
-  KindEditor.ready(function (K) {
-    window.editor = K.create('#editor_id', {
-      uploadJson: 'editor/php/upload_json.php',
-      fileManagerJson: 'editor/php/file_manager_json.php',
-      allowFileManager: true,
-      afterBlur: function () { this.sync(); }
-    });
-
-    K('#upButton11').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showLocal: false,
-          imageUrl: K('#v_pic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_pic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-    K('#upButton12').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showRemote: false,
-          imageUrl: K('#v_pic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_pic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-    K('#upButton21').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showLocal: false,
-          imageUrl: K('#v_spic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_spic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-    K('#upButton22').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showRemote: false,
-          imageUrl: K('#v_spic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_spic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-    K('#upButton31').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showLocal: false,
-          imageUrl: K('#v_gpic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_gpic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-
-    K('#upButton32').click(function () {
-      editor.loadPlugin('image', function () {
-        editor.plugin.imageDialog({
-          showRemote: false,
-          imageUrl: K('#v_gpic').val(),
-          clickFn: function (url, title, width, height, border, align) {
-            K('#v_gpic').val(url);
-            editor.hideDialog();
-          }
-        });
-      });
-    });
-
-  });
-</script>
 </head>
 <body>
 <!--当前导航-->
@@ -133,7 +48,7 @@
             <td width="70" height="30" align="right" class="td_border">&nbsp;图片地址：</td>
             <td height="30" class="td_border"><input name="v_pic" type="text" id="v_pic" value="<?php echo $vrow['n_pic']?>" size="30" />
               &nbsp;←
-              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_pic.value='';"/>
+              <input name="doClear" type="button" class="rb1" id="doClear" value=" 清  除 " onclick="javascript:document.addform.v_pic.value='';"/>
               &nbsp;
               <input name="upButton11" type="button" class="rb1" id="upButton11" value="选择图片"/>
               <input name="upButton12" type="button" class="rb1" id="upButton12" value="上传图片"/></td>
@@ -142,7 +57,7 @@
             <td width="70" height="30" align="right" class="td_border">&nbsp;幻灯图片：</td>
             <td height="30" class="td_border"><input name="v_spic" type="text" id="v_spic" value="<?php echo $vrow['n_spic']?>" size="30" />
               &nbsp;←
-              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_spic.value='';"/>
+              <input name="doClear" type="button" class="rb1" id="doClear" value=" 清  除 " onclick="javascript:document.addform.v_spic.value='';"/>
               &nbsp;
               <input name="upButton21" type="button" class="rb1" id="upButton21" value="选择图片"/>
               <input name="upButton22" type="button" class="rb1" id="upButton22" value="上传图片"/></td>
@@ -151,7 +66,7 @@
             <td width="70" height="30" align="right" class="td_border">&nbsp;背景图片：</td>
             <td height="30" class="td_border"><input name="v_gpic" type="text" id="v_gpic" value="<?php echo $vrow['n_gpic']?>" size="30" />
               &nbsp;←
-              <input name="doClear" type="button" class="rb1" id="doClear" value="清  除" onclick="javascript:document.addform.v_gpic.value='';"/>
+              <input name="doClear" type="button" class="rb1" id="doClear" value=" 清  除 " onclick="javascript:document.addform.v_gpic.value='';"/>
               &nbsp;
               <input name="upButton31" type="button" class="rb1" id="upButton31" value="选择图片"/>
               <input name="upButton32" type="button" class="rb1" id="upButton32" value="上传图片"/></td>
@@ -215,6 +130,23 @@
 <?php
 viewFoot();
 ?>
+<script>
+		window.editor = KindEditor.create('#editor_id', {
+		  uploadJson: 'editor/php/upload_json.php',
+		  fileManagerJson: 'editor/php/file_manager_json.php',
+		  allowFileManager: true,
+		  afterBlur: function () { this.sync(); }
+		});
+	
+		bindButtonFile('#upButton11', '#v_pic');
+		bindButtonUpImage('#upButton12', '#v_pic');
+	
+		bindButtonFile('#upButton21', '#v_spic');
+		bindButtonUpImage('#upButton22', '#v_spic');
+	
+		bindButtonFile('#upButton31', '#v_gpic');
+		bindButtonUpImage('#upButton32', '#v_gpic');
+	  </script>
 <script type="text/javascript" src="js/drag.js"></script>
 </body>
 </html>

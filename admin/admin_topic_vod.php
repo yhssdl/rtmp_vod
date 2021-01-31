@@ -90,7 +90,7 @@ elseif($action=="topicdelall")
 elseif($action=="add")
 {
 $makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Xgplayer"));
-$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
+$makeDownSelectStr = str_replace("'","\'",makedownSelect("下载地址一"));
 
 include(sea_ADMIN.'/templets/admin_topic_vod.htm');
 exit();

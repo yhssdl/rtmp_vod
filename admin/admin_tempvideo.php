@@ -76,7 +76,7 @@ elseif($action=="edit")
 	$v_downdata=$vrow['v_downdata'];
 	$v_content=$vrow['v_des'];
 	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect("Xgplayer"));
-	$makeDownSelectStr = str_replace("'","\'",makedownSelect(""));
+	$makeDownSelectStr = str_replace("'","\'",makedownSelect("下载地址一"));
 	include(sea_ADMIN.'/templets/admin_tempvideo_edit.htm');
 	exit();
 }

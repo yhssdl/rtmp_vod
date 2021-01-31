@@ -2,7 +2,7 @@ var ajax = new AJAX(); ajax.setcharset("utf-8");
 
 
 
-function bindButtonFile(buttonid, inputbox, bVideo = false, bAdd = false) {
+function bindButtonFile(buttonid, inputbox, bVideo, bAdd) {
 	KindEditor(buttonid).click(function () {
 		window.editor.loadPlugin('filemanager', function () {
 			window.editor.plugin.filemanagerDialog({

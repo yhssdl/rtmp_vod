@@ -8,10 +8,11 @@
   <link href="img/style.css" rel="stylesheet" type="text/css" />
   <link href="/webuploader/webuploader.css" rel="stylesheet" type="text/css" />
   <title>影片管理</title>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/common.js" type="text/javascript"></script>
   <script src="js/main.js" type="text/javascript"></script>
-    <script src="js/jquery.min.js" type="text/javascript"></script>
+
   <script charset="utf-8" src="js/main.js"></script>
   <script charset="utf-8" src="editor/kindeditor-min.js"></script>
   <script charset="utf-8" src="editor/lang/zh-CN.js"></script>
@@ -251,6 +252,10 @@
 viewFoot();
 ?>
   <script>
+
+    expendPlayArea(1, "<?php echo $makePlayerSelectStr;?>", 1);
+    expendDownArea(1, "<?php echo $makeDownSelectStr;?>", 1);
+
     window.editor = KindEditor.create('#editor_id', {
       uploadJson: 'editor/php/upload_json.php',
       fileManagerJson: 'editor/php/file_manager_json.php',
@@ -258,17 +263,16 @@ viewFoot();
       afterBlur: function () { this.sync(); }
     });
 
-    bindButtonFile('#upButton11', '#v_pic');
+    bindButtonFile('#upButton11', '#v_pic',false,false);
     bindButtonUpImage('#upButton12', '#v_pic');
 
-    bindButtonFile('#upButton21', '#v_spic');
+    bindButtonFile('#upButton21', '#v_spic',false,false);
     bindButtonUpImage('#upButton22', '#v_spic');
 
-    bindButtonFile('#upButton31', '#v_gpic');
+    bindButtonFile('#upButton31', '#v_gpic',false,false);
     bindButtonUpImage('#upButton32', '#v_gpic');
 
-    expendPlayArea(1, "<?php echo $makePlayerSelectStr;?>", 1);
-    expendDownArea(1, "<?php echo $makeDownSelectStr;?>", 1);
+
 
   </script>
   <script type="text/javascript" src="js/drag.js"></script>

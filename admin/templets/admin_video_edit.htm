@@ -201,7 +201,8 @@
                         <?php echo makePlayerSelect($pstr);?>
                       </select>
                      
-         &nbsp;&nbsp;<img onclick="var tb=$('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
+         &nbsp;&nbsp;<img onclick="var tb=document.getElementById('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
+         &nbsp;&nbsp;<a href="javascript:moveTableUp(document.getElementById('playfb<?php echo $j;?>'))">上移</a>&nbsp;&nbsp;<a href="javascript:moveTableDown(document.getElementById('playfb<?php echo $j;?>'))">下移</a>
          &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selVideo<?php echo $j;?>">添加视频</div>  <div class="div-inline" id="picker<?php echo $j;?>">上传视频</div><div class="div-inline" id="info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td>
                   </tr>
                   <tr>
@@ -241,7 +242,8 @@
                         <?php echo makedownSelect($pstr);?>
                       </select>
                       <!--input type='button' class='rb1' value='WEB采集' onclick='viewGatherWin(<?php echo $j;?>);selectTogg();'/-->
-                      &nbsp;&nbsp;<img onclick="var tb=$('downfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
+                      &nbsp;&nbsp;<img onclick="var tb=document.getElementById('downfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
+                      &nbsp;&nbsp;<a href="javascript:moveTableUp(document.getElementById('downfb<?php echo $j;?>'))">上移</a>&nbsp;&nbsp;<a href="javascript:moveTableDown(document.getElementById('downfb<?php echo $j;?>'))">下移</a>
                       &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selDown<?php echo $j;?>">添加视频</div>  <div class="div-inline" id="d_picker<?php echo $j;?>">上传视频</div><div class="div-inline" id="d_info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td></td>
                   </tr>
                   <tr>

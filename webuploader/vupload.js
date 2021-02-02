@@ -147,8 +147,12 @@ $WebUpload.prototype = {
                     var $info = $(me.infoid);
                     $info.find('.progress').fadeOut();
                     if (data && data.path) {
-                        $(me.inputbox).val(data.path);
-                        //alert(data.path);
+                        text = $(me.inputbox).val();
+                        if (text.length > 0)
+                            $(me.inputbox).val(text + "\n" + data.path);
+                        else
+                            $(me.inputbox).val(data.path);
+                
                     }
 
                 }, function (jqXHR, textStatus, errorThrown) {
@@ -158,7 +162,11 @@ $WebUpload.prototype = {
                 var $info = $(me.infoid);
                 $info.find('.progress').fadeOut();
                 if (data && data.path) {
-                    $(me.inputbox).val(data.path);
+                    text = $(me.inputbox).val();
+                    if (text.length > 0)
+                        $(me.inputbox).val(text + "\n" + data.path);
+                    else
+                        $(me.inputbox).val(data.path);
                 }
             }
         });

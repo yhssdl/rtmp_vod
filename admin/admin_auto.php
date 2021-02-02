@@ -3,7 +3,7 @@ header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
 ?>
-<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery-min.js" type="text/javascript"></script>
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <script language="javascript">
     var b=false;

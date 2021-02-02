@@ -38,140 +38,6 @@ function bindButtonUpImage(buttonid, inputbox) {
 	});
 }
 
-
-function bindButtonWebUpload(pickerid, infoid, inputbox ) {
-	
-	// 初始化WebUploader插件
-	uploader = WebUploader.create({
-
-		// swf文件路径， 需要修改为你自己存放的路径
-		swf: '/webuploader/uploader.swf',
-		// 文件接收服务端。  // 需要修改为你的后端地址
-		server: '/webuploader/upload.php',
-		// dnd 指定Drag And Drop拖拽的容器，如果不指定，则不启动
-		// 禁用全局拖拽，否则在没有启动拖拽容器的情况下，视频拖进来后会直接在浏览器内播放。
-		disableGlobalDnd: true,
-
-		// 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
-		pick: {
-			id: pickerid,                     // 对应 html 中的 picker
-			innerHTML: '上传视频',   // 按钮上显示的文字
-			multiple: true,                  // 多文件选择
-		},
-
-		info: infoid,
-		inputbox: inputbox,
-
-		// 允许视频和图片类型的文件上传。
-		accept: {
-			title: 'Video',
-			extensions: 'mp4',      // 可以多个后缀，以逗号分隔， 不要有空格
-			mimeTypes: '*/*'
-		},
-
-		// 只允许选择图片文件。
-		//accept: {
-		// title: 'Images',
-		//  extensions: '',
-		//  mimeTypes: ''
-		//}
-
-		// thumb配置生成缩略图的选项， 此项交由后台完成， 所以前台未配置
-
-		// 自动上传暂时关闭，使用多文件队列上传， 如果值为true，那么在选择完文件后，将直接开始上传文件，因为我还要做一些其他处理，故选择false。
-		auto: true,
-
-		//是否允许在文件传输时提前把下一个文件准备好。 对于一个文件的准备工作比较耗时，比如图片压缩，md5序列化。 如果能提前在当前文件传输期处理，可以节省总体耗时。
-		//prepareNextFile: true,
-
-		// 可选，是否要分片处理大文件上传
-		chunked: true,
-		// 如果要分片，分多大一片？这里我设置为2M, 如需更大值，可能需要需修改php.ini等配置
-		chunkSize: 5 * 1024 * 1024,
-		// 如果某个分片由于网络问题出错，允许自动重传多少次
-		chunkRetry: 3,
-		// 上传并发数，允许同时上传最大进程数，默认3
-		threads: 5,
-
-		// formData {Object} [可选] [默认值：{}] 文件上传请求的参数表，每次发送都会发送此对象中的参数。 其实就是post中的表单数据，可自定义字段。
-		formData: {
-			context: 0,     // 这里是我的业务数据，你可以自定义或者去掉此项都可以
-			from: "uploads"    // 这里是我的业务数据，你可以自定义或者去掉此项都可以
-		},
-		//[可选] 验证文件总数量, 超出9个文件则不允许加入队列。
-		fileNumLimit: 9,
-		// 验证文件总大小是否超出限制（10G）, 超出则不允许加入队列。根据需要进行设置。除了前面几个，其它都是可选项
-		fileSizeLimit: 1024 * 1024 * 1024 * 10,
-		// 验证单个文件大小是否超出限制（10G）, 超出则不允许加入队列。
-		fileSingleSizeLimit: 1024 * 1024 * 1024 * 10,
-		// [可选] 去重， 根据文件名字、文件大小和最后修改时间来生成hash Key.
-		// duplicate: true,
-		// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-		// resize: false,
-		// 压缩选项
-		compress: {
-			// 如果压缩后比源文件大，则不压缩，图片有可能压缩后比原文件还大，需设置此项
-			noCompressIfLarger: true,
-		},
-	});
-
-	// 以下都是监听事件， 方法中的file 和 response 参数，需了解，并
-
-	// 当有文件被添加进队列的时候触发，用于显示加载进度条
-	uploader.on('fileQueued', function (file) {
-		
-		$(this.options.info).find('.progress').fadeIn();
-	});
-
-	// 文件上传过程中创建进度条实时显示。
-	// 显示进度条
-	uploader.on('uploadProgress', function (file, percentage) {
-		$(this.options.info).find('.text').text(Math.round(percentage * 100) + '%');
-		$(this.options.info).find('.percentage').width(Math.round(percentage * 100) + '%');
-
-		if (Math.round(percentage * 100) == 100) {
-			$(this.options.info).find('.text').text('文件合并中，请稍候!');
-		}
-
-		// $percent.css( 'width', percentage * 100 + '%' );
-	});
-
-	// 监听上传成功
-	uploader.on('uploadSuccess', function (file, response) {
-		//$('#info').find('text').text('已上传');
-		$(this.options.info).find('.progress').fadeOut();
-		
-	});
-	// 监听上传失败
-	uploader.on('uploadError', function (file) {
-		$(this.options.info).find('.text').text('上传出错');
-	});
-	// 监听上传完成，不论失败还是成功
-	uploader.on('uploadComplete', function (file) {
-
-	});
-
-
-	uploader.on('uploadAccept', function (file, response) {
-		//获取最后一个.的位置
-		var index= response._raw.lastIndexOf(".");
-		//获取后缀
-		var ext = response._raw.substr(index+1);
-
-		if (ext== "mp4"){
-			var text = $(this.options.inputbox);
-			if(text.val().length>0) {
-				text.text(text.val()+"\n" + response._raw);
-			}else {
-				text.text(response._raw);
-			}
-		}
-	});
-
-}
-
-
-
 var getElementById = function (el) {
 	var id = el;
 	el = document.getElementById(el);
@@ -672,12 +538,13 @@ function expendPlayArea(i, optionStr, type) {
 	var n = i - 1, m = i + 1
 	var sparkStr = (type == 1) ? "" : ""
 	var sparkStr2 = (type == 1) ? "" : ""
-	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='playfb" + i + "'><tr><td height='30' width='70' class='td_border'>播放来源" + i + "：</td><td class='td_border'><select id='v_playfrom" + i + "' name='v_playfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('playfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除播放来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('playfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('playfb" + i + "'))\">下移</a>" + sparkStr + sparkStr2 + "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selVideo" + i + "\">添加视频</div>  <div class=\"div-inline\" id=\"picker" + i + "\">上传视频</div><div class=\"div-inline\" id=\"info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div> </td></tr><tr><td  class='td_border'>数据地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl(" + i + ")'/></td><td align='left' class='td_border'><textarea id='v_playurl" + i + "' name='v_playurl[" + i + "]' rows='8'  style='width:695px'></textarea>" + sparkStr + "</div></td></tr></table>"
+	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='playfb" + i + "'><tr><td height='30' width='70' class='td_border'>播放来源" + i + "：</td><td class='td_border'><select id='v_playfrom" + i + "' name='v_playfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('playfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除播放来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('playfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('playfb" + i + "'))\">下移</a>" + sparkStr + sparkStr2 + "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selVideo" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div> </td></tr><tr><td  class='td_border'>数据地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl(" + i + ")'/></td><td align='left' class='td_border'><textarea id='v_playurl" + i + "' name='v_playurl[" + i + "]' rows='8'  style='width:695px'></textarea>" + sparkStr + "</div></td></tr></table>"
 	var _nextdiv = document.createElement("div");
 	_nextdiv.innerHTML = area
 	document.getElementById('v_playarea').appendChild(_nextdiv.getElementsByTagName('table')[0])
 	bindButtonFile('#selVideo' + i, '#v_playurl' + i, true, true);
-	bindButtonWebUpload('#picker' + i, '#info' + i, '#v_playurl' + i);
+	var up1 = new $WebUpload('#picker' + i, '#info' + i, '#v_playurl' + i);
+	up1.init();
 	return i;
 }
 expendPlayArea.i = false;
@@ -691,12 +558,13 @@ function expendDownArea(i, optionStr, type) {
 	optionStr = unescape(optionStr)
 	var n = i - 1, m = i + 1
 	var sparkStr = (type == 1) ? "" : ""
-	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='downfb" + i + "'><tr><td  height='30' width='70' >下载来源" + i + "：</td><td class='td_border'>" + sparkStr + "<select id='m_downfrom" + i + "' name='m_downfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('downfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除下载来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('downfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('downfb" + i + "'))\">下移</a>"+ "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selDown" + i + "\">添加视频</div>  <div class=\"div-inline\" id=\"d_picker" + i + "\">上传视频</div><div class=\"div-inline\" id=\"d_info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div</td></tr><tr><td  class='td_border'>下载地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl2(" + i + ")'/></td><td align='left' class='td_border'><textarea id='m_downurl" + i + "' name='m_downurl[" + i + "]' rows='8' style='width:695px'></textarea></td></tr></table>";
+	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='downfb" + i + "'><tr><td  height='30' width='70' >下载来源" + i + "：</td><td class='td_border'>" + sparkStr + "<select id='m_downfrom" + i + "' name='m_downfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('downfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除下载来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('downfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('downfb" + i + "'))\">下移</a>"+ "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selDown" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"d_picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"d_info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div</td></tr><tr><td  class='td_border'>下载地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl2(" + i + ")'/></td><td align='left' class='td_border'><textarea id='m_downurl" + i + "' name='m_downurl[" + i + "]' rows='8' style='width:695px'></textarea></td></tr></table>";
 	var _nextdiv = document.createElement("div");
 	_nextdiv.innerHTML = area
 	document.getElementById('m_downarea').appendChild(_nextdiv.getElementsByTagName('table')[0]);
 	bindButtonFile('#selDown' + i, '#m_downurl' + i, true, true);
-	bindButtonWebUpload('#d_picker' + i, '#d_info' + i, '#m_downurl' + i);	
+	var up1 = new $WebUpload('#d_picker' + i, '#d_info' + i, '#m_downurl' + i);
+	up1.init();
 	_nextdiv = null;
 }
 expendDownArea.i = false;

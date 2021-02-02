@@ -204,7 +204,7 @@
                      
          &nbsp;&nbsp;<img onclick="var tb=document.getElementById('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
          &nbsp;&nbsp;<a href="javascript:moveTableUp(document.getElementById('playfb<?php echo $j;?>'))">上移</a>&nbsp;&nbsp;<a href="javascript:moveTableDown(document.getElementById('playfb<?php echo $j;?>'))">下移</a>
-         &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selVideo<?php echo $j;?>">添加视频</div>  <div class="div-inline" id="picker<?php echo $j;?>">上传视频</div><div class="div-inline" id="info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td>
+         &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selVideo<?php echo $j;?>">选择视频</div>&nbsp;<div class="div-inline" id="picker<?php echo $j;?>">上传视频</div>&nbsp;<div class="div-inline" id="info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td>
                   </tr>
                   <tr>
                     <td width='70' class='td_border'>数据地址<?php echo $j;?>：<br/>
@@ -245,7 +245,7 @@
                       <!--input type='button' class='rb1' value='WEB采集' onclick='viewGatherWin(<?php echo $j;?>);selectTogg();'/-->
                       &nbsp;&nbsp;<img onclick="var tb=document.getElementById('downfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>
                       &nbsp;&nbsp;<a href="javascript:moveTableUp(document.getElementById('downfb<?php echo $j;?>'))">上移</a>&nbsp;&nbsp;<a href="javascript:moveTableDown(document.getElementById('downfb<?php echo $j;?>'))">下移</a>
-                      &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selDown<?php echo $j;?>">添加视频</div>  <div class="div-inline" id="d_picker<?php echo $j;?>">上传视频</div><div class="div-inline" id="d_info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td></td>
+                      &nbsp;&nbsp;<div class="div-inline webuploader-pick" id = "selDown<?php echo $j;?>">选择视频</div>&nbsp;<div class="div-inline" id="d_picker<?php echo $j;?>">上传视频</div>&nbsp;<div class="div-inline" id="d_info<?php echo $j;?>"><div class="progress" style="display: none;"><span class="text">0%</span><span class="percentage" style="width: 0%;"></span></div> </td></td>
                   </tr>
                   <tr>
                     <td width='70' class='td_border'>数据地址<?php echo $j;?>：<br/>
@@ -306,13 +306,15 @@
       for($j=1;$j<=$vk;$j++){
         ?>
         bindButtonFile('#selVideo<?php echo $j;?>', '#v_playurl<?php echo $j;?>', true, true);
-	      bindButtonWebUpload('#picker<?php echo $j;?>', '#info<?php echo $j;?>', '#v_playurl<?php echo $j;?>');
+        var up1 = new $WebUpload('#picker<?php echo $j;?>', '#info<?php echo $j;?>', '#v_playurl<?php echo $j;?>');
+	    up1.init();
     <?php
         }
       for($j=1;$j<=$dk;$j++){
         ?>
         bindButtonFile('#selDown<?php echo $j;?>', '#m_downurl<?php echo $j;?>', true, true);
-	      bindButtonWebUpload('#d_picker<?php echo $j;?>', '#d_info<?php echo $j;?>', '#m_downurl<?php echo $j;?>');
+        var up1 = new $WebUpload('#d_picker<?php echo $j;?>', '#d_info<?php echo $j;?>', '#m_downurl<?php echo $j;?>');
+	      up1.init();
     <?php
         }
     ?>

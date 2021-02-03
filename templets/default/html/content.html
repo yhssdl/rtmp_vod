@@ -66,7 +66,7 @@
 								<p class="data"><span class="text-muted">执教：</span>{playpage:actor}</p>
 								<p class="data"><span class="text-muted">班级：</span>{playpage:director}</p>
 								<p class="data">
-									<span class="text-muted">类型：</span>{playpage:jqtype}<span class="split-line"></span><span class="text-muted hidden-xs">年级：</span>{playpage:publisharea}<span class="split-line"></span><span class="text-muted hidden-xs">年份：</span>{playpage:publishtime}
+									<span class="text-muted">类型：</span><a href="{playpage:typelink}">{playpage:typename}</a><span class="split-line"></span><span class="text-muted hidden-xs">年级：</span><a href="/search.php?searchtype=5&tid=[arealist:typeid]&area={playpage:publisharea}" title="{playpage:publisharea}">{playpage:publisharea}</a><span class="split-line"></span><span class="text-muted hidden-xs">年份：</span><a href="/search.php?searchtype=5&tid=[arealist:typeid]&year={playpage:publishtime}" title="{playpage:publishtime}">{playpage:publishtime}</a>
 								</p>
 								<p class="desc detail hidden-xs">
 									<span class="left text-muted">简介：</span><span class="detail-sketch">{playpage:des len=100}</span><div class="detail-content" style="display: none;"><span style="font-size:12px">{playpage:des}</span></div><a class="detail-more" href="javascript:;">详情 <i class="icon iconfont icon-moreunfold"></i></a>

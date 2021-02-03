@@ -17,7 +17,6 @@ select {font-size:12px;}
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;数据&nbsp;&raquo;&nbsp;新闻管理 ';</script>
 <?php
 $numPerPage=20;
-echo $order;
 if(empty($order)) $order="n_addtime";
 $order=trim(str_replace("desc","",$order));
 if($order =='id')$order="n_id";

@@ -45,7 +45,7 @@ select {
     $repeat=isset($repeat) ? $repeat : '';
     if(empty($order)) $order="v_addtime";
     $order=trim(str_replace("desc","",$order));
-	if($order =='id'){$order="v_id";}
+	  if($order =='id'){$order="v_id";}
     $orderStr= " order by d.$order desc";
     $page = isset($page) ? intval($page) : 1;
     if($page==0) $page=1;

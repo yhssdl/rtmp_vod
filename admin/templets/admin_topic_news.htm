@@ -21,6 +21,8 @@ $tid=addslashes($_GET[tid]);
 $nid=addslashes($_GET[vid]);
 $numPerPage=20;
 if(empty($order)) $order="n_addtime";
+$order=trim(str_replace("desc","",$order));
+if($order =='id'){$order="v_id";}
 $orderStr= " order by d.$order desc";
 $page = isset($page) ? intval($page) : 1;
 if($page==0) $page=1;

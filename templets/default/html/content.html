@@ -94,14 +94,15 @@
 			</div>
 		</div>
 		<!-- 详细信息-->
+
 		{playpage:playlist}
 		<div class="stui-pannel stui-pannel-bg clearfix">
 			<div class="stui-pannel-box">
 				<div class="stui-pannel_hd">
-					<!--<div class="stui-pannel__head bottom-line active clearfix">-->
-					<!--	<span class="more text-muted pull-right">[playlist:intro]</span>-->
-					<!--	<h3 class="title">[playlist:from]</h3>-->
-					<!--</div>-->
+					<div class="stui-pannel__head bottom-line active clearfix">
+						<span class="more text-muted pull-right">点击即可播放</span>
+						<h3 class="title">播放地址</h3>
+					</div>
 				</div>
 				<div class="stui-pannel_bd col-pd clearfix">
 					<ul class="stui-content__playlist column10 clearfix">
@@ -112,6 +113,26 @@
 		</div>
 		{/playpage:playlist}
 		<!-- 播放列表-->
+
+		{playpage:downlist}
+		<div class="stui-pannel stui-pannel-bg clearfix">
+			<div class="stui-pannel-box">
+				<div class="stui-pannel_hd">
+					<div class="stui-pannel__head bottom-line active clearfix">
+						<span class="more text-muted pull-right">点击即可下载</span>
+						<h3 class="title">下载地址</h3>
+					</div>
+				</div>
+				<div class="stui-pannel_bd col-pd clearfix">
+					<ul class="stui-content__playlist column10 clearfix">
+						[downlist:link target=_self]
+					</ul>
+				</div>
+			</div>
+		</div>
+		{/playpage:downlist}
+		<!--下载列表-->
+
 		<div class="stui-pannel stui-pannel-bg clearfix">
 			<div class="stui-pannel-box">
 				<div class="stui-pannel_hd">

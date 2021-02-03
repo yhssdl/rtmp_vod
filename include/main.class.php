@@ -2821,7 +2821,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -2833,7 +2833,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue,  '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -2845,7 +2845,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue,  '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -2998,7 +2998,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -3010,7 +3010,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -3022,7 +3022,7 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $pic, '/' ), $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );

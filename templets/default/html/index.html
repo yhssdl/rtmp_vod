@@ -99,12 +99,12 @@
 						{/seacms:videolist}
 						</ul>
 						<ul class="stui-vodlist__rank col-pd clearfix">
-						{seacms:videolist num=9 order=hit start=2 type=areatype}
+						{seacms:videolist num=11 order=hit start=2 type=areatype}
 							<li><a href="[videolist:link]" title="[videolist:name]"><span class="text-muted pull-right">{if:[videolist:state]<1}[videolist:note]{elseif:[videolist:state]<1000 and [videolist:state]>0}更新至第[videolist:state]集{elseif:[videolist:state]>1000}[videolist:state]{elseif:[videolist:state]=0 and "[videolist:note]"=""}[videolist:note]{end if}</span><span class="badge {if:[videolist:i]==2}badge-second{elseif:[videolist:i]==3}badge-third{else}{end if}">[videolist:i]</span>[videolist:name len=9]</a></li>
 						{/seacms:videolist}
 						</ul>
 					</div>
-					<div class="stui-pannel_hd">
+					<div class="stui-pannel_hd" style="margin-top: 20px;">
 						<div class="stui-pannel__head clearfix">
 							<a class="more text-muted pull-right" href="/search.php?searchtype=5&tid=[arealist:typeid]">更多 <i class="icon iconfont icon-more"></i></a>
 							<h3 class="title"><img src="images/icon_25.png"/>筛选</h3>

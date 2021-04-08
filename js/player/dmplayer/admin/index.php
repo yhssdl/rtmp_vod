@@ -337,7 +337,7 @@ button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09
     </div>
 </script>
 
-<div class="bottom"><table width="100%" cellspacing="5"><tr><td align="center"><font style="color:#666;">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align="center"><a target="_blank" href="//www.seacms.net/"><font style="font-size:10px;color: #3F628C;line-height: 28px;">POWER BY SEACMS</font></a></td></tr></table></div>
+<div class="bottom"><table width="100%" cellspacing="5"><tr><td align="center"><font style="color:#666;">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align="center"><a target="_blank" href="#"><font style="font-size:10px;color: #3F628C;line-height: 28px;">视频管理系统</font></a></td></tr></table></div>
 </body>
 
 </html>

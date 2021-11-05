@@ -63,12 +63,12 @@ elseif($action=="delall")
 elseif($action=="edit")
 {
 	$id = isset($id) && is_numeric($id) ? $id : 0;
-	//读取影片信息
+	//读取视频信息
 	$query = "select * from sea_temp where v_id='$id' ";
 	$vrow = $dsql->GetOne($query);
 	if(!is_array($vrow))
 	{
-		ShowMsg("读取影片基本信息出错!","-1");
+		ShowMsg("读取视频基本信息出错!","-1");
 		exit();
 	}
 	$vtype = $vrow['tid'];
@@ -84,7 +84,7 @@ elseif($action=="save")
 {
 	if(trim($v_name) == '')
 	{
-		ShowMsg("影片名不能为空！","-1");
+		ShowMsg("视频名不能为空！","-1");
 		exit();
 	}
 	$v_playurl = empty($v_playurl) ? $v_playurl : repairUrlForm($v_playurl,$v_playfrom);
@@ -106,10 +106,10 @@ elseif($action=="save")
 	$updateSql = "update sea_temp set ".$updateSql." where v_id=".$v_id;
 	if(!$dsql->ExecuteNoneQuery($updateSql))
 	{
-		ShowMsg('更新影片出错，请检查',-1);
+		ShowMsg('更新视频出错，请检查',-1);
 		exit();
 	}
-		ShowMsg("影片更新成功",$v_back);
+		ShowMsg("视频更新成功",$v_back);
 		exit();
 }
 else

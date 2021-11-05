@@ -19,19 +19,19 @@ if($action=="index")
 {
 	echoHead();
 	echo makeIndex($by);
-	echoFoot();
+	
 }
 elseif($action=="map")
 {
 	echoHead();
 	echo makeAllmovie($by);
-	echoFoot();
+	
 }
 elseif($action=="js")
 {
 	echoHead();
 	makeVideoJs($by);
-	echoFoot();
+	
 }
 elseif($action=="site")
 {
@@ -54,14 +54,14 @@ elseif($action=="newsday")
 	checkNewsRunMode();
 	echoHead();
 	makeNewsDay();
-	echoFoot();
+	
 }
 elseif($action=="single")
 {
 	checkRunMode();
 	echoHead();
 	echo makeContentById($id);
-	echoFoot();
+	
 	if(empty($from)){
 		echo "<script>"; 
 		echo "location.href='$Pirurl'"; 
@@ -78,7 +78,7 @@ elseif($action=="selected")
 	checkRunMode();
 	if(empty($e_id))
 	{
-		showMsg('请选择要生成的影片','-1');
+		showMsg('请选择要生成的视频','-1');
 	}
 	echoHead();
 	foreach($e_id as $id)
@@ -90,14 +90,14 @@ elseif($action=="selected")
 	}else{
 		alertMsg("生成完毕！",$from);
 	}
-	echoFoot();
+	
 }
 elseif($action=="singleNews")
 {
 	checkNewsRunMode();
 	echoHead();
 	makeArticleById($id);
-	echoFoot();
+	
 	if(empty($from)){
 		echo "<script>"; 
 		echo "location.href='$Pirurl'"; 
@@ -126,7 +126,7 @@ elseif($action=="selectednews")
 	}else{
 		alertMsg("生成完毕！",$from);
 	}
-	echoFoot();
+	
 }
 elseif($action=="content")
 {
@@ -138,7 +138,7 @@ elseif($action=="content")
 	}
 	echoHead();
 	makeContentByChannel($channel,false);
-	echoFoot();
+	
 }
 elseif($action=="newscontent")
 {
@@ -150,7 +150,7 @@ elseif($action=="newscontent")
 	}
 	echoHead();
 	makeArticleByChannel($channel,false);
-	echoFoot();
+	
 }
 elseif($action=="allcontent")
 {
@@ -178,7 +178,7 @@ elseif($action=="allcontent")
 	}else {
 		echoHead();
 		makeContentByChannel($typeId,false,$makenoncreate);
-		echoFoot();
+		
 	}
 }
 elseif($action=="allnewscontent")
@@ -207,7 +207,7 @@ elseif($action=="allnewscontent")
 	else {
 		echoHead();
 		makeArticleByChannel($typeId,false);
-		echoFoot();
+		
 	}
 }
 elseif($action=="daysview")
@@ -226,7 +226,7 @@ elseif($action=="daysview")
 		@flush();
 	}
 	unset($row);
-	echoFoot();
+	
 }
 elseif($action=="newsdaysview")
 {
@@ -244,7 +244,7 @@ elseif($action=="newsdaysview")
 		@flush();
 	}
 	unset($row);
-	echoFoot();
+	
 }
 elseif($action=="channel")
 {
@@ -256,7 +256,7 @@ elseif($action=="channel")
 	}
 	echoHead();
 	makeChannelById($channel);
-	echoFoot();
+	
 }
 elseif($action=="newschannel")
 {
@@ -268,7 +268,7 @@ elseif($action=="newschannel")
 	}
 	echoHead();
 	makeNewsChannelById($channel);
-	echoFoot();
+	
 }
 elseif($action=="allchannel")
 {
@@ -287,7 +287,7 @@ elseif($action=="allchannel")
 				echoHead();
 				echo makeIndex();
 				echo makeAllmovie();
-				echoFoot();
+				
 				alertMsg ("一键生成全部搞定","");
 				exit();
 			}
@@ -299,7 +299,7 @@ elseif($action=="allchannel")
 	}else{
 		echoHead();
 		makeChannelById($typeId);
-		echoFoot();
+		
 	}
 }
 elseif($action=="allpart")
@@ -319,7 +319,7 @@ elseif($action=="allpart")
 				echoHead();
 				echo makeIndex('news');
 				echo makeAllmovie('news');
-				echoFoot();
+				
 				alertMsg ("一键生成全部搞定","");
 				exit();
 			}
@@ -331,7 +331,7 @@ elseif($action=="allpart")
 	}else{
 		echoHead();
 		makeNewsChannelById($typeId);
-		echoFoot();
+		
 	}
 }
 elseif($action=="lengthchannel")
@@ -357,7 +357,7 @@ elseif($action=="lengthchannel")
 	if ($startpage>$endpage) exit("您输入的结束页小于开始页");
 	echoHead();
 	makeLengthChannelById($channel,$startpage,$endpage);
-	echoFoot();
+	
 }
 elseif($action=="lengthpart")
 {
@@ -382,21 +382,21 @@ elseif($action=="lengthpart")
 	if ($startpage>$endpage) exit("您输入的结束页小于开始页");
 	echoHead();
 	makeLengthPartById($channel,$startpage,$endpage);
-	echoFoot();
+	
 }
 elseif($action=="channelbyids")
 {
 	checkRunMode();
 	echoHead();
 	makeChannelByIDS();
-	echoFoot();
+	
 }
 elseif($action=="partbyids")
 {
 	checkNewsRunMode();
 	echoHead();
 	makePartByIDS();
-	echoFoot();
+	
 }
 elseif($action=="topic")
 {
@@ -407,7 +407,7 @@ elseif($action=="topic")
 	}
 	echoHead();
 	makeTopicById($topic);
-	echoFoot();
+	
 }
 elseif($action=="alltopic")
 {
@@ -430,7 +430,7 @@ elseif($action=="alltopic")
     $limitstart = ($page-1) * $numPerPage;
     if($limitstart<0) $limitstart=0;
 	
-	if($page > $TotalPage){echo '<br>全部专题生成完毕';echoFoot();exit();}
+	if($page > $TotalPage){echo '<br>全部专题生成完毕';exit();}
 	else{
 		$sql="select id from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
 		//die($sql);
@@ -449,7 +449,7 @@ elseif($action=="alltopic")
 		echo "<br>暂停".$cfg_stoptime."秒后继续生成<script language=\"javascript\">setTimeout(\"makeNextPage();\",".$cfg_stoptime."000);function makeNextPage(){location.href='?action=alltopic&page=".$nextpage."';}</script>";
 	
 	}
-	echoFoot();
+	
 }
 elseif($action=="topicindex")
 {
@@ -457,7 +457,7 @@ elseif($action=="topicindex")
 	echoHead();
 
 	makeTopicIndex($page);
-	echoFoot();
+	
 }
 elseif($action=="custom")
 {
@@ -465,7 +465,7 @@ elseif($action=="custom")
 	if (empty($customtemplate)) exit("请选择模板");
 	echoHead();
 	makeCustomInfo($customtemplate);
-	echoFoot();
+	
 
 }
 elseif($action=="customs")
@@ -477,7 +477,7 @@ elseif($action=="customs")
 	{
 		makeCustomInfo($customtemplate[$i]);
 	}
-	echoFoot();	
+		
 }
 elseif($action=="allcustom")
 {
@@ -488,56 +488,56 @@ elseif($action=="allcustom")
 	{
 	if(strpos($filename,"elf_")>0) makeCustomInfo($filename);
 	}
-	echoFoot();
+	
 
 }
 elseif($action=="baidu")
 {
 	echoHead();
 	echo makeBaidu();
-	echoFoot();
+	
 }
 elseif($action=="baidun")
 {
 	echoHead();
 	echo makeBaidun();
-	echoFoot();
+	
 }
 elseif($action=="google")
 {
 	echoHead();
 	echo makeGoogle();
-	echoFoot();
+	
 }
 elseif($action=="googlen")
 {
 	echoHead();
 	echo makeGooglen();
-	echoFoot();
+	
 }
 elseif($action=="rss")
 {
 	echoHead();
 	echo makeRss();
-	echoFoot();
+	
 }
 elseif($action=="rssn")
 {
 	echoHead();
 	echo makeRssn();
-	echoFoot();
+	
 }
 elseif($action=="baidux")
 {
 	echoHead();
 	echo makeBaidux();
-	echoFoot();
+	
 }
 elseif($action=="baiduxn")
 {
 	echoHead();
 	echo makeBaiduxn();
-	echoFoot();
+	
 }
 else
 {

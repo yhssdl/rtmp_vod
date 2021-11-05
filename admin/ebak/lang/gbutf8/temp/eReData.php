@@ -8,30 +8,46 @@ if(!defined('InEmpireBak'))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>恢复数据</title>
-<link href="../img/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="../css/x.css"/>
+<script src="../layui/layui.js"></script>
+<script language="JavaScript">
+	layui.use('layer', function(){
+	var layer = layui.layer;
+	});        
+
+//全屏弹出层
+var showv=function (url) {
+        var index = layer.open({
+            type: 2,          //默认弹出层类型
+            offset: '100px',
+            shade: 0.5,
+			      isOutAnim: false,
+            title:"选择备份目录",  //弹出层角标名称
+            content: url,  //弹出层页面地址
+            area: ['90%', '400px'],    //弹出层大小
+        });
+        
+    }
+</script>
 </head>
 
 <body>
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;工具&nbsp;&raquo;&nbsp;数据库恢复 ';</script>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb">
+
   <form name="ebakredata" method="post" action="phomebak.php" onsubmit="return confirm('确认要恢复？');">
-    <tr class="thead">
-	<td class="td_title" width="100%"  style="height:30px">恢复数据 </td>
-      <input name="phome" type="hidden" id="phome" value="ReData">  
-    </tr>
-</table>
- <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb">
+   <input name="phome" type="hidden" id="phome" value="ReData">  
+  <table class="layui-table" style="min-width:1170px;">
     <tr bgcolor="#FFFFFF"> 
       <td width="34%" height="25">恢复数据源文件：</td>
       <td width="66%" height="25"> 
         <?php  echo $bakpath ?>
         / 
-        <input name="mypath" type="text" id="mypath" value="<?php  echo $mypath ?>"> <input type="button" name="Submit2" value="选择备份" onclick="javascript:window.open('ChangePath.php?change=1','','width=750,height=500,scrollbars=yes');"></td>
+        <input name="mypath" type="text" id="mypath" size=30 value="<?php  echo $mypath ?>"> <input type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-xs" name="Submit2" value="选择备份" onclick="showv('ChangePath.php?change=1');"></td>
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td height="25" valign="top">要导入的数据库：</td>
-      <td height="25"> <select name="add[mydbname]" size="1" id="add[mydbname]" style="width:300">
+      <td height="25"> <select name="add[mydbname]" size="1" id="add[mydbname]" style="width:360px">
           <?php  echo $db ?>
         </select></td>
     </tr>
@@ -43,16 +59,10 @@ if(!defined('InEmpireBak'))
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td height="25" colspan="2"> <div align="left"> 
-          <input type="submit" name="Submit" value="开始恢复">
+          <input type="submit" class="layui-btn" name="Submit" value="开始恢复">
         </div></td>
     </tr>
 	</form>
   </table>
-<?php 
-echo "<div align=center>";
-	$starttime = explode(' ', $starttime);
-	$endtime = explode(' ', microtime()); 
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">视频管理系统</font></a></td></tr></table></div>\n</body>\n</html>";
- ?>
 </body>
 </html>

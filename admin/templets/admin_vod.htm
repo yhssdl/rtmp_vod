@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <link rel="stylesheet" type="text/css" href="layui/css/layui.css" />  
+  <link rel="stylesheet" type="text/css" href="css/x.css"/>
+  <title>直播信息</title>
+  <script type="text/javascript" src="js/common.js" ></script>
+  <script type="text/javascript" src="js/main.js" ></script>
+  <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/index.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/hls.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/flv.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/dash.js"></script>
+  <style type="text/css">
+	.text_gray {
+	  color: gray;
+	}
+	.text_green {
+	  color: green;
+	}
+	.text_red {
+	  color: red;
+	}
+
+	</style>
+</head>
+<?php
+require_once(dirname(__FILE__)."/../../data/config.plus.inc.php"); 
+
+$stats=array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
+$title_css = array("text_gray","text_green","text_red");
+//计算有多少条数据
+
+$groupid = $cuserLogin->getgroupid();
+$vodlist = $cuserLogin->getUserVodList();
+
+if($playid==0) {
+	if($groupid==3 && $vodlist!='0'){
+		$csqlStr="select count(*) as dd from `sea_vod` d where d.id in($vodlist) and d.stat!='0'";
+	}else{
+		$csqlStr="select count(*) as dd from `sea_vod` d where d.stat!='0'";
+	}
+
+	$row = $dsql->GetOne($csqlStr);
+	if(is_array($row)){
+		$TotalResult = $row['dd'];
+	}else{
+		$TotalResult = 0;
+	}
+	if($page<1) $page = 1;
+	if($page>$TotalResult) $page = $TotalResult;
+	$sp = $page -1;
+	if($groupid==3 && $vodlist!='0'){
+		$csqlStr = "SELECT * FROM `sea_vod` where id in($vodlist) and stat!=0 order by id asc limit $sp,1";
+	}else{
+		$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc limit $sp,1";
+	}
+}else{
+	$TotalResult = 1;
+	if($groupid==3 && $vodlist!='0'){
+		$csqlStr = "SELECT * FROM `sea_vod` where id in($vodlist) and id=$playid";
+	}else{
+		$csqlStr = "SELECT * FROM `sea_vod` where id=$playid";
+	}
+}
+
+$row = $dsql->GetOne($csqlStr);
+
+if(is_array($row)){
+	$id = $row['id'];
+	$title = $row['title'];
+	$app_name = $row['app_name'];
+	$stream_name = $row['stream_name'];
+	$width = $row['width'];
+	$height = $row['height'];
+	$can_rec = $row['can_rec'];
+	$stat = $row['stat'];
+	$idgroup = "$id";
+	$statgroup = "$stat";
+	if($playid==0)
+		$info = "分辨率：$width * $height, 状态：<span id='stat$id'>$stats[$stat]</span>";
+	else if($stat!=0)
+		$info = "分辨率：$width * $height, 状态：$stats[$stat]";
+	else{
+		$TotalResult = 0;
+		$info = "状态：<span id='stat$id'>$stats[$stat]</span>";	
+	}
+
+	$url = makeUrl($app_name,$stream_name);
+}else{
+	$TotalResult = 0;
+	if($playid==0){
+		$info = "<font color='red'>当前无直播的频道！</font>";		
+	}
+	else{
+		$info = "状态：<span id='stat$id'>$stats[$stat]</span>";	
+	}
+
+	$url = "";
+}
+
+function makeUrl($app,$stream){
+	if($app=="flv"){
+		$url = "/flv?app=flv&stream=".$stream."&s=.flv";
+	} else if($app=="hls") {
+		$url = "/hls/".$stream."/index.m3u8";
+	}else if($app=="dash") {
+		$url = "/dash/".$stream."/index.mpd";
+	}
+	return $url;
+}
+
+
+?> 
+<body>
+  <!--当前导航-->
+	<form action="?action=save&page=<?= $page ?>" method="post" name="addform" id="addform">
+	<input type="hidden" value="<?= $id ?>" name="v_id" id="v_id" /><input type="hidden" name="playid" value="<?php echo $playid;?>">
+	<div class="layui-fluid">
+	  <div class="layui-row">
+
+		<?php if($TotalResult!=0): ?>		
+		<div id="" class="layui-col-sm12 layui-col-md4 pd15">
+			<?= $info; ?>
+		</div>
+		
+		<div id="" class="layui-col-sm12 layui-col-md4 text_center pd15">
+			<span id="title<?= $id ?>" class="<?= $title_css[$stat] ?>"><?= $title ?>
+			<?php if($groupid!=3): ?>
+			&nbsp;<img id="setbt" style="cursor:pointer" title="点击重命名" src="img/system.png" onclick="$('#title<?= $id ?>').hide();$('#set_title').show();$('#v_name').focus();$('#v_name').select();";}></span>
+			<span id="set_title" style="display: none;"><input type="text" name="v_name" id="v_name" autocomplete="off" autofocus value="<?= $title ?>" size="30" />&nbsp;<input type="submit" name="Submit" value="提交" class="rb1" />&nbsp;<input type="button" id="cancel" value="取消" class="rb1" onclick="$('#title<?= $id ?>').show();$('#set_title').hide();"/></span>
+			<?php else: ?>
+			</span>
+			<?php endif; ?>
+		</div>		
+		<div id="" class="layui-col-sm12 layui-col-md4 pd15">
+			<div class="text_right">
+				<span id="action<?= $id ?>">
+						<?php 
+							if($stat==1){ 
+								echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>"; 
+							} 
+							else if($stat==2) {
+								echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>"; 
+							} 
+						?>
+					</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin_live.php?action=add&vid=<?= $id ?>">我要预约</a>
+					
+			</div>
+		</div>	
+	  </div>
+	  <?php  else: ?>	
+	  <div class="layui-row">
+		<div class="layui-col-md12 text_center pd15" style="line-height: 40px;"><br><font color='red'><h1>当前无直播内容</h1></font><br><h3>本视频网站支持RTMP协议推送的视频流的直播与预约录制功能。</h3><h3>推流软件可以使用OBS，网站地址：<a href="https://obsproject.com/zh-cn" target="_blank">https://obsproject.com/zh-cn</a></h3><h3>学校录播教室的设备或市场上部分摄像头也支持RTMP推流功能。</h3><br><br></div>
+	</div>	
+
+	  <?php  endif; ?>	  			  
+		<div class="layui-row">
+			<div class="layui-col-md12" style="padding-bottom: 15px;"><hr></div>
+		</div>	 
+		<div class="layui-row">
+			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
+			<div class="layui-col-md8"><div id="playerCnt"></div></div>
+			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
+		</div>	 
+	  <?php if(!($playid==0 && $TotalResult==0)): ?>
+		<div class="layui-row">
+			<div class="layui-col-md12 text_center pd15">
+			<div class="cuspages">
+			<div class="layui-inline" id="new_pages">
+				</div>
+					<div class="layui-inline" >
+				跳转	<select name="v_page" id="v_page" onchange="self.location.href='?&page='+this.options[this.selectedIndex].value">
+						<option value="">请选择频道</option>
+						  <?php
+							$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc;";
+							$dsql->SetQuery($csqlStr);
+							$dsql->Execute('vod_list');
+							while($row=$dsql->GetObject('vod_list'))
+							{
+								$title = $row->title;
+								$stat = $row->stat;
+								echo "<option value='$row->id'>$title</option>";
+							}
+						  ?>                  
+						</select>
+					</div>
+				</div>	
+			</div>	 
+		</div>	 
+		<?php  endif; ?>
+	</div>
+	<?php if($idgroup!="") echo "<div style='display:none'><div id='id_group'>$idgroup</div><div id='stat_group'>$statgroup</div></div>"; ?>
+	</form>
+
+</body>
+<script type="text/javascript">
+function createPlayer(videoUrl) {
+			if (videoUrl.indexOf('.m3u8') > -1) {
+				var xg = new HlsJsPlayer({
+					"id": "playerCnt",
+					"autoplay": true,
+					"url": videoUrl,
+					"fluid": true,
+					"isLive": true,
+					"playsinline": true,
+				});
+			}
+			else if (videoUrl.indexOf('.flv') > -1) {
+				var xg = new FlvJsPlayer({
+					"id": "playerCnt",
+					"autoplay": true,
+					"url": videoUrl,
+					"fluid": true,
+					"isLive": true,
+					"playsinline": true,
+				});
+			}
+			else if (videoUrl.indexOf('.mpd') > -1) {
+				var xg = new ShakaJsPlayer({
+					"id": "playerCnt",
+					"autoplay": true,
+					"url": videoUrl,
+					"fluid": true,
+					"playsinline": true,
+				});
+			} else {
+				var xg = new Player({
+					"id": "playerCnt",
+					"autoplay": true,
+					"url": videoUrl,
+					"fluid": true,
+					"playsinline": true,
+				});
+			}
+    }
+    
+    
+	<?php
+		if($TotalResult>0){
+    		echo "setInterval(getVodStat,3000,'id_group','stat_group');";
+			echo "videoUrl = '$url';";
+    		echo "createPlayer(videoUrl);";
+		}
+		
+	?>
+	
+	layui.use(['laypage', 'layer'], function(){
+	  var laypage = layui.laypage
+	  ,layer = layui.layer;
+	  laypage.render({
+	      elem: 'new_pages'
+	      ,count: <?php echo $TotalResult;?>
+		  ,limit: 1
+		  ,curr:<?php echo $page;?>
+		  ,prev:'上一频道'
+		  ,next:'下一频道'
+	      ,layout: ['count','prev', 'page', 'next']
+	      ,jump: function(obj,first){
+			  if(!first){
+				location.href = '?&page='+ obj.curr;
+			}
+	      }
+	    });
+	  });
+	</script>
+</html>

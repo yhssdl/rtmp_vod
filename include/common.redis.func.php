@@ -293,7 +293,7 @@ function GetIP()
 
 function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 {
-	global $cfg_basehost;
+	global $cfg_basehost,$cfg_basehost;
 	if(empty($GLOBALS['cfg_phpurl']))
 	{
 		$GLOBALS['cfg_phpurl'] = '..';
@@ -331,10 +331,10 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
         if(pgo==0){ location='$gourl'; pgo=1; }
       }\r\n";
 		$rmsg = $func;
-		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='{$cfg_basehost}/pic/i1.png'>系统提示</div>";
+		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='/{$cfg_basehost}pic/i1.png'>系统提示</div>";
 	    $rmsg .= "<div class='text'>\");\r\n";
 
-		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='{$cfg_basehost}/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
+		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='/{$cfg_basehost}pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
 		$rmsg .= "document.write(\"";
 		if($onlymsg==0)
 		{

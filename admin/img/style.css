@@ -49,7 +49,7 @@ li{ list-style:none;}
 .line{ background:url(../img/arrow.gif) center no-repeat; border-right:1px solid #adadad; height:100%; margin-top:1px;  width:10px;}
 .right{ background:#dedede; height:100%; border-left:1px solid red; }
 .right1{background:#dedede; }
-.r_main{ background-color:#dedede; width:100%;  margin-left:-1px; }
+.r_main{ background-color:#fff; width:100%;  margin-left:-1px; }
 .r_title{  background:color:#333333; background:url(../img/q2.jpg); height:32px;  text-align:left;   font-size:12px;   width:100%;  }
 .r_title1{float:left;width:10px; height:32px; }
 .r_title2{float:right; font-size:12px; height:32px; line-height:32px; }

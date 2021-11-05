@@ -146,7 +146,7 @@ function makeDay()
 	$limitstart = ($currentPage-1) * $pagesize;
 	if($limitstart<0) $limitstart=0;
 	$sql="select v_id from sea_data where v_wrong=0 and v_recycled=0 $wheresql limit $limitstart,$pagesize";
-	echoBegin ("正在开始生成当天影片,当前是第<font color='red'>".$currentPage."</font>页,共<font color='red'>".$TotalPage."</font>页<br>","content");
+	echoBegin ("正在开始生成当天视频,当前是第<font color='red'>".$currentPage."</font>页,共<font color='red'>".$TotalPage."</font>页<br>","content");
 	$dsql->SetQuery($sql);
 	$dsql->Execute('makeDay');
 	while($row=$dsql->GetObject('makeDay'))
@@ -178,7 +178,7 @@ function makeDay()
 			}
 		}
 		if(!empty($ids)){
-			echo "生成当天影片搞定<script language='javascript'>self.location='?action=channelbyids&ids=".$ids."&action3=site';</script>";
+			echo "生成当天视频搞定<script language='javascript'>self.location='?action=channelbyids&ids=".$ids."&action3=site';</script>";
 			exit;
 		}else{
 			alertMsg ("一键生成全部搞定","");
@@ -267,7 +267,7 @@ function makeArticleById($vId)
 	$playn = 0;
 	$row=$dsql->GetOne("Select * From `sea_news` where n_id='$vId'");
 	if(!is_array($row)){
-		echo "<font color='red'>影片ID:".$vId." 该影片所属分类被隐藏，跳过生成</font><br>";
+		echo "<font color='red'>视频ID:".$vId." 该视频所属分类被隐藏，跳过生成</font><br>";
 		return false;
 	}
 	$vType=$row['tid'];
@@ -413,9 +413,9 @@ function makeContentById($vId)
 	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){
-		return "<font color='red'>影片ID:".$vId." 该影片所属分类被隐藏，跳过生成</font><br>";
+		return "<font color='red'>视频ID:".$vId." 该视频所属分类被隐藏，跳过生成</font><br>";
 	}
-	if($row['v_recycled']==1){return "<font color='red'>影片ID:".$vId." 该影片被隐藏，跳过生成</font><br>";}
+	if($row['v_recycled']==1){return "<font color='red'>视频ID:".$vId." 该视频被隐藏，跳过生成</font><br>";}
 	$GLOBALS['zid']=$vId;
 	
 	$vType=$row['tid'];

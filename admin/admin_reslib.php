@@ -452,8 +452,8 @@ function intoDatabase($url,$gtype)
 	$recordcount = $xml->list['recordcount'];
 	foreach($xml->list->video as $video)
 	{
-		$xmltid =  $video->tid;//影片分类id
-		$name =  $video->name;//影片名称
+		$xmltid =  $video->tid;//视频分类id
+		$name =  $video->name;//视频名称
 		$localId = getBindedLocalId($ressite.'_'.$xmltid);//入库后本地id
 		$data = "$$".$video->dl->dd;
 		if(!empty($name)&&!empty($data))
@@ -560,7 +560,7 @@ function bottom()
 	$endtime = explode(' ', microtime()); 
 	$timeuse=round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])/1000,6);
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"2\"><tr><td align=\"center\">本页面用时".
-	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\">视频管理系统</a></td></tr></table></div>\n</body>\n</html>";
+	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\">深蓝视频管理系统</a></td></tr></table></div>\n</body>\n</html>";
 
 
 ?></div>

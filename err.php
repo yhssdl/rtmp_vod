@@ -74,7 +74,7 @@ if($author=='' || $errtxt=='') {
 
 <html>
     <head>
-    	<title>影片报错</title>
+    	<title>视频报错</title>
         <script>
 			function checkReportErr(){if (document.getElementById('author').value.length<1){alert('请填写报错者');return false;}; if (document.getElementById('errtxt').value.length<1){alert('请填写报错内容');return false;}}
         </script>
@@ -90,7 +90,7 @@ if($author=='' || $errtxt=='') {
         <form id="reporterr" action="?id=<?php  echo $id ?>&action=add" method="post" onSubmit="return checkReportErr()">
 		<input type="hidden" id="vid" name="vid"  value="<?php  echo $id2 ?>">
             <div class="err">
-			<h2>失效影片，我们会在第一时间内修正</h2>
+			<h2>失效视频，我们会在第一时间内修正</h2>
                <p style="padding-bottom:5px;">昵称:<input type="text" id="author" name="author"  value="匿名"  size="15"><font color="#FF0000">*必填</font></p>
 			
                 <p>详情:<textarea id="errtxt"  name="errtxt" style="width:270px;height:88px" rows=5 cols=30><?php  echo $errtxt2 ?></textarea>
@@ -99,7 +99,7 @@ if($author=='' || $errtxt=='') {
 				$vcode="<p>验证：<input name=\"validate\" type=\"text\" id=\"vdcode\" style=\"width:50px;text-transform:uppercase;\" class=\"text\" tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/><span class=\"red\"></span></p>";
 				if($cfg_feedback_ck=='1'){echo $vcode;}
 				?>
-                <input type="submit" value="影片报错" style="margin:5px 0 0 130px;">
+                <input type="submit" value="视频报错" style="margin:5px 0 0 130px;">
             </div>
         </form>
     </body>

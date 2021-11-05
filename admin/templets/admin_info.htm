@@ -70,7 +70,7 @@ $row=$dsql->GetOne("select count(*) as dd from sea_jqtype");$n3=$row['dd'];
 <div class="v_info mtop" ><ul><li>【分类数据】</li>
 <li>视频<font color='#ff0000'><?php echo $n1; ?></font></li>
 <li>文章<font color='#ff0000'><?php echo $n2; ?></font></li>
-<li>剧情<font color='#ff0000'><?php echo $n3; ?></font></li>
+<li>分类<font color='#ff0000'><?php echo $n3; ?></font></li>
 </ul></div>
 <?php
 $row=$dsql->GetOne("select count(*) as dd from sea_topic where TO_DAYS(from_unixtime(addtime)) = TO_DAYS(NOW())");$n1=$row['dd'];

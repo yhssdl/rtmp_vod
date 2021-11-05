@@ -75,7 +75,7 @@ input,label,img,th {vertical-align: middle;}
 
 /*登入界面修改 */
 #canvas{background: #2f4050;width: 100%;height: 100%;overflow: hidden;}
-.admin_login{width:300px;overflow:hidden;padding:40px;background: #fff; box-shadow:0 -15px 30px #293846;border-radius:5px;position: absolute;left:50%;top: 50%;margin-left: -190px;margin-top: -250px;}
+.admin_login{width:300px;overflow:hidden;padding:40px;background: #fff; box-shadow:1px 1px 50px rgba(0,0,0,.3);border-radius:2px;position: absolute;left:50%;top: 50%;margin-left: -190px;margin-top: -250px;}
 .admin_title{font-size: 20px;font-weight: bold;text-align: center;margin-bottom: 15px;color: #2f4050}
 .admin_title em{display: block;font-size: 12px;margin-top: 8px;}
 .admin_user,.admin_pwd,.admin_val,.admin_sub{margin: 10px 0;height: 40px;overflow: hidden;clear: both;position: relative;border: 1px solid #dbdbdb;border-radius: 3px; }

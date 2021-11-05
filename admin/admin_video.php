@@ -21,12 +21,12 @@ exit();
 elseif($action=="edit")
 {
 	$id = isset($id) && is_numeric($id) ? $id : 0;
-	//读取影片信息
+	//读取视频信息
 	$query = "select d.*,c.body as v_content,p.body as v_playdata,p.body1 as v_downdata from sea_data d left join `sea_content` c on c.v_id=d.v_id left join `sea_playdata` p on p.v_id=d.v_id  where d.v_id='$id' ";
 	$vrow = $dsql->GetOne($query);
 	if(!is_array($vrow))
 	{
-		ShowMsg("读取影片基本信息出错!","-1");
+		ShowMsg("读取视频基本信息出错!","-1");
 		exit();
 	}
 	$v_color = $vrow['v_color'];
@@ -45,7 +45,7 @@ elseif($action=="save")
 {
 	if(trim($v_name) == '')
 	{
-		ShowMsg("影片名不能为空！","-1");
+		ShowMsg("视频名不能为空！","-1");
 		exit();
 	}
 	if(empty($v_type))
@@ -68,7 +68,7 @@ elseif($action=="save")
 	$v_name = str_replace(array('\\','()','\''),'/',$v_name);
 	$v_actor = htmlspecialchars(cn_substrR($v_actor,200));
 	$v_actor = str_replace('%', ' ', $v_actor);
-	if($v_actor=="" OR empty($v_actor)){$v_actor="内详";}
+	if($v_actor=="" OR empty($v_actor)){$v_actor="佚名";}
 	$v_publishyear = empty($v_publishyear) ? date(Y) : intval($v_publishyear);
 	$v_publisharea = cn_substrR($v_publisharea,20);
 	$v_note = cn_substrR($v_note,30);
@@ -77,7 +77,7 @@ elseif($action=="save")
 	$v_tags = htmlspecialchars($v_tags);
 	$v_director = htmlspecialchars(cn_substrR($v_director,200));
 	$v_director = str_replace('%', ' ', $v_director);
-	if($v_director=="" OR empty($v_director)){$v_director="内详";}
+	if($v_director=="" OR empty($v_director)){$v_director="";}
 	$v_lang = cn_substrR($v_lang,10);
 	$v_commend =  empty($v_commend) ? 0 : intval($v_commend);
 	$v_enname = empty($v_enname)?Pinyin($v_name):$v_enname;
@@ -90,7 +90,7 @@ elseif($action=="save")
 	$v_vip = $_POST[v_vip];
 
 	$v_extratype=implode(",",$v_extratype); //获取扩展分类数组
-	$v_jq=implode(",",$v_extrajqtype); //获取剧情分类数组
+	$v_jq=implode(",",$v_extrajqtype); //获取课程分类数组
 	
 	$v_nickname = htmlspecialchars(cn_substrR($v_nickname,200));
 	$v_reweek = implode(",",$v_reweek);
@@ -177,17 +177,17 @@ elseif($action=="save")
 			$updateSql = "update sea_data set ".$updateSql." where v_id=".$v_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{
-				ShowMsg('更新影片出错，请检查',-1);
+				ShowMsg('更新视频出错，请检查',-1);
 				exit();
 			}
 			if(!$dsql->ExecuteNoneQuery("update `sea_content` set `body`='$v_content' where v_id='$v_id'"))
 			{
-				ShowMsg("更新影片内容时出错，请检查原因！",-1);
+				ShowMsg("更新视频内容时出错，请检查原因！",-1);
 				exit();
 			}
 			if(!$dsql->ExecuteNoneQuery("update `sea_playdata` set `body`='$v_playdata',`body1`='$v_downdata' where v_id='$v_id'"))
 			{
-				ShowMsg("更新影片播放数据时出错，请检查原因！",-1);
+				ShowMsg("更新视频播放数据时出错，请检查原因！",-1);
 				exit();
 			}
 			$v_oldtags = $v_oldtags ? strtolower(addslashes($v_oldtags)) : '';
@@ -220,14 +220,14 @@ elseif($action=="save")
 			if($cfg_runmode=='0'){
 				$trow = $dsql->GetOne("select ishidden from sea_type where tid=".$tid);
 				if($trow['ishidden']==1){
-					ShowMsg("影片更新成功",$v_back);
+					ShowMsg("视频更新成功",$v_back);
 					exit();
 				}else{
-					ShowMsg("影片更新成功，转向生成页面！","admin_makehtml.php?action=single&id=".$v_id."&from=".urlencode($v_back));
+					ShowMsg("视频更新成功，转向生成页面！","admin_makehtml.php?action=single&id=".$v_id."&from=".urlencode($v_back));
 					exit();
 				}
 			}else{
-				ShowMsg("影片更新成功",$v_back);
+				ShowMsg("视频更新成功",$v_back);
 				exit();
 			}
 			break;
@@ -238,7 +238,7 @@ elseif($action=="lock")
 	$back=$Pirurl;
 	$id = isset($id) && is_numeric($id) ? $id : 0;
 	$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '1' where v_id='$id'");
-	ShowMsg("影片锁定成功",$back);
+	ShowMsg("视频锁定成功",$back);
 	exit();
 }
 elseif($action=="unlock")
@@ -246,7 +246,7 @@ elseif($action=="unlock")
 	$back=$Pirurl;
 	$id = isset($id) && is_numeric($id) ? $id : 0;
 	$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '0' where v_id='$id'");
-	ShowMsg("影片解锁成功",$back);
+	ShowMsg("视频解锁成功",$back);
 	exit();
 }
 elseif($action=="lockall")
@@ -254,7 +254,7 @@ elseif($action=="lockall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要锁定/解锁的影片","-1");
+		ShowMsg("请选择需要锁定/解锁的视频","-1");
 		exit();
 	}
 	$dsql->SetQuery("select v_id,v_isunion from `sea_data` where v_id in (".implode(',',$e_id).")");
@@ -263,7 +263,7 @@ elseif($action=="lockall")
 	{
 		$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '".($rs['v_isunion']==1?0:1)."' where v_id=".$rs['v_id']);
 	}
-	ShowMsg("影片锁定/解锁成功",$back);
+	ShowMsg("视频锁定/解锁成功",$back);
 	exit();
 }
 elseif($action=="del")
@@ -279,7 +279,7 @@ elseif($action=="del")
 	$dsql->ExecuteNoneQuery("delete From `sea_content` where v_id='$id'");
 	$dsql->ExecuteNoneQuery("delete From `sea_playdata` where v_id='$id'");
 	clearTypeCache();
-	ShowMsg("影片删除成功",$back);
+	ShowMsg("视频删除成功",$back);
 	exit();
 }
 elseif($action=="restoreall")
@@ -287,7 +287,7 @@ elseif($action=="restoreall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要还原的影片","-1");
+		ShowMsg("请选择需要还原的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -303,7 +303,7 @@ elseif($action=="delall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要删除的影片","-1");
+		ShowMsg("请选择需要删除的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -318,7 +318,7 @@ elseif($action=="delall")
 	$dsql->ExecuteNoneQuery("delete From `sea_content` where v_id in(".$ids.")");
 	$dsql->ExecuteNoneQuery("delete From `sea_playdata` where v_id in(".$ids.")");
 	clearTypeCache();
-	ShowMsg("影片删除成功",$back);
+	ShowMsg("视频删除成功",$back);
 	exit();
 }
 elseif($action=="psettopic")
@@ -326,7 +326,7 @@ elseif($action=="psettopic")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要设置专题的影片","-1");
+		ShowMsg("请选择需要设置专题的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -339,12 +339,12 @@ elseif($action=="psettype")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要移动分类的影片","-1");
+		ShowMsg("请选择需要移动分类的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("update sea_data set tid=".$movetype." where v_id in(".$ids.")");
-	ShowMsg("批量移动影片成功",$back);
+	ShowMsg("批量移动视频成功",$back);
 	exit();
 }
 elseif($action=="deltypedata")
@@ -360,11 +360,11 @@ elseif($action=="hide")
 	$back=$Pirurl;
 	if(empty($id))
 	{
-		ShowMsg("请选择需要隐藏的影片","-1");
+		ShowMsg("请选择需要隐藏的视频","-1");
 		exit();
 	}
 	$dsql->ExecuteNoneQuery("update sea_data set v_recycled=1 where v_id=".$id);
-	ShowMsg("隐藏影片成功",$back);
+	ShowMsg("隐藏视频成功",$back);
 	exit();
 	
 		
@@ -374,11 +374,11 @@ elseif($action=="restore")
 	$back=$Pirurl;
 	if(empty($id))
 	{
-		ShowMsg("请选择需要还原的影片","-1");
+		ShowMsg("请选择需要还原的视频","-1");
 		exit();
 	}
 	$dsql->ExecuteNoneQuery("update sea_data set v_recycled=0 where v_id=".$id);
-	ShowMsg("还原影片成功",$back);
+	ShowMsg("还原视频成功",$back);
 	exit();	
 }
 else
@@ -396,7 +396,7 @@ function getAreaSelect($selectName,$strSelect,$areaId)
 	{
 		$publisharea = file($publishareatxt);
 	}
-	$str = '<select name="select1" id="select1"  onChange="v_publisharea.value=select1.value;v_publisharea.select()">';
+	$str = "<select name=\"$selectName\" id=\"$selectName\">";
 	if(!empty($strSelect)) $str .= "<option value=''>".$strSelect."</option>";
 	foreach($publisharea as &$area)
 	{
@@ -406,7 +406,7 @@ function getAreaSelect($selectName,$strSelect,$areaId)
 	}
 	if(!in_array($areaId,$publisharea)&&!empty($areaId))
 	$str .= "<option value='".$areaId."' selected>$areaId</option>";
-	$str .= '</select><input type="text" style="width:60px;" value="'.$areaId.'" name="v_publisharea">';
+	$str .= '</select>';
 	return $str;
 }
 
@@ -464,7 +464,7 @@ function getVerSelect($selectName,$strSelect,$verId)
 	{
 		$ver = file($vertxt);
 	}
-	$str = '<select name="select4" id="select4"  onChange="v_ver.value=select4.value;v_ver.select()">';
+	$str = "<select name=\"$selectName\" id=\"$selectName\"  onChange=\"v_ver.value=select4.value;v_ver.select()\">";
 	if(!empty($strSelect)) $str .= "<option value=''>".$strSelect."</option>";
 	foreach($ver as &$ver)
 	{
@@ -474,7 +474,7 @@ function getVerSelect($selectName,$strSelect,$verId)
 	}
 	if(!in_array($verId,$ver)&&!empty($verId))
 	$str .= "<option value='".$verId."' selected>$verId</option>";
-	$str .= '</select><input type="text" style="width:60px;" value="'.$verId.'" name="v_ver">';
+	$str .= '</select>';
 	return $str;
 }
 
@@ -840,17 +840,16 @@ function getjqslectADD($type=0)
 	$rows=getjqsOnCache();
 	foreach($rows as $row)
 	{
-		
 			if($row->tptype==$tptype)
 			{
-				echo "<input name=v_jqtype_extra[] type=checkbox value=".$row->tname.">".$row->tname."&nbsp;&nbsp;";
+				echo "<input name=v_jqtype_extra[] type=checkbox lay-skin='primary' value='$row->tname' title='$row->tname'>";
 				
 			}
 		
 	}
 }
 
-function getjqslectEDIT($topId,$separateStr,$span="",$compareValue,$tptype=0)
+function getjqslectEDIT($compareValue)
 {
 	$tlist=getjqsOnCache();
 
@@ -859,19 +858,19 @@ $ids_arr="";}else{
 $ids_arr = preg_split('[,]',$compareValue);}  
 	foreach($tlist as $row)
 	{						
-			for($i=0;$i<count($ids_arr);$i++)
-			{
-				if ($row->tname==$ids_arr[$i]){
-					$selectedStr=" checked=checked";
-					break;
-					}
-					else
-					{
-					$selectedStr="";
-					}
-			}
-			
-			echo "<input name=v_jqtype_extra[] type=checkbox value=".$row->tname." ".$selectedStr.">".$row->tname."&nbsp;&nbsp;";								
+		for($i=0;$i<count($ids_arr);$i++)
+		{
+			if ($row->tname==$ids_arr[$i]){
+				$selectedStr=" checked=checked";
+				break;
+				}
+				else
+				{
+				$selectedStr="";
+				}
+		}
+		
+		echo "<input name=v_jqtype_extra[] type=checkbox lay-skin='primary' value=$row->tname $selectedStr title='$row->tname'>";								
 	}	
 }
 ?>

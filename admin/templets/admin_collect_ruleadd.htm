@@ -89,7 +89,7 @@ function hide(){
             <th colspan="2" class="thc">使用采集规则向导生成采集规则</th>
           </tr>
           <tr>
-            <th colspan="2" class="thr"><font id="stephit1" color="red">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3">３. 采集内容与影片地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
+            <th colspan="2" class="thr"><font id="stephit1" color="red">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3">３. 采集内容与视频地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
           </tr>
         </thead>
       </table>
@@ -117,7 +117,7 @@ function hide(){
                   <option value="0">不限</option>
                   <?php for($i=1;$i<=31;$i++){echo "<option value=\"".$i."\">".$i."</option>";}?>
                 </select>
-                天 * 选择天数还要填写第3步的 <span class="red">影片日期 开始代码 和 结束代码</span>才有效</td>
+                天 * 选择天数还要填写第3步的 <span class="red">视频日期 开始代码 和 结束代码</span>才有效</td>
             </tr>
             <?php }?>
             <tr>
@@ -163,7 +163,7 @@ function hide(){
               <td><input type="radio" class="radio" name="autocls" value="0" onclick="show('selcls');" checked/>
                 固定分类
                 <input type="radio" class="radio" name="autocls" value="1" onclick="hide('selcls');"/>
-                智能归类(若归类失败，影片将自动加到临时库)</td>
+                智能归类(若归类失败，视频将自动加到临时库)</td>
             </tr>
             <tr id="selcls" style="">
               <td class="label">所属分类：</td>

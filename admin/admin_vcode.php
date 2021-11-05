@@ -18,49 +18,38 @@ if($action=="set")
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>管理登陆验证码</title>
-<link  href="img/style.css" rel="stylesheet" type="text/css" />
-<link  href="img/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/x.css"/>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script src="layui/layui.js" type="text/javascript"></script>
 </head>
 <body>
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;管理员&nbsp;&raquo;&nbsp;管理登陆验证码 ';</script>
-<div class="r_main">
-  <div class="r_content">
-    <div class="r_content_1">
-<form action="admin_vcode.php?action=set" method="post">	
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tb_style">
-<tbody><tr class="thead">
-<td colspan="5" class="td_title">后台登陆验证码</td>
-</tr>
-<tr>
-<td width="80%" align="left" height="30" class="td_border">
-<?php  $v1=file_get_contents("../data/admin/adminvcode.txt"); ?>
-<input type="radio" name="v" value="0" <?php  if($v1==0) echo 'checked';?>>关闭
-&nbsp;&nbsp;
-<input type="radio" name="v" value="1" <?php  if($v1==1) echo 'checked';?>>开启
-</td>
-</tr>
+<div class="layui-fluid">
+  <div class="r_content pd15">
+    <div style="overflow-x: auto">
+<form action="admin_vcode.php?action=set" method="post" class="layui-form">	
 
-<tr>
-<td width="10%" align="left" height="30" class="td_border">
-<input type="submit" value="确 认" class="btn" >
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
+<?php  $v1=file_get_contents("../data/admin/adminvcode.txt"); ?>
+  <div class="layui-form-item">
+    <label class="layui-form-label">验证码：</label>
+    <div class="layui-input-block">
+      <input type="radio" name="v" value="1" title="开启" <?php  if($v1==1) echo 'checked';?>>
+      <input type="radio" name="v" value="0" title="关闭" <?php  if($v1==0) echo 'checked';?>>
+    </div>
+  </div>
+	  
+  <div class="layui-form-item">
+	<div class="layui-input-block">
+	<input type="submit" name="Submit" value="确定提交" lay-submit="" class="layui-btn"/>
+	</div>
+  </div>  
+
 * 如果修改无效，请检查/data/admin/adminvcode.txt文件权限是否可写。
-</td>
-</tr>
-</tbody></table>	
-	
 
 </form>
 </div>
-	</div>
 </div>
-<?php 
-viewFoot();
-?>
+</div>
 </body>
 </html>

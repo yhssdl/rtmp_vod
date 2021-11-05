@@ -288,12 +288,13 @@ function starView(level, vid, type) {
 	var i, j, htmlStr;
 	var htmlStr = ""
 	if (level == 0) { level = 0 }
-	if (level > 0) { htmlStr += "<img src='img/starno.gif' border='0' style='cursor:pointer;margin-left:2px;' title='取消推荐'  onclick='commendVideo(" + vid + ",0," + type + ")'/>" }
+	//if (level > 0) { htmlStr += "<img src='img/starno.gif' border='0' style='cursor:pointer;margin-left:2px;' title='取消推荐'  onclick='commendVideo(" + vid + ",0," + type + ")'/>" }
+	if (level > 0) { htmlStr += "<i class='iconfont' border='0' style='color:Orange;cursor:pointer;margin-left:2px;' title='取消推荐'  onclick='commendVideo(" + vid + ",0," + type + ")'>&#xe69d;</i>" }
 	for (i = 1; i <= level; i++) {
-		htmlStr += "<img src='img/star0.gif' border='0' style='cursor:pointer;margin-left:2px;' onclick='commendVideo(" + vid + "," + i + "," + type + ")' title='推荐为" + i + "星级' id='star" + vid + "_" + i + "'  />"
+		htmlStr += "<i class='iconfont' border='0' style='color:red;cursor:pointer;margin-left:2px;' onclick='commendVideo(" + vid + "," + i + "," + type + ")' title='推荐为" + i + "星级' id='star" + vid + "_" + i + "'>&#xe717;</i>"
 	}
 	for (j = level + 1; j <= 5; j++) {
-		htmlStr += "<img src='img/star1.gif' border='0' style='cursor:pointer;margin-left:2px;' onclick='commendVideo(" + vid + "," + j + "," + type + ")' title='推荐为" + j + "星级' id='star" + vid + "_" + j + "' />"
+		htmlStr += "<i class='iconfont' border='0' style='color:gray;cursor:pointer;margin-left:2px;' onclick='commendVideo(" + vid + "," + j + "," + type + ")' title='推荐为" + j + "星级' id='star" + vid + "_" + j + "'>&#xe717;</i>"
 	}
 	set(document.getElementById('star' + vid), htmlStr)
 }
@@ -466,9 +467,9 @@ function getReferedId(str) {
 
 function repairUrl(i) {
 	var urlStr, urlArray, newStr, j, flagCount, fromText
-	fromText = $("v_playfrom" + i).options[$("v_playfrom" + i).selectedIndex].value
+	fromText = $("#v_playfrom" + i).find("option:selected").text();
 	if (fromText.length == 0) { alert('请选择播放器类型'); return false; }
-	urlStr = $('v_playurl' + i).value
+	urlStr = $("#v_playurl" + i).val();
 	if (urlStr.length == 0) { alert('请填写地址'); return false; }
 	if (navigator.userAgent.indexOf("Chrome") > 0) { urlArray = urlStr.split("\n"); }
 	else if (navigator.userAgent.indexOf("Firefox") > 0) { urlArray = urlStr.split("\n"); }
@@ -499,9 +500,9 @@ function repairUrl(i) {
 
 function repairUrl2(i) {
 	var urlStr, urlArray, newStr, j, flagCount, fromText
-	fromText = $("m_downfrom" + i).options[$("m_downfrom" + i).selectedIndex].value
+	fromText = $("#m_downfrom" + i).find("option:selected").text();
 	if (fromText.length == 0) { alert('请选择下载类型'); return false; }
-	urlStr = $('m_downurl' + i).value
+	urlStr = $('m_downurl' + i).val();
 	if (urlStr.length == 0) { alert('请填写地址'); return false; }
 	if (navigator.userAgent.indexOf("Chrome") > 0) { urlArray = urlStr.split("\n"); }
 	else if (navigator.userAgent.indexOf("Firefox") > 0) { urlArray = urlStr.split("\n"); }
@@ -538,7 +539,7 @@ function expendPlayArea(i, optionStr, type) {
 	var n = i - 1, m = i + 1
 	var sparkStr = (type == 1) ? "" : ""
 	var sparkStr2 = (type == 1) ? "" : ""
-	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='playfb" + i + "'><tr><td height='30' width='70' class='td_border'>播放来源" + i + "：</td><td class='td_border'><select id='v_playfrom" + i + "' name='v_playfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('playfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除播放来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('playfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('playfb" + i + "'))\">下移</a>" + sparkStr + sparkStr2 + "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selVideo" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div> </td></tr><tr><td  class='td_border'>数据地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl(" + i + ")'/></td><td align='left' class='td_border'><textarea id='v_playurl" + i + "' name='v_playurl[" + i + "]' rows='8'  style='width:695px'></textarea>" + sparkStr + "</div></td></tr></table>"
+	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='playfb" + i + "'><tr><td height='30' width='70' class='td_border'>播放来源" + i + "：</td><td class='td_border'><select id='v_playfrom" + i + "' name='v_playfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('playfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除播放来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('playfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('playfb" + i + "'))\">下移</a>" + sparkStr + sparkStr2 + "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selVideo" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div> </td></tr><tr><td  class='td_border'>数据地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl(" + i + ")'/></td><td align='left' class='td_border'><textarea id='v_playurl" + i + "' name='v_playurl[" + i + "]' rows='8'  style='width:695px;;height: 80px;'></textarea>" + sparkStr + "</div></td></tr></table>"
 	var _nextdiv = document.createElement("div");
 	_nextdiv.innerHTML = area
 	document.getElementById('v_playarea').appendChild(_nextdiv.getElementsByTagName('table')[0])
@@ -558,7 +559,7 @@ function expendDownArea(i, optionStr, type) {
 	optionStr = unescape(optionStr)
 	var n = i - 1, m = i + 1
 	var sparkStr = (type == 1) ? "" : ""
-	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='downfb" + i + "'><tr><td  height='30' width='70' >下载来源" + i + "：</td><td class='td_border'>" + sparkStr + "<select id='m_downfrom" + i + "' name='m_downfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('downfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除下载来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('downfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('downfb" + i + "'))\">下移</a>"+ "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selDown" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"d_picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"d_info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div</td></tr><tr><td  class='td_border'>下载地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl2(" + i + ")'/></td><td align='left' class='td_border'><textarea id='m_downurl" + i + "' name='m_downurl[" + i + "]' rows='8' style='width:695px'></textarea></td></tr></table>";
+	var area = "<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='downfb" + i + "'><tr><td  height='30' width='70' >下载来源" + i + "：</td><td class='td_border'>" + sparkStr + "<select id='m_downfrom" + i + "' name='m_downfrom[" + i + "]'><option value=''>暂无数据" + i + "</option>" + optionStr + "</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('downfb" + i + "');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除下载来源" + i + "' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('downfb" + i + "'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('downfb" + i + "'))\">下移</a>"+ "&nbsp;&nbsp;<div class=\"div-inline webuploader-pick\" id = \"selDown" + i + "\">选择视频</div>  <div class=\"div-inline\" id=\"d_picker" + i + "\">上传视频</div> <div class=\"div-inline\" id=\"d_info" + i + "\"><div class=\"progress\" style=\"display: none;\"><span class=\"text\">0%</span><span class=\"percentage\" style=\"width: 0%;\"></span></div</td></tr><tr><td  class='td_border'>下载地址" + i + "：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl2(" + i + ")'/></td><td align='left' class='td_border'><textarea id='m_downurl" + i + "' name='m_downurl[" + i + "]' rows='8' style='width:695px;height: 80px;'></textarea></td></tr></table>";
 	var _nextdiv = document.createElement("div");
 	_nextdiv.innerHTML = area
 	document.getElementById('m_downarea').appendChild(_nextdiv.getElementsByTagName('table')[0]);
@@ -765,14 +766,16 @@ function selectCache(value) {
 }
 
 function clearCache() {
-	set(document.getElementById("upcacheresult"), '加载中...')
+	//set(document.getElementById("upcacheresult"), '加载中...')
 	ajax.get(
 		"admin_ajax.php?action=updatecache",
 		function (obj) {
 			if (obj.responseText == 'ok') {
-				set(document.getElementById("upcacheresult"), '缓存更新成功')
+				//set(document.getElementById("upcacheresult"), '缓存更新成功')
+				layer.msg('缓存更新成功');
 			} else {
-				set(document.getElementById("upcacheresult"), '缓存更新失败')
+				layer.msg('缓存更新失败');
+				//set(document.getElementById("upcacheresult"), '缓存更新失败')
 			}
 		}
 	);
@@ -854,4 +857,228 @@ function getSelect_Value(obj_id) {
 	var index = obj.selectedIndex; // 选中索引
 	var value = obj.options[index].value; // 选中值
 	return value;
+}
+
+
+function ctrlRecord(vid,commandid) {
+	ajax.get(
+		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid + "&action=vod",
+		function (obj) {
+
+			if (obj.responseText == "stop") {
+				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
+				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
+				document.getElementById("title"+vid).setAttribute("class","text_red"); 
+			}else if (obj.responseText == "record") {
+				set(document.getElementById("ctrlm"+vid), "<span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'><font color='green'>开始录制</font></span>");
+				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
+				document.getElementById("title"+vid).setAttribute("class","text_green"); 
+			}  
+			else {
+				set(document.getElementById("ctrlm"+vid), obj.responseText);
+			}
+		}
+	);
+}
+
+function runVodTask(){
+	ajax.get(
+		"../vod.php?admin=1",
+		function (obj) {
+			if (obj.responseText != "") {
+				t1 = Number(obj.responseText)*1000;
+				 window.setTimeout(runVodTask,t1);
+			}
+		}
+	);
+}
+
+function runStatTask(){
+	ajax.get(
+		"admin_ajax.php?&action=get_stat",
+		function (obj) {
+			if (obj.responseText != "") {
+				strs=obj.responseText.split(";");
+				if(strs.length==2){
+					yy = parseInt(strs[0]);
+					vod = parseInt(strs[1]);
+					yy_tip = document.getElementById("yy_tip");
+					vod_tip = document.getElementById("vod_tip");
+					yy_tip.style.display=yy>0?"inline-block":"none";
+					vod_tip.style.display=vod>0?"inline-block":"none";
+					yy_tip.innerHTML = yy;
+					vod_tip.innerHTML = vod;
+				}
+				 window.setTimeout(runStatTask,10000);
+			}
+		}
+	);
+}
+
+
+
+function getLiveStat(id_group,stat_group){
+	idgroup = document.getElementById(id_group).innerHTML;
+	stats =  document.getElementById(stat_group).innerHTML;
+	if(idgroup==="") return;
+	ajax.get(
+		"admin_ajax.php?idgroup=" + idgroup + "&stats=" + stats +  "&action=live_main",
+		function (obj) {
+			if(obj.responseText!=""){
+				strs=obj.responseText.split(";");
+				var new_id_group = "";
+				var new_stat_group = "";
+				var len = strs.length;
+				var hasChanged = false;
+				for(var i=0;i<len;i++){
+					subs = strs[i].split(",");
+					if(subs.length==5){
+						if(subs[1]!=subs[2]){
+							set(document.getElementById("stat"+subs[0]),  subs[4]);
+							hasChanged = true;
+						}
+						if(subs[2]<5){
+							if(new_id_group!=="")new_id_group += ",";
+							if(new_stat_group!=="")new_stat_group += ",";
+							new_id_group += subs[0];
+							new_stat_group += subs[2];
+						} 
+						if(subs[2]>3 && subs[2]!=6){
+							node = document.getElementById("herf"+subs[0]);
+							node.innerHTML = "<a href='admin_vod.php?action=cut&id="+subs[0]+"' title='对视频进行播放与裁剪操作'><font color=green>播放</font></span>";
+						}
+					}
+				}
+				if(hasChanged){
+					set(document.getElementById("id_group"),new_id_group);
+					set(document.getElementById("stat_group"),new_stat_group);				
+				}
+			}
+		}
+	);	
+}
+
+
+function getVodStat(id_group,stat_group){
+	idgroup = document.getElementById(id_group).innerHTML;
+	stats =  document.getElementById(stat_group).innerHTML;
+	if(id_group==="") return;
+	ajax.get(
+		"admin_ajax.php?idgroup=" + idgroup + "&stats=" + stats +  "&action=vod_list",
+		function (obj) {
+			if(obj.responseText!=""){
+				strs=obj.responseText.split(";");
+				var new_id_group = "";
+				var new_stat_group = "";
+				var len = strs.length;
+				var hasChanged = false;
+				for(var i=0;i<len;i++){
+					subs = strs[i].split(",");
+					if(subs.length==3){
+						if(subs[1]!=subs[2]){
+							hasChanged = true;
+
+							var title=new Array("text_gray","text_green","text_red");
+							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
+							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除吗\")'>删除</a>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'><font color='green'>开始录制</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'><font color='red'>停止录制</font></span></span>")
+							
+							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
+							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);
+							set(document.getElementById("action"+subs[0]),  action[subs[2]]);
+						}
+						if(new_id_group!=="")new_id_group += ",";
+						if(new_stat_group!=="")new_stat_group += ",";
+						new_id_group += subs[0];
+						new_stat_group += subs[2];
+					}
+				}
+				if(hasChanged){
+					set(document.getElementById("id_group"),new_id_group);
+					set(document.getElementById("stat_group"),new_stat_group);
+				}
+			}
+		}
+	);	
+}
+
+function runCutTask(filename,stime,etime,mode,id){
+	ajax.get(
+		"admin_ajax.php?filename=" + filename + "&stime=" + stime + "&etime=" + etime +"&mode=" + mode+ "&id="+ id + "&action=cut",
+		function (obj) {
+			if (obj.responseText != "") {
+				if(mode==1){	
+					layer.msg(obj.responseText);
+					player.once('play',function(){
+						getstarttime(player.duration,'v_etime');
+					});
+					player.src = player.src+'8';
+					document.getElementById('waiting').style.display = "none";					
+				}else{
+					if(obj.responseText.indexOf('/')>=0){
+						layer.open({
+							type: 1,
+							title: '截图成功，已经设置为封面，您还可以对封面图片进行裁剪',
+							btn: ['裁剪并退出', '退出'],
+							area: ['650px', '480px'],
+							content: '<div><img id="cropperImg" src="' + obj.responseText +'?'+ Math.random() + '" width="100%" height="100%"/></div>',
+							yes: function(index){
+								layer.close(index);
+								src_data = cropper.getData();
+								src_data.x = Math.round(src_data.x);
+								src_data.y = Math.round(src_data.y);
+								src_data.width = Math.round(src_data.width);
+								src_data.height = Math.round(src_data.height);
+								runCutPicTask(obj.responseText,src_data.x,src_data.y,src_data.width,src_data.height);
+								//console.log(src_data);
+							  }
+						});
+						var image = document.querySelector('#cropperImg');
+						var cropper = new Cropper(image, {
+							  dragMode: 'crop',
+							  scalable:false,
+							  zoomable:false,
+							  zoomOnTouch:false,
+							  zoomOnWheel:false,
+						   
+						  });
+						  
+						
+						//$('#crop').on('click', function() {
+						//	console.log(cropper.getData());
+						//})
+							
+
+					}else{
+						layer.msg(obj.responseText);
+					}
+
+				}
+
+			}
+		}
+	);
+}
+
+function runCutPicTask(filename,x,y,width,height){
+	ajax.get(
+		"admin_ajax.php?filename=" + filename + "&x=" + x + "&y=" + y +"&width=" + width+ "&height="+ height + "&action=cut_pic",
+		function (obj) {
+			if (obj.responseText != "") {
+				layer.msg(obj.responseText);
+			}
+		}
+	);
+}
+
+function runNickName(nickname){
+	ajax.get(
+		"admin_ajax.php?nickname=" + nickname  + "&action=nickname",
+		function (obj) {
+			if (obj.responseText != "err") {
+				layer.msg(obj.responseText);
+				set(document.getElementById("nickname"),nickname);
+				
+			}
+		}
+	);
 }

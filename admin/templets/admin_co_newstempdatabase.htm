@@ -85,8 +85,8 @@ if($limitstart<0) $limitstart=0;
 $sqlStr="select n_id,n_title,n_inbase,tid,tname,n_addtime from sea_co_news ".$whereStr." order by n_addtime desc limit $limitstart,$numPerPage";
 $iMode="智能采集";
 if(strpos($cfg_gatherset,'0')!==false)$iMode.='[分类识别]';
-if(strpos($cfg_gatherset,'1')!==false)$iMode.='[不添加新影片]';
-if(strpos($cfg_gatherset,'2')!==false)$iMode.='[只更新影片地址及状态]';
+if(strpos($cfg_gatherset,'1')!==false)$iMode.='[不添加新视频]';
+if(strpos($cfg_gatherset,'2')!==false)$iMode.='[只更新视频地址及状态]';
 ?>
 <div class="r_main">
   <div class="r_content">
@@ -130,7 +130,7 @@ else{
 ?>
         <tr>
           <td height="30" width="50" bgcolor="#FFFFFF" class="td_btop3">编号</td>
-          <td bgcolor="#FFFFFF" class="td_btop3">影片名称</td>
+          <td bgcolor="#FFFFFF" class="td_btop3">视频名称</td>
           <td width="50" bgcolor="#FFFFFF" class="td_btop3">数据</td>
           <td width="80" bgcolor="#FFFFFF" class="td_btop3">绑定分类</td>
           <td width="80" bgcolor="#FFFFFF" class="td_btop3">采集分类名</td>
@@ -171,9 +171,9 @@ $n_id=$row->n_id;
                 <?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
               </select>
               &nbsp;
-              <input type="submit" value="导入选中影片" onclick="this.form.action='?action=import';" class="rb1" style="width:85px"/>
+              <input type="submit" value="导入选中视频" onclick="this.form.action='?action=import';" class="rb1" style="width:85px"/>
               &nbsp;
-              <input type="submit" value="导入全部影片" onclick="this.form.action='?action=import&smode=all';" class="rb1" style="width:85px"/>
+              <input type="submit" value="导入全部视频" onclick="this.form.action='?action=import&smode=all';" class="rb1" style="width:85px"/>
               &nbsp;
               <input type="submit" value="导入未入库" onclick="this.form.action='?action=import&smode=noinbase';" class="rb1" style="width:85px"/></td>
           </tr>

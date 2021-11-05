@@ -24,14 +24,43 @@ if($action=="add")
 		ShowMsg('用户名已存在！','-1');
 		exit();
 	}
-	$groupid = $groupid ? intval($groupid) : 2;
+	$groupid = $groupid ? intval($groupid) : 3;
+	if($groupid<3){
+		$publish = 1;
+	}else{
+		$publish = isset($publish) && is_numeric($publish) ? $publish : 0;
+	}
+
 	$mpwd = md5($pwd);
 	$pwd = substr(md5($pwd),5,20);
+	if(isset($vod_all)){
+		$vlist = '0';
+	}else{
+		$vlist = "";
+		$postedvods = $_POST['vods'];
+		foreach ($postedvods as $vod){
+			$vlist = $vlist . $vod.",";
+		}
+	}
 
-	$inquery = "Insert Into `sea_admin`(password,name,groupid,state) values('$pwd','$username',$groupid,1)";
+	$v_type = isset($v_type) && is_numeric($v_type) ? $v_type : 0;
+	if($nickname=="") $nickname = $username;
+	$vlist = rtrim($vlist,",");
+	$inquery = "Insert Into `sea_admin`(password,name,nickname,groupid,vod_list,state,publish,tid) values('$pwd','$username','$nickname',$groupid,'$vlist',1,$publish,$v_type)";
 	$dsql->ExecuteNoneQuery($inquery);
 	ShowMsg('成功增加一个用户！','admin_manager.php');
 	exit();
+}
+elseif($action=="edit")
+{
+	include(sea_ADMIN.'/templets/admin_manager_edit.htm');
+	exit;
+}
+elseif($action=="new")
+{
+
+	include(sea_ADMIN.'/templets/admin_manager_new.htm');
+	exit;
 }
 elseif($action=="save")
 {
@@ -53,8 +82,27 @@ elseif($action=="save")
 		$pwdm = ",pwd='".md5($pwd)."'";
 		$pwd = ",password='".substr(md5($pwd),5,20)."'";
 	}
-	$groupid = $groupid ? intval($groupid) : 2;
-	$query = "Update `sea_admin` set name='$username',groupid='$groupid',state='$state' $pwd where id='$id'";
+	$groupid = $groupid ? intval($groupid) : 3;
+
+	if($groupid<3){
+		$publish = 1;
+	}else{
+		$publish = isset($publish) && is_numeric($publish) ? $publish : 0;
+	}
+
+	
+	if(isset($vod_all)){
+		$vlist = '0';
+	}else{
+		$vlist = "";
+		$postedvods = $_POST['vods'];
+		foreach ($postedvods as $vod){
+			$vlist = $vlist . $vod.",";
+		}
+	}
+	if($nickname=="") $nickname = $username;
+	$vlist = rtrim($vlist,",");
+	$query = "Update `sea_admin` set name='$username',nickname='$nickname',groupid='$groupid',vod_list='$vlist',state='$state',publish='$publish',tid='$v_type' $pwd where id='$id'";
 	$dsql->ExecuteNoneQuery($query);
 	ShowMsg("成功更改一个帐户！","admin_manager.php");
 	exit();
@@ -96,6 +144,8 @@ function getManagerLevel($groupid)
 		return "系统管理员";
 	}else if($groupid==2){
 		return "网站编辑员";
+	}else if($groupid==3){
+		return "教师";
 	}else{
 		return "未知类型";
 	}
@@ -104,9 +154,9 @@ function getManagerLevel($groupid)
 function getManagerState($s)
 {
 	if($s==1){
-		return "激活";
+		return "已激活";
 	}else if($s==0){
-		return "锁定";
+		return "已锁定";
 	}else{
 		return "未知";
 	}

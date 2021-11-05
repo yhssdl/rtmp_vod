@@ -466,13 +466,11 @@ function getTemplateType($filename){
 function viewFoot()
 {
 	global $dsql,$starttime;
-	echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\">视频管理系统</a></td></tr></table></div>\n</body>\n</html>";
+	echo "<div class=\"bottom\">本页面用时".
+	round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6)."秒,共执行".$dsql->QueryTimes()."次数据查询<br><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">深蓝视频管理系统</font></a></div>";
 }
-
 function viewHead()
 {
 ?>
@@ -563,7 +561,7 @@ elseif($action=="selected")
 	checkRunMode();
 	if(empty($e_id))
 	{
-		showMsg('请选择要生成的影片','-1');
+		showMsg('请选择要生成的视频','-1');
 	}
 	echoHead();
 	foreach($e_id as $id)

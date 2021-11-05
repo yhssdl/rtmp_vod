@@ -11,8 +11,28 @@ if($act=="" OR empty($act)){$act="b";} //1为备份表 2为优化修复表
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>选择数据表</title>
-<link href="../img/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="../css/x.css"/>
+<script src="../layui/layui.js"></script>
 <script language="JavaScript">
+	layui.use('layer', function(){
+	var layer = layui.layer;
+	});        
+
+//全屏弹出层
+var showv=function (url) {
+        var index = layer.open({
+            type: 2,          //默认弹出层类型
+            offset: '100px',
+            shade: 0.5,
+			      isOutAnim: false,
+            title:"选择备份目录",  //弹出层角标名称
+            content: url,  //弹出层页面地址
+            area: ['90%', '400px'],    //弹出层大小
+        });
+        
+    }
+
 function CheckAll(form)
   {
   for (var i=0;i<form.elements.length;i++)
@@ -112,15 +132,13 @@ function check()
 </script>
 </head>
 <body>
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;工具&nbsp;&raquo;&nbsp;数据库 ';</script>
 
-  <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb">
+  <table class="layui-table" style="min-width:1170px;">
   <form name="ebakchangetb" method="post" action="phomebak.php" onsubmit="return check();">
-     <tr class="thead"><td class="td_title"  style="height:30px"><?php  if($act=="y"){echo '优化修复数据表';} else {echo '备份数据';}  ?>
-        <input name="phome" type="hidden" id="phome" value="DoEbak">        <input name="mydbname" type="hidden" id="mydbname" value="<?php  echo $mydbname ?>">        </td>
-    </tr>
+  <input name="phome" type="hidden" id="phome" value="DoEbak">        
+  <input name="mydbname" type="hidden" id="mydbname" value="<?php  echo $mydbname ?>">  
     <tr <?php  if($act=="y"){echo 'style="display:none;"';}  ?>> 
-      <td height="30" bgcolor="#FFFFFF"> <!---<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#DBEAF5">
+      <td height="30" bgcolor="#FFFFFF"> <!---<table width="100%" border="0" cellpadding="3" cellspacing="1">
 
           <tr id="showsave" style="display:none">
             <td>&nbsp;</td>
@@ -137,20 +155,20 @@ function check()
               <input name="newtablepre" type="text" id="newtablepre" size="18"> 
               <input name="Submit4" type="submit" id="Submit4" onClick="document.ebakchangetb.phome.value='ReplaceTable';document.ebakchangetb.action='phome.php';" value="替换选中表名">
             </td>
-          </tr>
-        </table>-->
-        <table width="100%" class="tb" >
+          </tr>-->
+
+        <table class="layui-table" style="min-width:1170px;">
           <tr <?php  if($act=="y"){echo 'style="display:none;"';}  ?>> 
             <td width="22%" ><input style="display:none;" type="radio" name="baktype" value="0"<?php  echo $dbaktype==0?' checked':'' ?>> 
               文件大小设置：</td>
-            <td width="78%" height="23"> 每组备份大小: 
+            <td width="78%"> 每组备份大小: 
               <input name="filesize" type="text" id="filesize" value="1024" size="6">
               KB <font color="#666666">(1 MB = 1024 KB)</font></td>
           </tr>
           <tr style="display:none;"> 
             <td><input type="radio" name="baktype" value="1"<?php  echo $dbaktype==1?' checked':'' ?>> 
               <strong>按记录数备份</strong></td>
-            <td height="23">每组备份 
+            <td>每组备份 
               <input name="bakline" type="text" id="bakline" value="1000" size="6">
               条记录， 
               <input name="autoauf" type="checkbox" id="autoauf" value="1"<?php  echo $dautoauf==1?' checked':'' ?>>
@@ -158,36 +176,36 @@ function check()
           </tr>
           <tr style="display:none;"> 
             <td>备份数据库结构</td>
-            <td height="23"><input name="bakstru" type="checkbox" id="bakstru" value="1"<?php  echo $dbakstru==1?' checked':'' ?>>
+            <td><input name="bakstru" type="checkbox" id="bakstru" value="1"<?php  echo $dbakstru==1?' checked':'' ?>>
               是 <font color="#666666">(没特殊情况，请选择)</font></td>
           </tr>
 		 
           <tr style="display:none;"> 
             <td>数据编码</td>
-            <td height="23"> <select name="dbchar" id="dbchar">
+            <td> <select name="dbchar" id="dbchar">
 				<option value="utf8" selected>utf8</option>              
               </select><font color="#666666"> (海洋cms默认使用utf8编码)</td>
           </tr>
           <tr style="display:none;">
             <td>数据存放格式</td>
-            <td height="23"><input type="radio" name="bakdatatype" value="0"<?php  echo $dbakdatatype==0?' checked':'' ?>>
+            <td><input type="radio" name="bakdatatype" value="0"<?php  echo $dbakdatatype==0?' checked':'' ?>>
               正常
               <input type="radio" name="bakdatatype" value="1"<?php  echo $dbakdatatype==1?' checked':'' ?>>
               十六进制方式<font color="#666666">(十六进制备份文件会占用更多的空间)</font></td>
           </tr>
           <tr <?php  if($act=="y"){echo 'style="display:none;"';}  ?>> 
             <td>存放目录</td>
-            <td height="23"> 
+            <td> 
               <?php  echo $bakpath ?>
               / 
               <input name="mypath" type="text" id="mypath" value="<?php  echo $mypath ?>" size="28"> 
               <font color="#666666"> 
-              <input type="button" name="Submit2" value="选择目录" onclick="javascript:window.open('ChangePath.php?change=1&toform=ebakchangetb','','width=750,height=500,scrollbars=yes');">
+              <input type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-xs" name="Submit2" value="选择目录" onclick="showv('ChangePath.php?change=1&toform=ebakchangetb');">
               (目录不存在，系统会自动建立)</font></td>
           </tr>
           <tr style="display:none;"> 
             <td>备份选项</td>
-            <td height="23">导入方式: 
+            <td>导入方式: 
               <select name="insertf" id="select">
                 <option value="replace"<?php  echo $dinsertf=='replace'?' selected':'' ?>>REPLACE</option>
                 <option value="insert"<?php  echo $dinsertf=='insert'?' selected':'' ?>>INSERT</option>
@@ -202,13 +220,13 @@ function check()
           </tr>
           <tr <?php  if($act=="y"){echo 'style="display:none;"';}  ?>> 
             <td valign="top">备份说明<br> <font color="#666666">(系统会生成一个readme.txt)</font></td>
-            <td height="23"><textarea name="readme" cols="80" rows="2" id="readme"><?php  echo $dreadme ?></textarea></td>
+            <td><textarea name="readme" cols="80" rows="2" id="readme"><?php  echo $dreadme ?></textarea></td>
           </tr>
 		  <!---
           <tr> 
             <td valign="top">去除自增值的字段列表：<br> <font color="#666666">(格式：<strong>表名.字段名</strong><br>
               多个请用&quot;,&quot;格开)</font></td>
-            <td height="23"><textarea name="autofield" cols="80" rows="5" id="autofield"><?php  echo $dautofield ?></textarea></td>
+            <td><textarea name="autofield" cols="80" rows="5" id="autofield"><?php  echo $dautofield ?></textarea></td>
           </tr>-->
         </table>
       </td>
@@ -219,20 +237,20 @@ function check()
  </tr>
 
     <tr>
-      <td height="25" bgcolor="#FFFFFF"><table width="100%" border="0" align="left" cellpadding="3" cellspacing="1">
-          <tr bgcolor="#DBEAF5"> 
-            <td width="5%" height="23"> <div align="left">选择</div></td>
-            <td width="27%" height="23" bgcolor="#DBEAF5"> 
+      <td><table class="layui-table" style="min-width:1170px;">
+          <tr  style="background-color: #F6F6F6;"> 
+            <td width="5%"> <div align="left">选择</div></td>
+            <td width="27%"> 
               <div align="left">表名</div></td>
-            <td width="13%" height="23" bgcolor="#DBEAF5"> 
+            <td width="13%"> 
               <div align="left">类型</div></td>
-            <td width="15%" bgcolor="#DBEAF5">
+            <td width="15%">
 <div align="left">编码</div></td>
-            <td width="15%" height="23"> 
+            <td width="15%"> 
               <div align="left">记录数</div></td>
-            <td width="14%" height="23"> 
+            <td width="14%"> 
               <div align="left">大小</div></td>
-            <td width="11%" height="23"> 
+            <td width="11%"> 
               <div align="left">碎片</div></td>
           </tr>
           <?php 
@@ -265,25 +283,25 @@ function check()
 			$collation=$r[Collation]?$r[Collation]:'---';
 		   ?>
           <tr id=tb<?php  echo $r[Name] ?>> 
-            <td height="23"> <div align="left"> 
+            <td> <div align="left"> 
                 <input name="tablename[]" type="checkbox" id="tablename[]" value="<?php  echo $r[Name] ?>" onclick="if(this.checked){tb<?php  echo $r[Name] ?>.style.backgroundColor='#F1F7FC';}else{tb<?php  echo $r[Name] ?>.style.backgroundColor='#ffffff';}"<?php  echo $tbchecked ?>>
               </div></td>
-            <td height="23"> <div align="left">
+            <td> <div align="left">
                 <?php  echo $r[Name] ?>
 </div></td>
-            <td height="23"> <div align="left">
+            <td> <div align="left">
                 <?php  echo $r[Type]?$r[Type]:$r[Engine] ?>
               </div></td>
             <td><div align="left">
 				<?php  echo $collation ?>
               </div></td>
-            <td height="23"> <div align="left">
+            <td> <div align="left">
                 <?php  echo $r[Rows] ?>
               </div></td>
-            <td height="23"> <div align="left">
+            <td> <div align="left">
                 <?php  echo Ebak_ChangeSize($datasize) ?>
               </div></td>
-            <td height="23"> <div align="left">
+            <td> <div align="left">
                 <?php  echo Ebak_ChangeSize($r[Data_free]) ?>
               </div></td>
           </tr>
@@ -293,14 +311,14 @@ function check()
           
         </table></td>
     </tr><tr>
-            <td height="23">总表数:<?php  echo $tablenum ?>&nbsp;&nbsp;&nbsp;&nbsp;总数据条目:<?php  echo $rownum ?>&nbsp;&nbsp;&nbsp;&nbsp;空间占用:<?php  echo Ebak_ChangeSize($totaldatasize) ?></td></tr>
+            <td>总表数:<?php  echo $tablenum ?>&nbsp;&nbsp;&nbsp;&nbsp;总数据条目:<?php  echo $rownum ?>&nbsp;&nbsp;&nbsp;&nbsp;空间占用:<?php  echo Ebak_ChangeSize($totaldatasize) ?></td></tr>
     <tr class="header"> 
-      <td height="25">
+      <td>
 <div id="go">
-          <input type="submit" name="Submit" <?php  if($act=="y"){echo 'style="display:none;"';}  ?> value="开始备份" onclick="document.ebakchangetb.phome.value='DoEbak';document.ebakchangetb.action='phomebak.php';">
-          <input type="submit" name="Submit2" <?php  if($act=="b"){echo 'style="display:none;"';}  ?> value="修复数据表" onclick="document.ebakchangetb.phome.value='DoRep';document.ebakchangetb.action='phome.php';">
+          <input type="submit" class="layui-btn" name="Submit" <?php  if($act=="y"){echo 'style="display:none;"';}  ?> value="开始备份" onclick="document.ebakchangetb.phome.value='DoEbak';document.ebakchangetb.action='phomebak.php';">
+          <input type="submit" class="layui-btn" name="Submit2" <?php  if($act=="b"){echo 'style="display:none;"';}  ?> value="修复数据表" onclick="document.ebakchangetb.phome.value='DoRep';document.ebakchangetb.action='phome.php';">
           &nbsp;&nbsp; &nbsp;&nbsp; 
-          <input type="submit" name="Submit22" <?php  if($act=="b"){echo 'style="display:none;"';}  ?> value="优化数据表" onclick="document.ebakchangetb.phome.value='DoOpi';document.ebakchangetb.action='phome.php';">
+          <input type="submit" class="layui-btn" name="Submit22" <?php  if($act=="b"){echo 'style="display:none;"';}  ?> value="优化数据表" onclick="document.ebakchangetb.phome.value='DoOpi';document.ebakchangetb.action='phome.php';">
         &nbsp;&nbsp; &nbsp;&nbsp;  
 		</div></td>
     </tr>
@@ -318,12 +336,6 @@ if($ckmaxinputnum)
 	</script>
 <?php 
 }
- ?>
-<?php 
-echo "<div align=center>";
-	$starttime = explode(' ', $starttime);
-	$endtime = explode(' ', microtime()); 
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">视频管理系统</font></a></td></tr></table></div>\n</body>\n</html>";
  ?>
 
 </body>

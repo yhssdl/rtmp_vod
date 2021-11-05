@@ -266,10 +266,10 @@ else if($step==4)
 	fclose($fp);
 
 	//增加管理员帐号
-	$adminquery = "INSERT INTO `{$dbprefix}admin` (name,password,logincount,loginip,logintime,groupid,state) VALUES ('$adminuser', '".substr(md5($adminpwd),5,20)."', 0, '127.0.0.1', '".time()."', 1, 1);";
+	$adminquery = "INSERT INTO `{$dbprefix}admin` (name,nickname,password,logincount,loginip,logintime,groupid,vod_list,state,publish,tid) VALUES ('$adminuser','$adminuser', '".substr(md5($adminpwd),5,20)."', 0, '127.0.0.1', '".time()."', 1,'0', 1,1,0);";
 	mysqli_query($conn,$adminquery);
 	
-	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'http://www.seacms.net', '海洋cms', '', '', '', '1432312055', '1');";
+	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'https://gitee.com/yhssdl', '深蓝软件', '', '', '', '1432312055', '1');";
 	mysqli_query($conn,$flinkquery);
 
   mysqli_close($conn);

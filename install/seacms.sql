@@ -1,15 +1,19 @@
 DROP TABLE IF EXISTS `sea_admin`;
 CREATE TABLE `sea_admin` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
-  `name` varchar(20) NOT NULL default '',
-  `password` varchar(32) NOT NULL default '',
-  `logincount` smallint(6) NOT NULL default '0',
-  `loginip` varchar(16) NOT NULL default '',
-  `logintime` int(10) NOT NULL default '0',
+  `name` varchar(20) NOT NULL DEFAULT '',
+  `nickname` varchar(32) NOT NULL DEFAULT '',
+  `password` varchar(32) NOT NULL DEFAULT '',
+  `logincount` smallint(6) NOT NULL DEFAULT 0,
+  `loginip` varchar(16) NOT NULL DEFAULT '',
+  `logintime` int(10) NOT NULL DEFAULT 0,
   `groupid` smallint(4) NOT NULL,
-  `state` smallint(4) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  `vod_list` varchar(255) NOT NULL DEFAULT '0',
+  `state` smallint(4) NOT NULL DEFAULT 1,
+  `publish` tinyint(1) NOT NULL DEFAULT 1,
+  `tid` int(11) NOT NULL DEFAULT 0 COMMENT '默认目录',
+   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sea_arcrank`;
 CREATE TABLE `sea_arcrank` (
@@ -582,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `sea_danmaku_report` (
   `ip` varchar(16) NOT NULL COMMENT '发送弹幕的IP地址',
   PRIMARY KEY (`text`),
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sea_danmaku_ip`;
 CREATE TABLE IF NOT EXISTS `sea_danmaku_ip` (
@@ -590,7 +594,7 @@ CREATE TABLE IF NOT EXISTS `sea_danmaku_ip` (
   `c` int(5) NOT NULL DEFAULT '1' COMMENT '规定时间内的发送次数',
   `time` int(10) NOT NULL,
   PRIMARY KEY (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sea_danmaku_list`;
 CREATE TABLE IF NOT EXISTS `sea_danmaku_list` (
@@ -606,4 +610,56 @@ CREATE TABLE IF NOT EXISTS `sea_danmaku_list` (
   `user` varchar(20) NOT NULL COMMENT '用户名',
   PRIMARY KEY (`cid`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `sea_subscribe` (
+  `id` int(11) NOT NULL auto_increment,
+  `title` text DEFAULT NULL COMMENT '视频标题',
+  `vid` int(11) NOT NULL DEFAULT 0 COMMENT '直播流id号',
+  `tid` int(11) NOT NULL DEFAULT 0 COMMENT '所在目录',
+  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '发布id',
+  `aid` int(11) NOT NULL DEFAULT 0 COMMENT '创建人ID',
+  `publish` tinyint(1) NOT NULL DEFAULT 1,
+  `v_pic` text NOT NULL,
+  `start` datetime NOT NULL COMMENT '开始录制时间',
+  `end` datetime NOT NULL COMMENT '结束录制时间',
+  `v_publisharea` char(20) NOT NULL COMMENT '年级',
+  `v_director` varchar(200) NOT NULL COMMENT '班级',
+  `user` text DEFAULT NULL COMMENT '教师姓名',
+  `file_name` text NOT NULL COMMENT '文件名',
+  `stat` int(11) NOT NULL DEFAULT 0 COMMENT '0预约1录制2待转3转码4待发5完成6错误',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+CREATE TABLE IF NOT EXISTS `sea_vod` (
+  `id` int(11) NOT NULL auto_increment,
+  `title` text DEFAULT NULL COMMENT '直播流标题',
+  `app_name` text DEFAULT NULL COMMENT '直接流app名称',
+  `stream_name` text DEFAULT NULL COMMENT '流频道名称',
+  `width` int(11) NOT NULL DEFAULT 0 COMMENT '视频分辨率X',
+  `height` int(11) NOT NULL DEFAULT 0 COMMENT '视频分辨率Y',
+  `can_rec` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否可录像',
+  `file_name` text DEFAULT NULL COMMENT '正在录像的文件名',
+  `stat` int(11) NOT NULL DEFAULT 0 COMMENT '状态：0为没推送，1为直播中，2为录制中',
+   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `sea_class_time` (
+  `id` int(11) NOT NULL  auto_increment,
+  `title` varchar(100) NOT NULL,
+  `week1s` time NOT NULL,
+  `week2s` time NOT NULL,
+  `week3s` time NOT NULL,
+  `week4s` time NOT NULL,
+  `week5s` time NOT NULL,
+  `week6s` time NOT NULL,
+  `week7s` time NOT NULL,
+  `week1e` time NOT NULL,
+  `week2e` time NOT NULL,
+  `week3e` time NOT NULL,
+  `week4e` time NOT NULL,
+  `week5e` time NOT NULL,
+  `week6e` time NOT NULL,
+  `week7e` time NOT NULL,
+   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

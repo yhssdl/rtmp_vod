@@ -218,7 +218,7 @@ elseif($action=="existpic")
 	$dsql->SetQuery($sql);
 	$dsql->Execute('existpic');
 	echoHead();
-	echo "正在更新影片图片地址。。。<br>";
+	echo "正在更新视频图片地址。。。<br>";
 	while($row = $dsql->GetArray('existpic'))
 	{
 		if($row[v_pic]!=''&&strpos($row[v_pic],'uploads/')===0){
@@ -746,7 +746,7 @@ function echoFieldOptions()
 	$fieldOptionArray[11][0]="数据点击量" ; $fieldOptionArray[11][1]="v_hit";
 	$fieldOptionArray[12][0]="播放地址/来源" ; $fieldOptionArray[12][1]="v_playdata";
 	$fieldOptionArray[13][0]="下载地址" ; $fieldOptionArray[13][1]="v_downdata";
-	$fieldOptionArray[14][0]="影片导演" ; $fieldOptionArray[14][1]="v_director";
+	$fieldOptionArray[14][0]="视频导演" ; $fieldOptionArray[14][1]="v_director";
 	$fieldOptionArray[15][0]="数据学期" ; $fieldOptionArray[15][1]="v_lang";
 	$fieldOptionArray[16][0]="顶的次数" ; $fieldOptionArray[16][1]="v_digg";
 	$fieldOptionArray[17][0]="踩的次数" ; $fieldOptionArray[17][1]="v_tread";
@@ -756,8 +756,8 @@ function echoFieldOptions()
 	$fieldOptionArray[21][0]="电视台" ; $fieldOptionArray[21][1]="v_tvs";
 	$fieldOptionArray[22][0]="关键词" ; $fieldOptionArray[22][1]="v_tags";
 	$fieldOptionArray[23][0]="发行公司" ; $fieldOptionArray[23][1]="v_company";
-	$fieldOptionArray[24][0]="影片别名" ; $fieldOptionArray[24][1]="v_nickname";
-	$fieldOptionArray[25][0]="剧情分类" ; $fieldOptionArray[25][1]="v_jq";
+	$fieldOptionArray[24][0]="视频别名" ; $fieldOptionArray[24][1]="v_nickname";
+	$fieldOptionArray[25][0]="课程分类" ; $fieldOptionArray[25][1]="v_jq";
 	$fieldOptionArray[26][0]="豆瓣评分" ; $fieldOptionArray[26][1]="v_douban";
 	$fieldOptionArray[27][0]="时光网评分" ; $fieldOptionArray[27][1]="v_mtime";
 	$fieldOptionArray[28][0]="IMDB评分" ; $fieldOptionArray[28][1]="v_imdb";
@@ -766,8 +766,8 @@ function echoFieldOptions()
 	$fieldOptionArray[31][0]="月点击量" ; $fieldOptionArray[31][1]="v_monthhit";
 	$fieldOptionArray[32][0]="视频长度" ; $fieldOptionArray[32][1]="v_len";
 	$fieldOptionArray[33][0]="视频集数" ; $fieldOptionArray[33][1]="v_total";
-	$fieldOptionArray[34][0]="影片备注" ; $fieldOptionArray[34][1]="v_note";
-	$fieldOptionArray[35][0]="影片版本" ; $fieldOptionArray[35][1]="v_ver";
+	$fieldOptionArray[34][0]="视频备注" ; $fieldOptionArray[34][1]="v_note";
+	$fieldOptionArray[35][0]="视频版本" ; $fieldOptionArray[35][1]="v_ver";
 	$fieldOptionArray[36][0]="备用说明" ; $fieldOptionArray[36][1]="v_longtxt";
 	$fieldOptionArray[37][0]="幻灯图片" ; $fieldOptionArray[37][1]="v_spic";
 	$fieldOptionArray[38][0]="背景图片" ; $fieldOptionArray[38][1]="v_gpic";

@@ -14,37 +14,37 @@ class Collect
 	 * */
 	public function xml_db($video,$localId)
 	{  
-		$v_data['v_name'] =  htmlspecialchars($video->name);//影片名称
+		$v_data['v_name'] =  htmlspecialchars($video->name);//视频名称
 		$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
-		$v_data['v_pic'] = (String)$video->pic;//影片图片地址
-		$v_data['v_state'] = (String)$video->state;//影片连载状态
-		$v_data['v_lang'] = (String)$video->lang;//影片学期
-		$v_data['v_publisharea'] =(String) $video->area;//影片年级
-		$v_data['v_publishyear'] = (String)$video->year;//影片年份
-		$v_data['v_note'] = (String)$video->note;//影片备注
-		$v_data['v_tags'] = htmlspecialchars($video->keywords);//影片关键词
-		$v_data['v_nickname'] = htmlspecialchars($video->nickname);//影片别名
-		$v_data['v_reweek'] =(String) $video->reweek;//影片更新周期
-		$v_data['v_douban'] = (String)$video->douban;//影片豆瓣评分
-		$v_data['v_mtime'] = (String)$video->mtime;//影片时光网评分
-		$v_data['v_imdb'] = (String)$video->imdb;//影片imdb评分
-		$v_data['v_tvs'] = (String)$video->tvs;//影片上映电视台
-		$v_data['v_company'] = (String)$video->company;//影片发行公司
-		$v_data['v_ver'] = (String)$video->ver;//影片版本
-		$v_data['v_longtxt'] =(String) $video->longtxt;//影片备用备注信息
-		$v_data['v_actor'] = htmlspecialchars($video->actor);//影片演员
+		$v_data['v_pic'] = (String)$video->pic;//视频图片地址
+		$v_data['v_state'] = (String)$video->state;//视频连载状态
+		$v_data['v_lang'] = (String)$video->lang;//视频学期
+		$v_data['v_publisharea'] =(String) $video->area;//视频年级
+		$v_data['v_publishyear'] = (String)$video->year;//视频年份
+		$v_data['v_note'] = (String)$video->note;//视频备注
+		$v_data['v_tags'] = htmlspecialchars($video->keywords);//视频关键词
+		$v_data['v_nickname'] = htmlspecialchars($video->nickname);//视频别名
+		$v_data['v_reweek'] =(String) $video->reweek;//视频更新周期
+		$v_data['v_douban'] = (String)$video->douban;//视频豆瓣评分
+		$v_data['v_mtime'] = (String)$video->mtime;//视频时光网评分
+		$v_data['v_imdb'] = (String)$video->imdb;//视频imdb评分
+		$v_data['v_tvs'] = (String)$video->tvs;//视频上映电视台
+		$v_data['v_company'] = (String)$video->company;//视频发行公司
+		$v_data['v_ver'] = (String)$video->ver;//视频版本
+		$v_data['v_longtxt'] =(String) $video->longtxt;//视频备用备注信息
+		$v_data['v_actor'] = htmlspecialchars($video->actor);//视频演员
 		$v_data['v_actor'] = str_replace('%', ' ', $v_data['v_actor']);
-		$v_data['v_director'] = htmlspecialchars($video->director);//影片导演
+		$v_data['v_director'] = htmlspecialchars($video->director);//视频导演
 		$v_data['v_director']  = str_replace('%', ' ', $v_data['v_director'] );
-		$v_data['v_des'] = htmlspecialchars($video->des);//影片简介
+		$v_data['v_des'] = htmlspecialchars($video->des);//视频简介
 		$v_data['v_total'] = (String)$video->episode;//总集数
-		$v_data['v_len'] = (String)$video->len;//影片时长
-		$v_data['v_total'] = (String)$video->total;//影片集数
-		$v_data['v_jq'] = (String)$video->jq;//剧情分类
+		$v_data['v_len'] = (String)$video->len;//视频时长
+		$v_data['v_total'] = (String)$video->total;//视频集数
+		$v_data['v_jq'] = (String)$video->jq;//课程分类
 		if($v_data['v_actor']=="" OR empty($v_data['v_actor'])){$v_data['v_actor']="内详";}
 		if($v_data['v_director']=="" OR empty($v_data['v_director'])){$v_data['v_director']="内详";}
-		//$flag = $video->dl->dd['flag'];//影片前缀，属于哪个资源库
-		//$v_data['v_playdata'] = $flag."$$".$video->dl->dd;//影片数据地址
+		//$flag = $video->dl->dd['flag'];//视频前缀，属于哪个资源库
+		//$v_data['v_playdata'] = $flag."$$".$video->dl->dd;//视频数据地址
 		$zzt=count($video->dl->dd);
 		$playerKindsfile=sea_ROOT.'/data/admin/playerKinds.xml';
 					$xml = simplexml_load_file($playerKindsfile);
@@ -73,7 +73,7 @@ class Collect
 		$v_data['v_enname'] = Pinyin($v_data['v_name']);
 		$v_data['v_letter'] = strtoupper(substr($v_data['v_enname'],0,1));
 		
-		// 影片关键词过滤 跳过采集
+		// 视频关键词过滤 跳过采集
 		global $cfg_cjjump;
 		if($cfg_cjjump !=""){
 			$jumparr = explode('|',$cfg_cjjump);
@@ -82,7 +82,7 @@ class Collect
 						  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
 					  }
 		}
-		// 影片关键词替换
+		// 视频关键词替换
 		global $cfg_cjreplace;
 		if($cfg_cjreplace !=""){		
 			$r0 = explode('|',$cfg_cjreplace);
@@ -298,10 +298,10 @@ class Collect
 				  unset($downurlarray);
 				  if(empty($v_data['v_name']))
 				  {
-					  return "{$echo_id} ".$lurl."\t<font color=red>影片名为空，跳过保存</font>.<br>";
+					  return "{$echo_id} ".$lurl."\t<font color=red>视频名为空，跳过保存</font>.<br>";
 				  }
 				  
-				  // 影片关键词过滤 跳过采集
+				  // 视频关键词过滤 跳过采集
 				  global $cfg_cjjump;
 				  if($cfg_cjjump !=""){
 					  $jumparr = explode('|',$cfg_cjjump);
@@ -310,7 +310,7 @@ class Collect
 						  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
 					  }
 				  }
-				// 影片关键词替换
+				// 视频关键词替换
 				global $cfg_cjreplace;
 				if($cfg_cjreplace !=""){				
 					$r0 = explode('|',$cfg_cjreplace);
@@ -455,12 +455,12 @@ class Collect
 
 				}else
 				{
-					//if 勾选[开启不添加新影片]
+					//if 勾选[开启不添加新视频]
 				   if(strpos($cfg_gatherset,'1')!==false)
 				   {
-					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新影片功能<br>";
+					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新视频功能<br>";
 				   }
-				   //else 不勾选[开启不添加新影片]
+				   //else 不勾选[开启不添加新视频]
 				   return $autocol_str.$this->_insert_database($v_data);
 				}
 			}else
@@ -511,12 +511,12 @@ class Collect
 		}//else 不 同名
 		else{
 			
-			//if 开启不添加新影片
+			//if 开启不添加新视频
 			if(strpos($cfg_gatherset,'1')!==false)
 			{
-				return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新影片功能<br>";
+				return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新视频功能<br>";
 			}
-			// else 以新影片添加
+			// else 以新视频添加
 			return $autocol_str.$this->_insert_database($v_data);
 		}
 	}

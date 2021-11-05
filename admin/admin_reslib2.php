@@ -465,13 +465,11 @@ function getTemplateType($filename){
 function viewFoot()
 {
 	global $dsql,$starttime;
-	echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\">视频管理系统</a></td></tr></table></div>\n</body>\n</html>";
+	echo "<hr><div style='text-align:center'>本页面用时".
+	round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6)."秒,共执行".$dsql->QueryTimes()."次数据查询<br><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">深蓝视频管理系统</font></a></div>";
 }
-
 function viewHead($str)
 {
 ?>
@@ -945,8 +943,8 @@ function intoDatabase($url,$gtype)
 	$recordcount = $xml->list['recordcount'];
 	foreach($xml->list->video as $video)
 	{
-		$xmltid =  $video->tid;//影片分类id
-		$name =  $video->name;//影片名称
+		$xmltid =  $video->tid;//视频分类id
+		$name =  $video->name;//视频名称
 		$localId = getBindedLocalId($ressite.'_'.$xmltid);//入库后本地id
 		$data = "$$".$video->dl->dd;
 		if(!empty($name)&&!empty($data))

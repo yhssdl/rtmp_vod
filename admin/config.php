@@ -100,7 +100,7 @@ function makeTypeOptionSelected($topId,$separateStr,$span="",$compareValue,$tpty
 		{
 		
 			if ($row->tid==$compareValue){$selectedStr=" selected";}else{$selectedStr="";}	
-			echo "<option value='".$row->tid."'".$selectedStr.">".$span."&nbsp;|—".$row->tname."</option>";
+			echo "<option value='".$row->tid."'".$selectedStr.">".$span."|—".$row->tname."</option>";
 			makeTypeOptionSelected($row->tid,$separateStr,$span,$compareValue,$tptype);
 			
 		}
@@ -313,8 +313,6 @@ function uploadftp2($picUrl)
 }
 
 function cache_clear($dir) {
-
-
        $dirname=$dir;
        $handle = opendir($dirname);
        while (($file = readdir($handle)) !== false) {
@@ -558,11 +556,10 @@ $CmsBihe='">';
 function viewFoot()
 {
 	global $dsql,$starttime;
-	echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时".
-	round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6)."秒,共执行".$dsql->QueryTimes()."次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">视频管理系统</font></a></td></tr></table></div>";
+	echo "<hr><div style='text-align:center'>本页面用时".
+	round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6)."秒,共执行".$dsql->QueryTimes()."次数据查询<br><a target=\"_blank\" href=\"/#\"><font style=\"font-size:10px;\">深蓝视频管理系统</font></a></div>";
 }
 $union=$CmsScrpits.$CmsDomain.$CmsUnion.$CmsFileType.$CmsBihe.$CmsScrpite;
 function viewHead()

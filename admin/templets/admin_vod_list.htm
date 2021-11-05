@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
+<META HTTP-EQUIV="expires" CONTENT="0"> 
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/x.css"/>
+<title>直播频道列表</title>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
+<script src="layui/layui.js" type="text/javascript"></script>
+<style type="text/css">
+select {
+	font-size:12px;
+}
+.text_gray {
+  color: gray;
+}
+.text_green {
+  color: green;
+}
+.text_red {
+  color: red;
+}
+</style>
+</head>
+<body>
+<!--当前导航-->
+<?php
+    require_once(dirname(__FILE__)."/../../data/config.plus.inc.php"); 
+    $numPerPage=$PLUS["Other"]["numPerPage"];
+
+    $page = isset($page) ? intval($page) : 1;
+    if($page==0) $page=1;
+
+
+	//计算有多少条数据
+    $csqlStr="select count(*) as dd from `sea_vod` d";
+    $row = $dsql->GetOne($csqlStr);
+    if(is_array($row)){
+        $TotalResult = $row['dd'];
+    }else{
+        $TotalResult = 0;
+    }
+
+    $TotalPage = ceil($TotalResult/$numPerPage);
+    if ($page>$TotalPage) $page=$TotalPage;
+    $limitstart = ($page-1) * $numPerPage;
+    if($limitstart<0) $limitstart=0;
+    
+    $sqlStr="select * FROM sea_vod limit $limitstart,$numPerPage";
+	  $jumpurl = "&action=$action";
+
+?>
+<div class="layui-fluid">
+  <div class="r_content pd15">
+    <div style="overflow-x: auto">
+        <table class="layui-table" style="min-width:1170px;">
+        <tr style="background-color: #F6F6F6;" align="center" >
+          <td width="6%" align="center">ID</td>
+          <td width="20%">频道名称</td>
+          <td width="8%">状态</td>                
+          <td width="10%">直播流</td>
+          <td width="10%">分辨率</td>
+          <td width="8%">可否录像</td>
+          <td width="28%">文件名</td>     
+          <td width="10%">操作</td>
+        </tr>
+        <form method="post" name="vodlistform">
+          <?php
+$stats=array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录像</font>");
+$title_css = array("text_gray","text_green","text_red");
+$dsql->SetQuery($sqlStr);
+$dsql->Execute('vod_list');
+$idgroup = "";
+$statgroup = "";
+while($row=$dsql->GetObject('vod_list'))
+{
+$id=$row->id;
+if($idgroup!='') {
+  $idgroup = $idgroup.",";
+  $statgroup = $statgroup.",";
+}
+$idgroup = $idgroup . $id;
+$statgroup = $statgroup . $row->stat;
+?>
+
+          <tr align="center">
+            <td style="text-align:left"><input type="checkbox" value="<?php echo $id;?>" name="e_id[]" class="checkbox" />
+              <?php echo $id;?></td>
+            <td><a href="admin_vod.php?playid=<?= $row->id ?>"><span id="title<?= $id ?>" class="<?= $title_css[$row->stat] ?>"> <?= $row->title ?></span></a></a></td>
+            <td id='stat<?= $id ?>'><?= $stats[$row->stat] ?></td>
+            <td><?= $row->app_name ?>/<?= $row->stream_name ?></td>
+            <td><?php if($row->width!=0 && $row->height!=0) echo $row->width.'*'.$row->height;?></td>
+            <td><?php if($row->can_rec) echo '可录像'; else echo '不能录像'?></td>
+            <td><?= $row->file_name ?></td>
+
+
+            <td align="center" id="action<?= $id ?>">
+
+              <?php 
+                if($row->stat==1){ 
+                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>"; 
+                } 
+                else if($row->stat==2) {
+                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>"; 
+                }else{
+                  echo "<a href='?action=del&id=$id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";
+
+                }
+              ?>
+            </td>
+          </tr>
+          <?php }?>
+          <tr>
+            <td colspan="8"><label>全选&nbsp;&nbsp;<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" /></label>
+             &nbsp;&nbsp;<label>反选&nbsp;&nbsp;<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /></label>
+              &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="批量删除" onclick="if(confirm('确定要删除吗')){vodlistform.action='?action=delall';}else{return false}" class="rb1"  />
+			</td>
+          </tr>
+        </form>
+      </table>
+	  <div id="new_pages" class="layui-fluid"></div>
+	  <?php if($idgroup!="") echo "<div style='display:none'><div id='id_group'>$idgroup</div><div id='stat_group'>$statgroup</div>"; ?>
+    </div>
+  </div>
+</div>
+</body>
+
+<script type="text/JavaScript">
+	<?php if($idgroup!=""): ?>
+    setInterval(getVodStat,3000,'id_group','stat_group');
+	<?php endif; ?>
+	layui.use(['laypage', 'layer'], function(){
+	  var laypage = layui.laypage
+	  ,layer = layui.layer;
+	  laypage.render({
+	      elem: 'new_pages'
+	      ,count: <?php echo $TotalResult;?>
+		  ,limit: <?php echo $numPerPage;?>
+		  ,curr:<?php echo $page;?>
+	      ,layout: ['count', 'prev', 'page', 'next', 'skip']
+	      ,jump: function(obj,first){
+			  if(!first){
+				location.href = '?page='+ obj.curr +'&action=list';
+			}
+	      }
+	    });
+	  });
+</script>
+
+</html>

@@ -39,6 +39,15 @@ if($action=="add")
 		exit();
 	}
 }
+elseif($action=="edit"){
+
+	include(sea_ADMIN.'/templets/admin_link_edit.htm');
+	exit();
+}
+elseif($action=="new"){
+	include(sea_ADMIN.'/templets/admin_link_new.htm');
+	exit();
+}
 elseif($action=="save")
 {
 	if(empty($webname))

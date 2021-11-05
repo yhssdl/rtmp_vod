@@ -1,0 +1,152 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="robots" content="noindex,nofollow">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="img/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+		<title>新增节次</title>
+		<script src="editor/kindeditor-min.js" type="text/javascript"></script>
+		<script src="editor/lang/zh-CN.js" type="text/javascript"></script>
+		<script src="js/common.js" type="text/javascript"></script>
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script src="js/main.js" type="text/javascript"></script>
+		<script src="layui/layui.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<!--当前导航-->
+		<div class="layui-card">
+			<div class="layui-card-header">修改课程节次</div>
+			<div class="layui-card-body">
+				<form action="?action=save&acttype=edit" method="post" name="addform" id="addform" class="layui-form">
+					<input type="hidden" value="<?= $id ?>" name="id" id="id" />
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">统一时间：</label>
+						<div class="layui-input-block">
+							<input type="checkbox" lay-filter="same_time" name="same_time"  title="使用统一的时间" lay-skin="primary" <?php if($is_same) echo "checked"; ?>  value="1" />
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">节次标题：</label>
+						<div class="layui-input-block">
+							<input type="text" id="v_title" name="v_title" placeholder="请输入标题"
+								autocomplete="off" class="layui-input" lay-verify="required"  value="<?= $v_title ?>"/>
+						</div>
+					</div>
+
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">周一时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="week1" id="week1"  lay-key="1" size="8"
+								class="layui-input time-item" lay-verify="required" value="<?= $s1 ?> - <?= $e1 ?>"/>
+						</div>
+					</div>
+
+					<div id="other_time" <?php if($is_same) echo "style='display: none;'"; ?>>
+						<div class="layui-form-item">
+							<label class="layui-form-label">周二时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week2" id="week2"  lay-key="2" size="8"
+									class="layui-input time-item" value="<?= $s2 ?> - <?= $e2 ?>"/>
+							</div>
+						</div>
+	
+						<div class="layui-form-item">
+							<label class="layui-form-label">周三时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week3" id="week3"  lay-key="3" size="8"
+									class="layui-input time-item" value="<?= $s3 ?> - <?= $e3 ?>"/>
+							</div>
+						</div>
+	
+						<div class="layui-form-item">
+							<label class="layui-form-label">周四时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week4" id="week4"  lay-key="4" size="8"
+									class="layui-input time-item" value="<?= $s4 ?> - <?= $e4 ?>"/>
+							</div>
+						</div>
+	
+						<div class="layui-form-item">
+							<label class="layui-form-label">周五时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week5" id="week5"  lay-key="5" size="8"
+									class="layui-input time-item" value="<?= $s5 ?> - <?= $e5 ?>"/>
+							</div>
+						</div>
+	
+						<div class="layui-form-item">
+							<label class="layui-form-label">周六时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week6" id="week6"  lay-key="6" size="8"
+									class="layui-input time-item" value="<?= $s6 ?> - <?= $e6 ?>"/>
+							</div>
+						</div>
+	
+						<div class="layui-form-item">
+							<label class="layui-form-label">周日时间：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="week7" id="week7"  lay-key="7" size="8"
+									class="layui-input time-item" value="<?= $s7 ?> - <?= $e7 ?>"/>
+							</div>
+						</div>
+						
+					</div>
+
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<input type="submit" name="Submit" value="确定提交" lay-submit="" class="layui-btn"/>
+							<input type="reset" name="reset" value="清除重置" class="layui-btn layui-btn-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script>
+			layui.use(['form','laydate'], function() {
+				var laydate = layui.laydate;
+
+				//时间选择器
+				//同时绑定多个
+				lay('.time-item').each(function(){
+					laydate.render({
+						elem: this,
+						type: 'time',
+						range: true
+					});
+				}); 
+
+
+				form = layui.form;
+				//监听多选框点击事件
+				form.on('checkbox(same_time)', function (data) {
+				　　console.log( data );　　//打印当前选择的信息
+					if( data.elem.checked){　　　　　　//判断当前多选框是选中还是取消选中
+						document.getElementById("other_time").style.display = "none";
+					} else{
+						document.getElementById("other_time").style.display = "block";
+						if(document.getElementById("week2").value=="") document.getElementById("week2").value=document.getElementById("week1").value;
+						if(document.getElementById("week3").value=="") document.getElementById("week3").value=document.getElementById("week1").value;
+						if(document.getElementById("week4").value=="") document.getElementById("week4").value=document.getElementById("week1").value;
+						if(document.getElementById("week5").value=="") document.getElementById("week5").value=document.getElementById("week1").value;
+						if(document.getElementById("week6").value=="") document.getElementById("week6").value=document.getElementById("week1").value;
+						if(document.getElementById("week7").value=="") document.getElementById("week7").value=document.getElementById("week1").value;
+					}
+				　　
+				});
+
+			});
+
+
+		</script>
+
+	</body>
+
+</html>

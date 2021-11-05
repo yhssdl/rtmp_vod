@@ -38,6 +38,7 @@ foreach($_GET as $_k=>$_v)
 
 foreach($_POST as $_k=>$_v)
 {
+
 	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
 	{
 		Header("Location:$jpurl");

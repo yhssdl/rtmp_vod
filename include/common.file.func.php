@@ -293,13 +293,13 @@ function GetIP()
 
 function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 {
-	global $cfg_basehost;
+	global $cfg_basehost,$cfg_cmspath;
 	if(empty($GLOBALS['cfg_phpurl']))
 	{
 		$GLOBALS['cfg_phpurl'] = '..';
 	}
 	$htmlhead  = "<html>\r\n<head>\r\n<title>提示信息</title>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no\">\r\n";
-	$htmlhead .= "<base target='_self'/>\r\n<style>body{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;min-height:60px;margin:5% auto 0;border: 1px solid #293846;border-radius: 4px;min-height: 200px;box-shadow: 0px 1px 2px rgba(0,0,0,0.1);border: 1px solid #0099CC;}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 50px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 32px;padding: 0px;line-height: 32px;font-size: 14px;color: #DFE4ED;text-align: left;background: #0099CC;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n<script>\r\n";
+	$htmlhead .= "<base target='_self'/>\r\n<style>{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;min-height:60px;margin:5% auto 0;border-radius: 2px;min-height: 200px;box-shadow:1px 1px 50px rgba(0,0,0,.3);}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 50px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 22px;padding: 10px;line-height: 22px;font-size: 14px;background:#eee;color: #333;text-align: left;border-bottom:1px solid #F0F0F0;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n";
 	$htmlfoot  = "</script>\r\n$extraJs</center>\r\n</body>\r\n</html>\r\n";
 
 	if($limittime==0)
@@ -315,10 +315,13 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 	{
 		if($limittime==0)
 		{
-			$litime = 5000;
+			$litime = 3000;
 		}
 		$gourl = "javascript:history.go(-1);";
 	}
+
+	echo $htmlhead;
+
 
 	if($gourl==''||$onlymsg==1)
 	{
@@ -326,23 +329,20 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 	}
 	else
 	{
-		$func = "      var pgo=0;
+		$rmsg = "<script>\r\n      var pgo=0;
       function JumpUrl(){
         if(pgo==0){ location='$gourl'; pgo=1; }
       }\r\n";
-		$rmsg = $func;
-		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='{$cfg_basehost}/pic/i1.png'>系统提示</div>";
-	    $rmsg .= "<div class='text'>\");\r\n";
 
-		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='{$cfg_basehost}/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
-		$rmsg .= "document.write(\"";
+		echo "<br /><div class='mac_msg_jump'><div class='msg_jump_tit'>系统提示</div><div class='text'><img style='height: 28px;margin-bottom: 8px;'; src='/{$cfg_cmspath}pic/i2.png'><br>".str_replace("\"","“",$msg);
+
 		if($onlymsg==0)
 		{
 			if($gourl!="javascript:;" && $gourl!="")
 			{
-				$rmsg .= "<div style='margin-top:35px;'><a href='{$gourl}'><font style='color:#0099CC;font-size:12px;'>[点击这里手动跳转]</font></a></div>";
+				echo "<div style='margin-top:35px;'><a href='{$gourl}'><font style='color:#999;font-size:12px;'>[点击这里手动跳转]</font></a></div>";
 			}
-			$rmsg .= "<br/></div></div>\");\r\n";
+			echo "<br/></div></div>";
 			if($gourl!="javascript:;" && $gourl!='')
 			{
 				$rmsg .= "setTimeout('JumpUrl()',$litime);";
@@ -350,9 +350,9 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 		}
 		else
 		{
-			$rmsg .= "<br/><br/></div></div>\");\r\n";
+			echo "<br/><br/></div></div>";
 		}
-		$msg  = $htmlhead.$rmsg.$htmlfoot;
+		$msg  = $rmsg.$htmlfoot;
 	}
 	echo $msg;
 }
@@ -1958,7 +1958,7 @@ function makeTypeOption($topId,$separateStr,$tptype=0,$span="")
 		{
 			if($row->tptype==$tptype)
 			{
-				echo "<option value='".$row->tid."'>".$span."&nbsp;|—".$row->tname."</option>";
+				echo "<option value='".$row->tid."'>".$span."|—".$row->tname."</option>";
 				makeTypeOption($row->tid,$separateStr,$tptype,$span);
 			}
 		}

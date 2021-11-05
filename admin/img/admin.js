@@ -20,7 +20,7 @@ function getMenu(key)
 		return "工具";
 	if(key=='ads')
 		return "广告";
-	if(key=='gathersoft')
+	if(key=='live')
 		return "采集";
 	if(key=='webhelper')
 		return "括展";

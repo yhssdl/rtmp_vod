@@ -170,7 +170,10 @@ class MainClass_Template {
 		if (strpos ( $content, 'caslist}' ) === false) {
 			return $content;
 		}
+		
+		
 		$labelRule = "{seacms:" . $str . "caslist(.*?)}(.*?){/seacms:" . $str . "caslist}";
+		
 		$attrDictionary = array ();
 		$labelRule = buildregx ( $labelRule, "is" );
 		preg_match_all ( $labelRule, $content, $mar );
@@ -180,6 +183,10 @@ class MainClass_Template {
 			$attrStr = trim ( preg_replace ( "/[ \r\n\t\f]{1,}/", " ", $mar [1] [$m] ) );
 			$loopstrMenulist = $mar [2] [$m];
 			$attrDictionary = $this->parseAttr ( $attrStr );
+			$vnum = empty ( $attrDictionary ["num"] ) ? 0 : intval ( $attrDictionary ["num"] );
+			
+
+			
 			$vtype = empty ( $attrDictionary ["type"] ) ? "all" : $attrDictionary ["type"];
 			switch (trim ( $str )) {
 				case "type" :
@@ -207,15 +214,20 @@ class MainClass_Template {
 						$publishyear = file ( $publishyeartxt );
 					}
 					$rsArray = $publishyear;
+					if($vnum>0 && $vnum<count($rsArray))
+						$rsArray = array_slice ($rsArray, 0,$vnum);
 					array_push ( $rsArray, "more" );
 					break;
 				case "area" :
+							echo $vnum."/";
 					$publishareatxt = sea_DATA . "/admin/publisharea.txt";
 					$publisharea = array ();
 					if (filesize ( $publishareatxt ) > 0) {
 						$publisharea = file ( $publishareatxt );
 					}
 					$rsArray = $publisharea;
+					if($vnum>0 && $vnum<count($rsArray))
+						$rsArray = array_slice ($rsArray, 0,$vnum);
 					break;
 				case "lang" :
 					$publishyuyantxt = sea_DATA . "/admin/publishyuyan.txt";
@@ -224,6 +236,8 @@ class MainClass_Template {
 						$publishyuyan = file ( $publishyuyantxt );
 					}
 					$rsArray = $publishyuyan;
+					if($vnum>0 && $vnum<count($rsArray))
+						$rsArray = array_slice ($rsArray, 0,$vnum);
 					break;
 				case "ver" :
 					$vertxt = sea_DATA . "/admin/verlist.txt";
@@ -232,6 +246,8 @@ class MainClass_Template {
 						$ver = file ( $vertxt );
 					}
 					$rsArray = $ver;
+					if($vnum>0 && $vnum<count($rsArray))
+						$rsArray = array_slice ($rsArray, 0,$vnum);
 					break;
 				case "letter" :
 					$rsArray = array (
@@ -284,6 +300,8 @@ class MainClass_Template {
 						$rows [] = $rowr->tname;
 					}
 					$rsArray = $rows;
+					if($vnum>0 && $vnum<count($rsArray))
+						$rsArray = array_slice ($rsArray, 0,$vnum);
 					break;
 			}
 			$labelRuleField = buildregx ( "\[" . $str . "caslist:(.*?)\]", "is" );
@@ -1074,7 +1092,7 @@ class MainClass_Template {
 								$v_pic = $row->n_pic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
 									} else {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
@@ -1087,7 +1105,7 @@ class MainClass_Template {
 								$v_pic = $row->n_spic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
 									} else {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
@@ -1100,7 +1118,7 @@ class MainClass_Template {
 								$v_pic = $row->n_gpic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
 									} else {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
@@ -1689,7 +1707,7 @@ class MainClass_Template {
 								$v_pic = $row->v_pic;
 								 
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
 									} else {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
@@ -2159,7 +2177,7 @@ class MainClass_Template {
 								$v_pic = $row->v_pic;
 								 
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
 									} else {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
@@ -2630,7 +2648,7 @@ class MainClass_Template {
 								$v_pic = $row->n_pic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
 									} else {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
@@ -2644,7 +2662,7 @@ class MainClass_Template {
 								$v_pic = $row->n_spic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
 									} else {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
@@ -2658,7 +2676,7 @@ class MainClass_Template {
 								$v_pic = $row->n_gpic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
 									} else {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
@@ -4304,7 +4322,7 @@ class MainClass_Template {
 								$v_pic = $row->v_pic;
 								
 								if (! empty ( $v_pic )) {
-									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0 || strpos ( ' ' . $v_pic, '/' ) ==1) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
 									} else {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );

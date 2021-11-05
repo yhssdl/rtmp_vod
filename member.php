@@ -83,7 +83,7 @@ if($mod=='repsw'){
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -225,7 +225,7 @@ if($mod=='repsw3'){
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -493,7 +493,7 @@ if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -656,7 +656,7 @@ elseif($action=='favorite')
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -723,7 +723,7 @@ EOT;
 							                        <td class="hidden-xs">{$state}</td>
 							                        <td class="hidden-xs">{$note}</td>			
 							                        <td>
-								<a onClick="return(confirm('确定取消收藏该影片？'))" href="?action=cancelfav&id=
+								<a onClick="return(confirm('确定取消收藏该视频？'))" href="?action=cancelfav&id=
 EOT;
 								echo $row['id'];
 		echo <<<EOT
@@ -792,7 +792,7 @@ elseif($action=='buy')
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -938,7 +938,7 @@ elseif($action=='buy2')
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>
@@ -1066,7 +1066,7 @@ elseif($action=='buy3')
 					</div>						
 					<div class="search hidden-xs"> 
 				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
-							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input class="form-control" placeholder="输入视频关键词..." name="searchword" type="text" id="keyword" required="">
 							<input type="submit" id="searchbutton" value="" class="hide">
 							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
 						</form>

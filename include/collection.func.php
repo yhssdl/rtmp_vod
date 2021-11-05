@@ -164,29 +164,29 @@ function getTestItemRule($tid,$previewurl,$previewpic='')
 	$html = cget($previewurl,$sock);
 	$html = ChangeCode($html,$coding);
 	echo "<font color='red'>测试地址</font>：".$previewurl."<br>";
-	getTestAreaValue($loopstr,"name","影片名称",$html,$removecode);
+	getTestAreaValue($loopstr,"name","视频名称",$html,$removecode);
 	if(trim($previewpic)!=''){
 		echo "<font color='red'>图片地址</font>：".$previewpic."<br>";
 	}else{
-		getTestAreaValue($loopstr,"pic","影片图片",$html,$removecode);
+		getTestAreaValue($loopstr,"pic","视频图片",$html,$removecode);
 	}
-	getTestAreaValue($loopstr,"actor","影片演员",$html,$removecode);
-	getTestAreaValue($loopstr,"director","影片导演",$html,$removecode);
-	getTestAreaValue($loopstr,"parea","影片年级",$html,$removecode);
-	getTestAreaValue($loopstr,"pyear","影片年份",$html,$removecode);
-	getTestAreaValue($loopstr,"plang","影片学期",$html,$removecode);
-	getTestAreaValue($loopstr,"state","影片连载",$html,$removecode);
-	getTestAreaValue($loopstr,"note","影片备注",$html,$removecode);
-	getTestAreaValue($loopstr,"des","影片介绍",$html,$removecode);
+	getTestAreaValue($loopstr,"actor","视频演员",$html,$removecode);
+	getTestAreaValue($loopstr,"director","视频导演",$html,$removecode);
+	getTestAreaValue($loopstr,"parea","视频年级",$html,$removecode);
+	getTestAreaValue($loopstr,"pyear","视频年份",$html,$removecode);
+	getTestAreaValue($loopstr,"plang","视频学期",$html,$removecode);
+	getTestAreaValue($loopstr,"state","视频连载",$html,$removecode);
+	getTestAreaValue($loopstr,"note","视频备注",$html,$removecode);
+	getTestAreaValue($loopstr,"des","视频介绍",$html,$removecode);
 	//处理时间
 	if($getherday){
 		getTestAreaValue($loopstr,"pdate","更新时间",$html,$removecode);
 	}
 	//处理分类
 	if($autocls){
-		getTestAreaValue($loopstr,"cls","影片分类",$html,$removecode);
+		getTestAreaValue($loopstr,"cls","视频分类",$html,$removecode);
 	}else{
-		echo "<font color='red'>影片分类</font>：".getTypeName($classid)."<br>";
+		echo "<font color='red'>视频分类</font>：".getTypeName($classid)."<br>";
 	}
 	//开始处理播放区域
 	$splay=$attrDictionary["splay"];
@@ -565,7 +565,7 @@ function Getserverarray($html,$matchRule='',$trimRule='')
 	return $serverarray;
 }
 
-//补全影片地址，预先未定义好播放来源，通过采集获取播放来源
+//补全视频地址，预先未定义好播放来源，通过采集获取播放来源
 function transferUrlarr($fromarray,$playarray,$part=array())
 {
 	$fai=count($fromarray);
@@ -594,7 +594,7 @@ function transferUrlarr($fromarray,$playarray,$part=array())
 	return $url;
 }
 
-//补全影片地址，预先定义好播放来源
+//补全视频地址，预先定义好播放来源
 function transferUrlatr($fromstr,$playarray,$part=array())
 {
 	if(!isset($playarray[0])) return '';

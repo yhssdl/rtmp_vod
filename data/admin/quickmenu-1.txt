@@ -1,2 +1,8 @@
-﻿添加影片,admin_video.php?action=add
-管理影片,admin_video.php?action=else
+预约录课,admin_live.php?action=add
+管理预约,admin_live.php?action=list
+
+查看直播,admin_vod.php?action=main
+管理直播,admin_vod.php?action=list
+
+﻿添加视频,admin_video.php?action=add
+管理视频,admin_video.php?action=else

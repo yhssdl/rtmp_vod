@@ -7,7 +7,7 @@ if(empty($action))
 {
 	$action = '';
 }
-	$sql="select * from sea_topic where id=$tid"; //获取之前的影片id'数据
+	$sql="select * from sea_topic where id=$tid"; //获取之前的视频id'数据
 	$dsql->SetQuery($sql);
 	$dsql->Execute('al') ;
 	while($row=$dsql->GetObject('al'))

@@ -101,7 +101,7 @@ function hide(){
             <th colspan="2" class="thc">使用采集规则向导生成采集规则</th>
           </tr>
           <tr>
-            <th colspan="2" class="thr"><font id="stephit1">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3" color="red">３. 采集内容与影片地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
+            <th colspan="2" class="thr"><font id="stephit1">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3" color="red">３. 采集内容与视频地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
           </tr>
         </thead>
       </table>
@@ -141,7 +141,7 @@ function hide(){
                 <input type="checkbox" class="checkbox" name="fields[]" value="des" onclick="if(this.checked){show('desbody')}else{hide('desbody')}"<?php if(strpos(' '.$flds,'des')>0) echo " checked"?>/>
                 介绍 
 				<input type="checkbox" class="checkbox" name="fields[]" value="jq" onclick="if(this.checked){show('jqbody')}else{hide('jqbody')}" />
-                剧情分类
+                课程分类
                 <input type="checkbox" class="checkbox" name="fields[]" value="down" onclick="if(this.checked){show('downbody')}else{hide('downbody')}"<?php if(strpos(' '.$flds,'down')>0) echo " checked"?>/>
                 下载地址</td>
             </tr>
@@ -376,17 +376,17 @@ function hide(){
           <tbody id="jqbody" style="<?php if(strpos($flds,"jq")===false) echo "display:none";?>">
           <input type='hidden' name='item[]' checked  value='jq'/>
           <tr>
-            <td class="label">剧情分类开始代码：</td>
+            <td class="label">课程分类开始代码：</td>
             <td><textarea name="jqa" rows="4" cols="80" wrap="off"><?php echo getrulevalueh($itemloopstr,"jqa");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">剧情分类结束代码：
+            <td class="label">课程分类结束代码：
               <div class="blue">开始标签 和 结束标签<br />
-                为空不截取剧情分类</div></td>
+                为空不截取课程分类</div></td>
             <td><textarea name="jqb" rows="4" cols="80" wrap="off"><?php echo getrulevalueh($itemloopstr,"jqb");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">剧情分类替换规则：</td>
+            <td class="label">课程分类替换规则：</td>
             <td><textarea name="jq_trim" id="jq_trim" rows="3" cols="50" wrap="off"><?php echo getrulevalueh($itemloopstr,"jq_trim");?></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('jq_trim')" /></td>
           </tr>
@@ -442,9 +442,9 @@ function hide(){
             <tr>
               <td class="label red">获取播放器设置：</td>
               <td><input type="radio" class="radio" name="serveron" value="0" onclick="show('serveronbody');"<?php if($atr["serveron"]==0) echo " checked";?>/>
-                非影片列表范围获取
+                非视频列表范围获取
                 <input type="radio" class="radio" name="serveron" value="1" onclick="show('serveronbody')"<?php if($atr["serveron"]==1) echo " checked";?>/>
-                影片列表范围获取
+                视频列表范围获取
                 <input type="radio" class="radio" name="serveron" value="2" onclick="hide('serveronbody');clearvalue('servera','serverb');"<?php if($atr["serveron"]==2) echo " checked";?>/>
                 关闭播放器获取</td>
             </tr>
@@ -469,11 +469,11 @@ function hide(){
           <?php }?>
           <tbody>
             <tr>
-              <td class="label red">获取影片地址方式：</td>
+              <td class="label red">获取视频地址方式：</td>
               <td><input type="radio" class="radio" name="playgetsrc" value="1" onclick="show('playlinkbody')"<?php if($atr["playgetsrc"]==1) echo " checked";?>/>
-                播放页获取所有影片地址
+                播放页获取所有视频地址
                 <input type="radio" class="radio" name="playgetsrc" value="0" onclick="hide('playlinkbody');clearvalue('playlinka','playlinkb');"<?php if($atr["playgetsrc"]==0) echo " checked";?>/>
-                内容页直接获取影片地址</td>
+                内容页直接获取视频地址</td>
             </tr>
           </tbody>
           <tbody id="playlinkbody" style="<?php if($atr["playgetsrc"]!=1) echo "display:none";?>">
@@ -496,15 +496,15 @@ function hide(){
           <tbody>
           <input type='hidden' name='item[]' checked  value='msrc'/>
           <tr>
-            <td class="label">影片地址开始代码：</td>
+            <td class="label">视频地址开始代码：</td>
             <td><textarea name="msrca" rows="4" cols="80" wrap="off"><?php echo getrulevalueh($itemloopstr,"msrca");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片地址结束代码：</td>
+            <td class="label">视频地址结束代码：</td>
             <td><textarea name="msrcb" rows="4" cols="80" wrap="off"><?php echo getrulevalueh($itemloopstr,"msrcb");?></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片地址替换规则：</td>
+            <td class="label">视频地址替换规则：</td>
             <td><textarea name="msrc_trim" id="msrc_trim" rows="3" cols="50" wrap="off"><?php echo getrulevalueh($itemloopstr,"msrc_trim");?></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('msrc_trim')" /></td>
           </tr>

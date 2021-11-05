@@ -7,15 +7,22 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$save_path = '/uploads/media';
+require_once('../data/config.cache.inc.php');
+if(strlen($cfg_cmspath)>0){
+	$save_path = "/".$cfg_cmspath.$cfg_upload_dir."/media";
+}else{
+	$save_path = "/$cfg_upload_dir/media";
+}
 
 require_once('vupload_class.php');
+
 $uploader =  new \Org\Util\Vupload;
 $uploader->set('save_path', $save_path);
 //用于断点续传，验证指定分块是否已经存在，避免重复上传
 if (isset($_POST['status'])) {
     if ($_POST['status'] == 'chunkCheck') {
         $target =  $_SERVER['DOCUMENT_ROOT'].$save_path . '/' . md5($_POST['name']) . '/' . $_POST['chunkIndex'];
+		
         if (file_exists($target) && filesize($target) == $_POST['size']) {
             die('{"ifExist":1}');
         }

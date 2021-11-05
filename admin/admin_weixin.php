@@ -281,7 +281,7 @@ if($action=="set")
 </tr>
 <tr>
 <td width="90%" align="left" height="30" class="td_border">
- 当用户输入<font color="red"><strong>中文</strong></font>或<font color="red"><strong>英文</strong></font>时搜索影片；<font color="red"><strong>纯数字</strong></font>时获取观看密码。
+ 当用户输入<font color="red"><strong>中文</strong></font>或<font color="red"><strong>英文</strong></font>时搜索视频；<font color="red"><strong>纯数字</strong></font>时获取观看密码。
 </td>
 </tr>
 <tr>

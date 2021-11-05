@@ -238,18 +238,18 @@ function typeList($topId,$separateStr,$span="")
 		{
 			if(!$row->tptype){
 ?>
-	<tr>
-            <td height="30" bgcolor="#FFFFFF" class="td_border"><?php  echo $span;?>&nbsp;<input type="checkbox" name="e_id[]" id="E_ID"  value="<?php  echo $row->tid;?>" class="checkbox"/><?php  echo $row->tid;?>.<a href="admin_video.php?type=<?php  echo $row->tid;?>"><?php  echo $row->tname;?></a>(<font color="red"><?php  echo getNumPerTypeOnCache($row->tid);?></font>)</td>
-            <td height="30" align="left" bgcolor="#FFFFFF"  class="td_border"><input size="13" type="text" name="tname<?php  echo $row->tid;?>" value="<?php  echo $row->tname;?>"></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="tenname<?php  echo $row->tid;?>" value="<?php  echo $row->tenname;?>"  size="12" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="templist<?php  echo $row->tid;?>" value="<?php  echo $row->templist;?>"  size="15" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="templist_1<?php  echo $row->tid;?>" value="<?php  echo $row->templist_1;?>"  size="15" /></td>
-			<td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="templist_2<?php  echo $row->tid;?>" value="<?php  echo $row->templist_2;?>"  size="15" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="title<?php  echo $row->tid;?>" value="<?php  echo $row->title;?>"  size="20" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="keyword<?php  echo $row->tid;?>" value="<?php  echo $row->keyword;?>"  size="20" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="description<?php  echo $row->tid;?>" value="<?php  echo $row->description;?>"  size="20" /></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><input type="text" name="torder<?php  echo $row->tid;?>" value="<?php  echo $row->torder;?>" size="5" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/></td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><?php  if($row->ishidden==0){?><input type="button" value="隐藏"  onClick="location.href='?action=hide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }else{?> <input type="button" value="取消隐藏"  onClick="location.href='?action=nohide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }?> <input type="button" value="删除" onclick="del(<?php  echo $row->tid;?>)" class="rb1"></td>
+	<tr align="center">
+            <td align="left"><?php  echo $span;?>&nbsp;<input size=10 type="checkbox" name="e_id[]" id="E_ID"  value="<?php  echo $row->tid;?>" class="checkbox"/>&nbsp;<?php  echo $row->tid;?>.<a href="admin_video.php?type=<?php  echo $row->tid;?>"><?php  echo $row->tname;?></a>(<font color="red"><?php  echo getNumPerTypeOnCache($row->tid);?></font>)</td>
+            <td align="left" ><input  size=10 type="text" name="tname<?php  echo $row->tid;?>" value="<?php  echo $row->tname;?>"></td>
+            <td><input type="text" size=6 name="tenname<?php  echo $row->tid;?>" value="<?php  echo $row->tenname;?>"  /></td>
+            <td><input type="text" size=7 name="templist<?php  echo $row->tid;?>" value="<?php  echo $row->templist;?>"   /></td>
+            <td><input type="text" size=7 name="templist_1<?php  echo $row->tid;?>" value="<?php  echo $row->templist_1;?>" /></td>
+			<td><input type="text" size=7 name="templist_2<?php  echo $row->tid;?>" value="<?php  echo $row->templist_2;?>" /></td>
+            <td><input type="text" size=7 name="title<?php  echo $row->tid;?>" value="<?php  echo $row->title;?>"  /></td>
+            <td><input type="text" size=7 name="keyword<?php  echo $row->tid;?>" value="<?php  echo $row->keyword;?>"  /></td>
+            <td><input type="text" size=7 name="description<?php  echo $row->tid;?>" value="<?php  echo $row->description;?>"  /></td>
+            <td><input type="text" size=5 name="torder<?php  echo $row->tid;?>" value="<?php  echo $row->torder;?>" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/></td>
+            <td><?php  if($row->ishidden==0){?><input type="button" value="隐藏"  onClick="location.href='?action=hide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }else{?> <input type="button" value="取消隐藏"  onClick="location.href='?action=nohide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }?> <input type="button" value="删除" onclick="del(<?php  echo $row->tid;?>)" class="rb1"></td>
 	</tr>
 <?php 
 		typeList($row->tid,$separateStr,$span);

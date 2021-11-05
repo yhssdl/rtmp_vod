@@ -25,14 +25,21 @@ require_once($admincachefile);
 class userLogin
 {
 	var $userName = '';
+	var $nickName = '';
 	var $userPwd = '';
 	var $userID = '';
+	var $userVodList = '';
 	var $adminDir = '';
 	var $groupid = '';
+	var $publish = '';
+	var $tid = '';
 	var $keepUserIDTag = "sea_admin_id";
 	var $keepgroupidTag = "sea_group_id";
 	var $keepUserNameTag = "sea_admin_name";
-
+	var $keepNickNameTag = "sea_nick_name";
+	var $keeVodListTag = "sea_vod_list";
+	var $keePublishTag = "sea_publish_name";
+	var $keeTidTag = "sea_tid_name";
 	//php5构造函数
 	function __construct($admindir='')
 	{
@@ -42,6 +49,10 @@ class userLogin
 			$this->userID = $_SESSION[$this->keepUserIDTag];
 			$this->groupid = $_SESSION[$this->keepgroupidTag];
 			$this->userName = $_SESSION[$this->keepUserNameTag];
+			$this->nickName = $_SESSION[$this->keepNickNameTag];	
+			$this->userVodList = $_SESSION[$this->keeVodListTag];
+			$this->publish = $_SESSION[$this->keePublishTag];	
+			$this->tid = $_SESSION[$this->keeTidTag];
 		}
 
 		if($admindir!='')
@@ -85,6 +96,10 @@ class userLogin
 			$this->userID = $row->id;
 			$this->groupid = $row->groupid;
 			$this->userName = $row->name;
+			$this->userVodList = $row->vod_list;
+			$this->nickName = $row->nickname;
+			$this->publish = $row->publish;
+			$this->tid = $row->tid;
 			$inquery = "update `sea_admin` set loginip='$loginip',logintime='".time()."' where id='".$row->id."'";
 			$dsql->ExecuteNoneQuery($inquery);
 			return 1;
@@ -102,6 +117,10 @@ class userLogin
 			$_SESSION[$this->keepUserIDTag] = $this->userID;
 			$_SESSION[$this->keepgroupidTag] = $this->groupid;
 			$_SESSION[$this->keepUserNameTag] = $this->userName;
+			$_SESSION[$this->keepNickNameTag] = $this->nickName;			
+			$_SESSION[$this->keeVodListTag] = $this->userVodList;
+			$_SESSION[$this->keePublishTag] = $this->publish;			
+			$_SESSION[$this->keeTidTag] = $this->tid;			
 
 			$fp = fopen($admincachefile,'w');
 			fwrite($fp,'<'.'?php $admin_path ='." '{$this->adminDir}'; ?".'>');
@@ -120,6 +139,11 @@ class userLogin
 		$_SESSION[$this->keepUserIDTag] = '';
 		$_SESSION[$this->keepgroupidTag] = '';
 		$_SESSION[$this->keepUserNameTag] = '';
+		$_SESSION[$this->keepNickNameTag] = '';		
+		$_SESSION[$this->keeVodListTag] = '';	
+		$_SESSION[$this->keePublishTag] = '';		
+		$_SESSION[$this->keeTidTag] = '';			
+		
 	}
 
 
@@ -135,6 +159,34 @@ class userLogin
 			return -1;
 		}
 	}
+
+	//获得用户的发布权限
+	function getpublish()
+	{
+		if($this->publish!='')
+		{
+			return $this->publish;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	//获得用户的发布默认分类
+	function gettypeid()
+	{
+		if($this->tid!='')
+		{
+			return $this->tid;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	
 
 	function getUserRank()
 	{
@@ -163,8 +215,42 @@ class userLogin
 		}
 		else
 		{
-			return -1;
+			return "";
 		}
 	}
+
+	//获得昵称
+	function getNickName()
+	{
+		if($this->nickName!='')
+		{
+			return $this->nickName;
+		}
+		else
+		{
+			return "";
+		}
+	}	
+
+		//设置新的昵称
+		function setNickName($nickname)
+		{
+			$this->nickName = $nickname;
+			$_SESSION[$this->keepNickNameTag] = $this->nickName;
+		}	
+
+	//获得用户可操作VOD列表
+	function getUserVodList()
+	{
+		if($this->userVodList!='')
+		{
+			return $this->userVodList;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 }
 ?>

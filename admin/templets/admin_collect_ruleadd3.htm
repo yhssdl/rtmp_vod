@@ -101,7 +101,7 @@ function hide(){
             <th colspan="2" class="thc">使用采集规则向导生成采集规则</th>
           </tr>
           <tr>
-            <th colspan="2" class="thr"><font id="stephit1">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3" color="red">３. 采集内容与影片地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
+            <th colspan="2" class="thr"><font id="stephit1">１. 设置基本参数</font>&nbsp;&nbsp;<font id="stephit2">２. 采集列表连接设置</font>&nbsp;&nbsp;<font id="stephit3" color="red">３. 采集内容与视频地址设置</font>&nbsp;&nbsp;<font id="stephit4">４. 在线模拟预览结果</font>&nbsp;&nbsp;<font id="stephit5">５. 完成向导并真实演示</font></th>
           </tr>
         </thead>
       </table>
@@ -141,7 +141,7 @@ function hide(){
                 <input type="checkbox" class="checkbox" name="fields[]" value="des" onclick="if(this.checked){show('desbody')}else{hide('desbody')}" checked/>
                 介绍 
                 <input type="checkbox" class="checkbox" name="fields[]" value="jq" onclick="if(this.checked){show('jqbody')}else{hide('jqbody')}" />
-                剧情分类
+                课程分类
 				<input type="checkbox" class="checkbox" name="fields[]" value="down" onclick="if(this.checked){show('downbody')}else{hide('downbody')}" checked/>
                 下载地址
 				</td>
@@ -150,15 +150,15 @@ function hide(){
           <tbody id="namebody">
           <input type='checkbox' name='item[]' checked='1'  value='name' style='display:none' />
           <tr>
-            <td class="label">影片名称开始代码：</td>
+            <td class="label">视频名称开始代码：</td>
             <td><textarea name="namea" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片名称结束代码：</td>
+            <td class="label">视频名称结束代码：</td>
             <td><textarea name="nameb" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片名称替换规则：</td>
+            <td class="label">视频名称替换规则：</td>
             <td><textarea name="name_trim" id="name_trim" rows="3" cols="50" wrap="off"></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('name_trim')" /></td>
           </tr>
@@ -377,17 +377,17 @@ function hide(){
           <tbody id="jqbody" style="display:none">
           <input type='checkbox' name='item[]' checked='1'  value='jq' style='display:none' />
           <tr>
-            <td class="label">剧情分类开始代码：</td>
+            <td class="label">课程分类开始代码：</td>
             <td><textarea name="jqa" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">剧情分类结束代码：
+            <td class="label">课程分类结束代码：
               <div class="blue">开始标签 和 结束标签<br />
                 为空不截取演员</div></td>
             <td><textarea name="jqb" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">剧情分类替换规则：</td>
+            <td class="label">课程分类替换规则：</td>
             <td><textarea name="jq_trim" id="jq_trim" rows="3" cols="50" wrap="off"></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('jq_trim')" /></td>
           </tr>
@@ -442,9 +442,9 @@ function hide(){
             <tr>
               <td class="label red">获取播放器设置：</td>
               <td><input type="radio" class="radio" name="serveron" value="0" onclick="show('serveronbody');"/>
-                非影片列表范围获取
+                非视频列表范围获取
                 <input type="radio" class="radio" name="serveron" value="1" onclick="show('serveronbody')"/>
-                影片列表范围获取
+                视频列表范围获取
                 <input type="radio" class="radio" name="serveron" value="2" onclick="hide('serveronbody');clearvalue('servera','serverb');"checked/>
                 关闭播放器获取</td>
             </tr>
@@ -469,11 +469,11 @@ function hide(){
           <?php }?>
           <tbody>
             <tr>
-              <td class="label red">获取影片地址方式：</td>
+              <td class="label red">获取视频地址方式：</td>
               <td><input type="radio" class="radio" name="playgetsrc" value="1" onclick="show('playlinkbody')" checked/>
-                播放页获取所有影片地址
+                播放页获取所有视频地址
                 <input type="radio" class="radio" name="playgetsrc" value="0" onclick="hide('playlinkbody');clearvalue('playlinka','playlinkb');"/>
-                内容页直接获取影片地址</td>
+                内容页直接获取视频地址</td>
             </tr>
           </tbody>
           <tbody id="playlinkbody">
@@ -496,15 +496,15 @@ function hide(){
           <tbody>
           <input type='checkbox' name='item[]' checked='1'  value='msrc' style='display:none' />
           <tr>
-            <td class="label">影片地址(如:qvod,bdhd)开始代码：</td>
+            <td class="label">视频地址(如:qvod,bdhd)开始代码：</td>
             <td><textarea name="msrca" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片地址(如:qvod,bdhd)结束代码：</td>
+            <td class="label">视频地址(如:qvod,bdhd)结束代码：</td>
             <td><textarea name="msrcb" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
-            <td class="label">影片地址(如:qvod,bdhd)替换规则：</td>
+            <td class="label">视频地址(如:qvod,bdhd)替换规则：</td>
             <td><textarea name="msrc_trim" id="msrc_trim" rows="3" cols="50" wrap="off"></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('msrc_trim')" /></td>
           </tr>

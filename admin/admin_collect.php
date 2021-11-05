@@ -523,12 +523,12 @@ elseif($action=="tempdatabase")
 elseif($action=="editVideo")
 {
 	$id = isset($id) && is_numeric($id) ? $id : 0;
-	//读取影片信息
+	//读取视频信息
 	$query = "select * from sea_co_data where v_id='$id' ";
 	$vrow = $dsql->GetOne($query);
 	if(!is_array($vrow))
 	{
-		ShowMsg("读取影片基本信息出错!","-1");
+		ShowMsg("读取视频基本信息出错!","-1");
 		exit();
 	}
 	$vtype = $vrow['tid'];
@@ -542,7 +542,7 @@ elseif($action=="saveVideo")
 {
 	if(trim($v_name) == '')
 	{
-		ShowMsg("影片名不能为空！","-1");
+		ShowMsg("视频名不能为空！","-1");
 		exit();
 	}
 	if(empty($v_type))
@@ -578,10 +578,10 @@ elseif($action=="saveVideo")
 			$updateSql = "update sea_co_data set ".$updateSql." where v_id=".$v_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{
-				ShowMsg('更新影片出错，请检查',-1);
+				ShowMsg('更新视频出错，请检查',-1);
 				exit();
 			}
-			ShowMsg("影片更新成功",$v_back);
+			ShowMsg("视频更新成功",$v_back);
 			exit();
 			break;
 	}
@@ -597,17 +597,17 @@ elseif($action=="delallTempData")
 	if($do=="all")
 	{
 		$dsql->ExecuteNoneQuery("delete from sea_co_data");
-		ShowMsg("影片全部删除成功","?action=tempdatabase");
+		ShowMsg("视频全部删除成功","?action=tempdatabase");
 		exit();
 	}
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要删除的影片","-1");
+		ShowMsg("请选择需要删除的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("delete from sea_co_data where v_id in(".$ids.")");
-	ShowMsg("影片删除成功","?action=tempdatabase");
+	ShowMsg("视频删除成功","?action=tempdatabase");
 	exit();
 }
 elseif($action=="import")
@@ -646,7 +646,7 @@ elseif($action=="import")
 			$idsArray[]=$row->v_id;
 		}
 		if(count($idsArray)>0){
-			echo "正在导入影片,当前是第<font color='red'>".$page."</font>页,共<font color='red'>".$TotalPage."</font>页,共<font color='red'>".$TotalResult."</font>部影片<hr />";
+			echo "正在导入视频,当前是第<font color='red'>".$page."</font>页,共<font color='red'>".$TotalPage."</font>页,共<font color='red'>".$TotalResult."</font>部视频<hr />";
 			import2Base($idsArray,$vtype);
 			unset($idsArray);
 			echo "<br>暂停3秒后继续导入<script language=\"javascript\">setTimeout(function (){location.href='?action=".$action."&smode=".$smode."&type=".$vtype."&page=".($page+1)."&TotalPage=".$TotalPage."&TotalResult=".$TotalResult."';},3000);</script>";
@@ -657,7 +657,7 @@ elseif($action=="import")
 	}else{
 		if(empty($e_id))
 		{
-			ShowMsg("请选择需要导入的影片","-1");
+			ShowMsg("请选择需要导入的视频","-1");
 			exit();
 		}
 		import2Base($e_id,$vtype);

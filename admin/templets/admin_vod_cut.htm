@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="robots" content="noindex,nofollow">
+  <link href="img/style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+  <link rel="stylesheet" type="text/css" href="css/x.css"/> 
+  <link rel="stylesheet" type="text/css" href="css/cropper.css"/>     
+  <title>剪切视频</title>
+  <script type="text/javascript" src="js/common.js" ></script>
+  <script type="text/javascript" src="js/cropper.js" ></script>
+  <script type="text/javascript" src="../js/player/xgplayer/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/index.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/hls.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/flv.js"></script>
+  <script type="text/javascript" src="../js/player/xgplayer/dash.js"></script>
+  <script src="js/main.js" type="text/javascript"></script>
+  <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<?php
+require_once(dirname(__FILE__)."/../../data/config.plus.inc.php"); 
+
+$groupid = $cuserLogin->getgroupid();
+$userid =  $cuserLogin->getUserID();
+$vodlist = $cuserLogin->getUserVodList();
+
+if($groupid==3 && $vodlist!='0'){
+	$csqlStr = "SELECT title,file_name FROM `sea_subscribe` where vid in($vodlist) and aid='$userid' and id='$id' and stat>3";
+}else if($groupid==3){
+	$csqlStr = "SELECT title,file_name FROM `sea_subscribe` where id='$id' and aid='$userid' and stat>3";
+}
+else{
+	$csqlStr = "SELECT title,file_name FROM `sea_subscribe` where id='$id' and stat>3";
+}
+$row = $dsql->GetOne($csqlStr);
+
+if(is_array($row)){
+	$title = $row['title'];
+	$file_name = $row['file_name'];
+}
+
+?> 
+<body>
+  <!--当前导航-->
+  <!--当前导航-->
+
+  	<div class="layui-fluid">
+  	  <div class="layui-row">
+  		<div id="" class="layui-col-md12 pd15">
+  			视频剪切：<font color=green><?= $title ?></font>
+  		</div>
+  	  </div>	  			  
+  		<div class="layui-row">
+  			<div class="layui-col-md12" style="padding-bottom: 15px;"><hr></chr></div>
+  		</div>	 
+  		<div class="layui-row">
+  			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
+  			<div class="layui-col-md8"><div id="playerCnt"></div><div id="waiting"><img src="img/wait.gif"><p><br>裁剪中，请等待...</p></div></div>
+  			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
+  		</div>
+  		<div class="layui-row">
+  			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
+  			<div class="layui-col-md8">
+				<div class="layui-row">
+					<div class="layui-col-md5 pd15"><input type="button" class="layui-btn layui-btn-xs layui-btn-normal" value="获取开始时间"	onclick="getstarttime(player.currentTime,'v_stime');" />&nbsp;&nbsp;<input type="text" name ="v_stime" id="v_stime" value="00:00:00.0" placeholder="开始时间" size="15"></div>
+					<div class="layui-col-md2 text_center pd15"><input type="button"  class="layui-btn layui-btn-xs layui-btn-danger" value="开始剪切"	onclick="startcut('<?= $file_name ?>',1,<?= $id ?>);" />&nbsp;&nbsp;<input type="button" class="layui-btn layui-btn-xs"  value="封面截图"	onclick="startcut('<?= $file_name ?>',0,<?= $id ?>);" /></div>
+					<div class="layui-col-md5 text_right pd15"><input type="text" name ="v_etime" id="v_etime" placeholder="结束时间" size="15">&nbsp;&nbsp;<input  class="layui-btn layui-btn-xs layui-btn-normal" type="button" value="获取结束时间"	onclick="getstarttime(player.currentTime,'v_etime');"/></div>
+				</div>
+			</div>
+  			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
+  		</div>			
+  	</div>
+</body>
+<script type="text/javascript">
+function createPlayer(videoUrl) {
+	if (videoUrl.indexOf('.flv') > -1) {
+		var xg = new FlvJsPlayer({
+			"id": "playerCnt",
+			"autoplay": true,
+			"url": videoUrl,
+			"fluid": true,
+			"isLive": true,
+			"playsinline": true,
+		});
+	} else {
+		var xg = new Player({
+			"id": "playerCnt",
+			"autoplay": true,
+			"url": videoUrl,
+			"fluid": true,
+			"playsinline": true,
+		});
+	}
+	return xg;
+}
+
+function getstarttime(t1,idname){
+
+	hour = Math.floor(player.currentTime / 3600);
+	t1 = t1 - hour * 3600;
+	minute = Math.floor(t1 / 60);
+	t1 = t1 - minute*60;
+
+	text = ""+pad(hour)+":"+pad(minute)+":"+pad(t1);
+	document.getElementById(idname).value=text;
+
+}
+
+function pad(num){
+	if(num<10) return "0"+num;
+	return num;
+}
+
+
+function startcut(filename,mode,id){
+
+	if(mode==1){	
+
+		stime = document.getElementById('v_stime').value;
+		if(stime.length==0){
+			alert("请使用“获取开始时间”按钮，设置好开始时间。");
+			return;
+		}
+
+		s1 = time2num(stime);
+		if(s1<0) {
+			alert("开始时间格式不对，请使用 00:00:10.123 这样的格式。");
+			return;
+		}
+		etime = document.getElementById('v_etime').value;
+		if(etime.length==0){
+			alert("请使用“获取结束时间”按钮，设置好结束时间。");
+			return;
+		}
+		e1 = time2num(etime);
+		if(e1<0) {
+			alert("结束时间格式不对，请使用 00:10:10.123 这样的格式。");
+			return;
+		}
+
+		if(e1<=s1){
+			alert("结束时间必须大于开始时间，请检查时间设置。");
+			return;	
+		}
+		
+		tc = e1 - s1;
+		m1 = Math.floor(tc / 60);
+		s1 = tc - m1 * 60;
+		if(m1>0)
+			msg = "确定要剪切掉开头与结尾部分视频，保留中间的 "+m1+"分"+s1+"秒的视频？\n\n剪切时间可能较长，请不要关闭网页。";
+		else
+			msg = "确定要剪切掉开头与结尾部分视频，保留中间的 "+s1+"秒的视频？\n\n剪切时间可能较长，请不要关闭网页。";	
+
+		if(confirm(msg)){
+			player.pause();
+			document.getElementById('waiting').style.display = "block";
+			runCutTask(filename,stime,etime,1,id);
+		}
+	}else{
+		
+		player.pause();
+		msg = "确定截取当前播放处的图像作为视频封面图片吗？";	
+		if(confirm(msg)){
+			runCutTask(filename,player.currentTime,0,0,id);
+		}
+	}
+}
+
+function time2num(time){
+	arrs = time.split(".");
+	if(arrs.length==0) return -1;
+	arrs = arrs[0].split(":");
+	if(arrs.length!=3) return -1;
+	return parseInt(arrs[0]) * 3600 + parseInt(arrs[1])*60 + parseInt(arrs[2]);
+}
+    
+    
+<?php
+	$ran = rand();
+	echo " let player = createPlayer('$file_name?ran=$ran');";
+?>
+
+	player.once('play',function(){
+		getstarttime(player.duration,'v_etime');
+	});
+	
+	layui.use('layer', function(){
+	  var layer = layui.layer;
+	});              
+
+</script>
+
+</html>

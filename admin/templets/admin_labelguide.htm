@@ -3,7 +3,7 @@
 <head><meta name="robots" content="noindex,nofollow">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
-<title>影片管理</title>
+<title>视频管理</title>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 </head>
@@ -19,7 +19,7 @@
 <tr class="thead"><th  colspan="7" style="font-weight:bold"><font color="green">标签向导【因标签众多，此向导仅做部分标签演示，全部标签请访问官网技术文档】<br /></th></tr>
 <tr><td class="td_border">
 <input type="button" class="rb1" value="menulist(菜单导航标签)"  style="width:250px;"  onclick="self.location.href='?action=menulist'"/><br>
-<input type="button" class="rb1" value="videolist(影片列表标签)"  style="width:250px;"  onclick="self.location.href='?action=videolist'" /><br>
+<input type="button" class="rb1" value="videolist(视频列表标签)"  style="width:250px;"  onclick="self.location.href='?action=videolist'" /><br>
 <input type="button" class="rb1" value="arealist(双重循环列表标签)"  style="width:250px;" onClick="self.location.href='?action=arealist'"/><br>
 <input type="button" class="rb1" value="channellist(分页列表标签)" style="width:250px;" onClick="self.location.href='?action=channellist'"/><br>
 <input type="button" class="rb1" value="topiclist(专题列表标签)" style="width:250px;" onclick="self.location.href='?action=topiclist'"/><br>
@@ -78,7 +78,7 @@ if($action=="videolist"){
 			if (isNaN($("deslen").value)){
 				alert('长度必须为数字')
 			}else{
-				if ($("deslen").value!=10){wherestr+="&nbsp;&nbsp;[videolist:des len="+$("deslen").value+"]表示影片描述<br>"}else{wherestr+="&nbsp;&nbsp;[videolist:des]表示影片描述<br>"}
+				if ($("deslen").value!=10){wherestr+="&nbsp;&nbsp;[videolist:des len="+$("deslen").value+"]表示视频描述<br>"}else{wherestr+="&nbsp;&nbsp;[videolist:des]表示视频描述<br>"}
 			}
 		}
 		if($("addtime").checked){
@@ -100,7 +100,7 @@ if($action=="videolist"){
 	}
 </script>
 <div id="videolistlabel"   style="top:100px; display:none;" class="popdiv">
-	<div class="poptitie"><img src="img/btn_close.gif" alt="关闭" onClick="$('videolistlabel').style.display='none'" />创建videolist(影片列表标签)</div>
+	<div class="poptitie"><img src="img/btn_close.gif" alt="关闭" onClick="$('videolistlabel').style.display='none'" />创建videolist(视频列表标签)</div>
     <div class="popbody"><div>
 <table class="tb" width="100%" border="0" cellpadding="0" cellspacing="0" >
 	<tr><td colspan="2"><font color="#FF0000">设置标签属性</font></td></tr>
@@ -109,7 +109,7 @@ if($action=="videolist"){
     	<td>起点：<input type="text"  id="start" size="8" value="1"/>默认(从第1条开始调)</td>
      </tr>
      <tr>
-     <td>排列顺序：<select id="order"><option value="time">时间</option><option value="id">影片ID</option><option value="commend">推荐星级</option><option value="hit">点击量</option><option value="digg">顶的次数</option></select>默认(按时间) </td>
+     <td>排列顺序：<select id="order"><option value="time">时间</option><option value="id">视频ID</option><option value="commend">推荐星级</option><option value="hit">点击量</option><option value="digg">顶的次数</option></select>默认(按时间) </td>
      <td>分类： <select name="type" id="type" style="width:100px;" onChange="viewSelectedType()"><option value="all">所有</option><?php makeTypeOption(0,"&nbsp;|&nbsp;")?></select><input id="typetext" value="all" size="8" />默认(所有) </td>
      </tr>
      <tr>
@@ -373,7 +373,7 @@ if($action=="videolist"){
   <td >每页数据条数：
     <input type="text"  id="size" size="8" value="10"/>默认(10)  </td>
   <td>数据排列顺序：
-    <select id="order"><option value="time">时间</option><option value="hit">点击量</option><option value="id">影片ID</option><option value="digg">顶的次数</option></select>默认(按时间) </td></tr>
+    <select id="order"><option value="time">时间</option><option value="hit">点击量</option><option value="id">视频ID</option><option value="digg">顶的次数</option></select>默认(按时间) </td></tr>
 
 <tr><td colspan="2"><font color="#FF0000">选择标签变量</font></td></tr>
      <tr><td > 电影名
@@ -542,7 +542,7 @@ if($action=="videolist"){
   <td >每页数据条数：
     <input type="text"  id="size" size="8" value="10"/>默认(10)  </td>
   <td>数据排列顺序：
-    <select id="order"><option value="time">时间</option><option value="hit">点击量</option><option value="id">影片ID</option><option value="digg">顶的次数</option></select>默认(按时间) </td></tr>
+    <select id="order"><option value="time">时间</option><option value="hit">点击量</option><option value="id">视频ID</option><option value="digg">顶的次数</option></select>默认(按时间) </td></tr>
 
 <tr><td colspan="2"><font color="#FF0000">选择标签变量</font></td></tr>
      <tr><td > 电影名

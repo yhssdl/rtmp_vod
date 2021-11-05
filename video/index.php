@@ -322,11 +322,11 @@ foreach($arr2 as $player)
 $str=implode('$$$',$arr1); //最终地址
 //隐藏的播放地址end
 	if($cfg_playaddr_enc=='escape'){
-		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\"; var now=unescape(\"".escape($partName[2])."\");var pn=\"".$partName[3]."\";var next=unescape(\"".escape($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
+		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\"; var now=unescape(\"".escape($partName[2])."\");var pn=\"".$partName[3]."\";var next=unescape(\"".escape(str_replace("\\","/",$partName[2]))."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
 	}elseif($cfg_playaddr_enc=='base64'){
-		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\"; var now=base64decode(\"".base64_encode($partName[2])."\");var pn=\"".$partName[3]."\";var next=base64decode(\"".base64_encode($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
+		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\"; var now=base64decode(\"".base64_encode($partName[2])."\");var pn=\"".$partName[3]."\";var next=base64decode(\"".base64_encode(str_replace("\\","/",$partName[2]))."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
 	}else{
-		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\";var now=\"".$partName[2]."\";var pn=\"".$partName[3]."\"; var next=\"".$partNameN[2]."\";var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
+		$content = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$row['v_id']."\";var vfrom=\"".$id."\";var vpart=\"".$from."\";var now=\"".str_replace("\\","/",$partName[2])."\";var pn=\"".$partName[3]."\"; var next=\"".$partNameN[2]."\";var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$content);
 	}
 	$content = str_replace("{playpage:textlink}",$typeText."&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href='".$contentLink2."'>".$row['v_name']."</a>",$content);
 	$playerwidth = 1;

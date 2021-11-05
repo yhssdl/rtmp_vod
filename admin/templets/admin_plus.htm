@@ -68,11 +68,11 @@
 
 							<h3 class="panel-title">
 								<input type="checkbox" name="hideoff_name"
-									<?php echo $PLUS["HideName"]["off"]?"checked":""; ?> />启用？&nbsp;&nbsp;&nbsp;&nbsp;【片名屏蔽】用于屏蔽片名包含关键字的影片
+									<?php echo $PLUS["HideName"]["off"]?"checked":""; ?> />启用？&nbsp;&nbsp;&nbsp;&nbsp;【片名屏蔽】用于屏蔽片名包含关键字的视频
 							</h3>
 						</div>
 						<div class="panel-body">
-							 <span class="label label-info">片名关键字</span>&nbsp;&nbsp;输入关键字,每行一个,影片名包含关键字的影片将会屏蔽
+							 <span class="label label-info">片名关键字</span>&nbsp;&nbsp;输入关键字,每行一个,视频名包含关键字的视频将会屏蔽
 
 							<textarea name="hidebody_name" cols="30" rows="5" class="form-control"
 								style="border-radius:2px;margin-top:5px;"><?php foreach($PLUS["HideName"]["data"] as $key){echo "$key\r";} ?></textarea>

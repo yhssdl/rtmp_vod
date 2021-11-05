@@ -1,7 +1,7 @@
 
 _extensions = 'mp4,rmvb,mov,avi,m4v';
 _mimeTypes = 'video/*,audio/*,application/*';
-_backEndUrl = '/webuploader/vupload.php';
+_backEndUrl = '../webuploader/vupload.php';
 _chunkSize = 5 * 1024 * 1024;        //分块大小
 
 

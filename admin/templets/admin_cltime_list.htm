@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/x.css"/>
+<link rel="stylesheet" href="./css/font.css">
+<title>课程时间</title>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
+</head>
+<body>
+<!--当前导航-->
+<?php
+    require_once(dirname(__FILE__)."/../../data/config.plus.inc.php");
+    $sqlStr="select  * from sea_class_time order by week1s asc";
+    $groupid = $cuserLogin->getgroupid();
+    $vodlist = $cuserLogin->getUserVodList();
+    if($groupid==3 && $vodlist!='0'){
+      $subscribeStr = "select s.title,s.start,s.end,s.user,v.title as vt from sea_subscribe s left join `sea_vod` v on v.id=s.vid where s.vid in($vodlist) and s.stat=0 limit 100";
+    }else{
+      $subscribeStr = "select s.title,s.start,s.end,s.user,v.title as vt from sea_subscribe s left join `sea_vod` v on v.id=s.vid where s.stat=0 limit 100";
+    }
+
+    $page = isset($page) ? intval($page) : 0;
+    if($page==0){
+      $prev_html = "<a class='layui-btn layui-btn-sm layui-btn-disabled' href='javascript:void(0)' >上一周</a>" ;
+    }else{
+      $prev_page = $page - 1;
+      $prev_html ="<a class='layui-btn layui-btn-sm' href='?page=$prev_page' >上一周</a>" ;
+    }
+
+    $next_page = $page + 1;
+    $next_html ="<a class='layui-btn layui-btn-sm' href='?page=$next_page' >下一周</a>" ;
+
+    $date=date('Y-m-d');
+    $w= date("w");
+    $days = array();
+    $days[]=date('Y-m-d',strtotime("$date ".(($w ?1 - $w : -6)+7*$page).' days'));
+    $days[]=date('Y-m-d',strtotime("$days[0] +1 days")); 
+    $days[]=date('Y-m-d',strtotime("$days[0] +2 days")); 
+    $days[]=date('Y-m-d',strtotime("$days[0] +3 days")); 
+    $days[]=date('Y-m-d',strtotime("$days[0] +4 days")); 
+    $days[]=date('Y-m-d',strtotime("$days[0] +5 days")); 
+    $days[]=date('Y-m-d',strtotime("$days[0] +6 days")); 
+
+?>
+<div class="layui-fluid">
+  <div class="r_content pd15">
+    <div style="overflow-x: auto">
+      <div class="layui-row">
+        <div class="layui-col-md6">
+          <?php if($cuserLogin->getgroupid()==1): ?>  <a class="layui-btn layui-btn-sm" href="admin_cltime.php?action=add" title="新增节次">新增&nbsp;&nbsp;<i class="iconfont">&#xe6b9;</i></a> <?php endif; ?>     
+        </div>
+        <div class="layui-col-md6" style="text-align: right;">
+          <?= $prev_html ?> &nbsp;&nbsp;
+          <a class="layui-btn layui-btn-sm layui-btn-normal" href="?page=0" >本周</a>&nbsp;&nbsp;
+          <?= $next_html ?> 
+        </div>
+      </div>
+      <table class="layui-table" style="min-width:1000px;">
+       <tbody>
+        <tr style="background-color: #F6F6F6;" align="center">
+          <td width="11%">节次</td>
+          <td width="11%" <?php if($date==$days[0]) echo "class='text_red'" ?>>星期一<br><?=$days[0] ?></td>
+          <td width="11%" <?php if($date==$days[1]) echo "class='text_red'" ?>>星期二<br><?=$days[1] ?></td>
+          <td width="11%" <?php if($date==$days[2]) echo "class='text_red'" ?>>星期三<br><?=$days[2] ?></td>
+          <td width="11%" <?php if($date==$days[3]) echo "class='text_red'" ?>>星期四<br><?=$days[3] ?></td>
+          <td width="11%" <?php if($date==$days[4]) echo "class='text_red'" ?>>星期五<br><?=$days[4] ?></td>
+          <td width="11%" <?php if($date==$days[5]) echo "class='text_red'" ?>>星期六<br><?=$days[5] ?></td>
+          <td width="11%" <?php if($date==$days[6]) echo "class='text_red'" ?>>星期日<br><?=$days[6] ?></td>   
+          <?php if($cuserLogin->getgroupid()==1): ?>  <td width="12%">操作</td> <?php endif; ?>     
+        </tr>
+          <?php
+            $dsql->SetQuery($subscribeStr);
+            $dsql->Execute('vod_list');
+            
+            $infos = array
+            (
+                "title"=>array(),
+                "sd"=>array(),
+                "ed"=>array(),
+                "st"=>array(),
+                "et"=>array(),
+                "user"=>array(),
+                "vt"=>array(),                
+            );
+            while($row=$dsql->GetObject('vod_list')){
+              $s = explode(" ",$row->start);
+              $e = explode(" ",$row->end);
+              if(count($s)!=2 || count($e)!=2) continue;
+              $infos['title'][] = $row->title;
+              $infos['sd'][] = $s[0];
+              $infos['ed'][] = $e[0];
+              $infos['st'][] = $s[1];
+              $infos['et'][] = $e[1];
+              $infos['user'][] = $row->user;
+              $infos['vt'][] = $row->vt;
+
+            }
+
+            $dsql->SetQuery($sqlStr);
+            $dsql->Execute('time_list');
+            $time1=date("Y-m-d H:i:s");//获取当前时间
+            while($row=$dsql->GetObject('time_list'))
+            {
+              $id=$row->id;
+              $week = date("w");
+              if($week==0) $week = 7;
+
+
+              $class_arrs=array("","","","","","","","");
+
+              $url1 = getActionUrl($class_arrs,$infos,1,$row,$days,$page);
+              $url2 = getActionUrl($class_arrs,$infos,2,$row,$days,$page);
+              $url3 = getActionUrl($class_arrs,$infos,3,$row,$days,$page);
+              $url4 = getActionUrl($class_arrs,$infos,4,$row,$days,$page);
+              $url5 = getActionUrl($class_arrs,$infos,5,$row,$days,$page);
+              $url6 = getActionUrl($class_arrs,$infos,6,$row,$days,$page);
+              $url7 = getActionUrl($class_arrs,$infos,7,$row,$days,$page);
+
+
+
+          ?>
+          <tr align="center">
+            <td height="36px"><?= $row->title; ?></td>
+            <td height="36px" <?= $class_arrs[1] ?>><?= $url1; ?></td>
+            <td height="36px" <?= $class_arrs[2] ?>><?= $url2; ?></td>
+            <td height="36px" <?= $class_arrs[3] ?>><?= $url3; ?></td>
+            <td height="36px" <?= $class_arrs[4] ?>><?= $url4; ?></td>
+            <td height="36px" <?= $class_arrs[5] ?>><?= $url5; ?></td>
+            <td height="36px" <?= $class_arrs[6] ?>><?= $url6; ?></td>
+            <td height="36px" <?= $class_arrs[7] ?>><?= $url7; ?></td>   
+            <?php if($cuserLogin->getgroupid()==1): ?>  <td height="36px">
+              <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a>
+            </td>   <?php endif; ?>         
+          </tr>
+  <?php
+ } 
+
+
+ function getActionUrl(&$class_arrs,&$infos,$week,&$row,$days,$page){
+
+  $time1=date("Y-m-d H:i:s");//获取当前时间
+  $w = date("w");
+  $can = true;
+  if($w==0) $w = 7;
+
+  if($page==0){
+    if($w==$week){
+      $time2=date("Y-m-d").getStartTime($row,$week);
+      if(strtotime($time1)>strtotime($time2)){
+      $class_arrs[$week] = "class='text_disable'";
+      $can = false;
+      }
+    } else if($week<$w){
+        $class_arrs[$week] = "class='text_disable'";
+        $can = false;
+    }
+  }
+
+
+  $start = getStartTime($row,$week);
+  $end = getEndTime($row,$week);
+
+   if($can){
+      $date = $days[$week-1];
+      $bFound = false;
+      $title = "";
+      $user = "";
+      $url= "";
+
+      $len = count($infos['title']); 
+  
+      for($i=0;$i<$len;$i++){
+
+        if($infos['sd'][$i]=$date && $infos['ed'][$i]==$date){
+          if(  ($infos['st'][$i]>=$start && $infos['st'][$i]<$end) ||
+               ($infos['et'][$i]>$start && $infos['et'][$i]<=$end) ||
+               ($infos['st'][$i]<$start && $infos['et'][$i]>=$end) 
+           ){
+            $bFound = true;
+            $title =$infos['title'][$i];
+            $vt = $infos['vt'][$i];
+            $user = $infos['user'][$i];
+            if($url!="") $url = $url . "<br><hr>";
+            $url = $url ."<a href='admin_live.php?action=add&id=-1&sd=$date&ed=$date&st=$start&et=$end' title='直播源：$vt\n执　教：$user'>$title</a>";
+          }
+        }
+        
+      }
+
+     
+      if(!$bFound){
+        $class_arrs[$week] = "class='bg_green'";
+
+        $url = "<a href='admin_live.php?action=add&id=-1&sd=$date&ed=$date&st=$start&et=$end' title='点击预约录像'>$start - $end</a>";
+      } else{
+        $class_arrs[$week] = "class='bg_red'";
+      }
+
+   } else { 
+    $url = "$start - $end";
+   }
+
+
+    return $url;
+ }
+  
+ function getStartTime($row,$week){
+  switch($week){
+    case 1:
+      return $row->week1s;
+    case 2:
+      return $row->week2s;
+    case 3:
+      return $row->week3s;
+    case 4:
+      return $row->week4s;
+    case 5:
+      return $row->week5s;
+    case 6:
+      return $row->week6s;
+    case 7:
+      return $row->week7s;      
+  }
+}
+
+function getEndTime($row,$week){
+  switch($week){
+    case 1:
+      return $row->week1e;
+    case 2:
+      return $row->week2e;
+    case 3:
+      return $row->week3e;
+    case 4:
+      return $row->week4e;
+    case 5:
+      return $row->week5e;
+    case 6:
+      return $row->week6e;
+    case 7:
+      return $row->week7e;      
+  }
+}
+
+ ?>
+		</tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

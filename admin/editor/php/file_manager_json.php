@@ -4,14 +4,22 @@ if(empty($_SESSION['sea_admin_id'])){die('ERR');}
 
 
 require_once 'JSON.php';
+require_once '../../../data/config.cache.inc.php';
 
 $php_path = dirname(__FILE__) . '/';
 $php_url = dirname($_SERVER['PHP_SELF']) . '/';
 
 //根目录路径，可以指定绝对路径，比如 /var/www/attached/
-$root_path = $php_path . '../../../uploads/';
+
+
+$root_path = $php_path . "../../../$cfg_upload_dir/";
 //根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
-$root_url = '/uploads/';
+if(strlen($cfg_cmspath)>0){
+	$root_url = "/".$cfg_cmspath."$cfg_upload_dir/";
+}else{
+	$root_url = "/$cfg_upload_dir/";
+}
+
 //图片扩展名
 $ext_arr = array('gif', 'jpg', 'jpeg', 'png', 'bmp');
 

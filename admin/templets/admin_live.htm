@@ -1,0 +1,262 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="robots" content="noindex,nofollow">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="img/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+		<title>新增预约</title>
+		<script src="editor/kindeditor-min.js" type="text/javascript"></script>
+		<script src="editor/lang/zh-CN.js" type="text/javascript"></script>
+		<script src="js/common.js" type="text/javascript"></script>
+		<script src="js/jquery.min.js" type="text/javascript"></script>
+		<script src="js/main.js" type="text/javascript"></script>
+		<script src="layui/layui.js" type="text/javascript"></script>
+	</head>
+
+	<?php
+		$groupid = $cuserLogin->getgroupid();
+		$vodlist = $cuserLogin->getUserVodList();
+		if($groupid==3)
+			$publish = $cuserLogin->getpublish();
+		else
+			$publish = 1;
+	?>
+
+	<body>
+		<!--当前导航-->
+		<div class="layui-card">
+			<div class="layui-card-header">添加预约录课</div>
+			<div class="layui-card-body">
+				<form action="?action=save&acttype=add" method="post" name="addform" id="addform" class="layui-form">
+					<input type="hidden" value="0" name="v_commend" id="v_commend" />
+					<input type="hidden" name="id" value="<?php echo $id;?>">
+					<div class="layui-form-item"  <?php if($groupid==3 && $publish==0) echo " style=\"display:none\"";?>>
+						<label class="layui-form-label">自动发布：</label>
+						<div class="layui-input-block">
+							<input type="checkbox" name="v_publish"  id="v_publish"  title="自动发布到网站首页" lay-skin="primary" <?php if($publish=='1' ) echo "checked"; ?>  value="1" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">视频来源：</label>
+						<div class="layui-input-block">
+							<select name="v_id" id="v_id">
+							<?php
+								require_once(dirname(__FILE__)."/../../data/config.plus.inc.php"); 
+								$stats=array("(离线)","(正在直播)","(正在录制)");
+								if($groupid==3  && $vodlist!='0'){
+								$csqlStr = "SELECT `id`,`title`,`stat` FROM `sea_vod` where id in($vodlist);"; 
+								
+								} else{
+									$csqlStr = "SELECT `id`,`title`,`stat` FROM `sea_vod`";
+								}
+				
+								$dsql->SetQuery($csqlStr);
+								$dsql->Execute('vod_list');
+								while($row=$dsql->GetObject('vod_list'))
+								{
+								$id=$row->id;
+								$title = $row->title;
+								$stat = $row->stat;
+							
+								echo "<option value='$id'";
+								if($v_id==$id) echo  " selected = 'selected'";
+								echo ">".$title.$stats[$stat]."</option>";
+								}
+			        		?>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">视频标题：</label>
+						<div class="layui-input-block">
+							<input type="text" id="v_name" name="v_name" lay-verify="required" placeholder="请输入标题"
+								autocomplete="off" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">视频分类：</label>
+						<div class="layui-input-block">
+							<select name="v_type" id="v_type"  lay-verify="required" lay-search>
+								<option value="">请选择视频分类</option>
+								<?php
+									if($groupid==3) {
+										$tid = $cuserLogin->gettypeid();
+										makeTypeOptionSelected(0,"　","",$tid,0);
+									}
+									else
+								 		makeTypeOption(0," 　",0);
+									 
+								?>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">开始时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="v_sdate" id="v_sdate" placeholder="请输入日期" lay-key="1" size="11"
+								class="layui-input" lay-verify="required" />
+						</div>
+						<div class="layui-input-inline">
+							<input type="text" name="v_stime" id="v_stime" placeholder="请输入时间" lay-key="2" size="8"
+								class="layui-input" lay-verify="required" />
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">结束时间：</label>
+						<div class="layui-input-inline">
+							<input type="text" name="v_edate" id="v_edate" placeholder="请输入日期" lay-key="3" size="11"
+								class="layui-input" lay-verify="required" />
+						</div>
+						<div class="layui-input-inline">
+							<input type="text" name="v_etime" id="v_etime" placeholder="请输入时间" lay-key="4" size="8"
+								class="layui-input" lay-verify="required" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-block">
+							<label class="layui-form-label">图片地址：</label>
+							<div class="layui-input-inline" >
+								<input name="v_pic" type="text" id="v_pic" value="" size="30" class="layui-input" />
+							</div>
+							<div class="layui-input-inline" style="width: 80px;">
+								<input name="doClear1" type="button" id="doClear1" value="清  除"
+									onclick="javascript:document.addform.v_pic.value='';" class="layui-btn" />
+							</div>
+							<div class="layui-input-inline"  style="width: 100px;">
+								<input name="upButton11" type="button" id="upButton11" value="选择图片"
+									class="layui-btn layui-btn-danger" />
+							</div>
+							<div class="layui-input-inline"  style="width: 100px;">
+								<input name="upButton12" type="button" id="upButton12" value="上传图片"
+									class="layui-btn layui-btn-danger" />
+							</div>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">执　　教：</label>
+						<div class="layui-input-block">
+							<input size="30" name="v_actor" value="<?php if($groupid==3) echo $cuserLogin->getNickName();?>" class="layui-input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">年　　级：</label>
+						<div class="layui-input-block">
+							<?php echo getAreaSelect("v_publisharea","请选择年级","");?>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">班　　级：</label>
+						<div class="layui-input-block">
+							<input name="v_director" size="10" value="" class="layui-input" />
+						</div>
+					</div>
+
+					<div class="layui-form-item" style="display: none;">
+						<label class="layui-form-label">视频介绍：</label>
+						<div class="layui-input-block">
+							<textarea id="editor_id" name="v_content" style="height:100px;"></textarea>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<input type="submit" name="Submit" lay-filter="*" value="确定提交" lay-submit="" class="layui-btn"/>
+							<input type="reset" name="reset" value="清除重置" class="layui-btn layui-btn-primary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script>
+			layui.use(['layer','jquery','laydate','form'], function() {
+				var laydate = layui.laydate;
+				var sd = laydate.render({
+					elem: '#v_sdate',
+					value: '<?= $v_sdate ?>',
+					done: function(value, date) {
+						date.month = date.month - 1;
+						ed.config.min = date;
+					}
+				});
+				//时间选择器
+				var st = laydate.render({
+					elem: '#v_stime',
+					value: '<?= $v_stime ?>',
+					type: 'time',
+					done: function(value, date) {
+						date.minutes++;
+						if (date.minutes == 60) {
+							date.minutes = 0;
+							date.hours++;
+						}
+						et.config.min.hours = date.hours;
+						et.config.min.minutes = date.minutes;
+						et.config.min.seconds = date.seconds;
+					}
+				});
+
+				var ed = laydate.render({
+					elem: '#v_edate',
+					min: '<?= $v_sdate ?>',
+					value: '<?= $v_edate ?>',
+					done: function(value, date) {
+						date.month = date.month - 1;
+						sd.config.max = date;
+					}
+				});
+				//时间选择器
+				var et = laydate.render({
+					elem: '#v_etime',
+					min: '<?= $v_stime ?>',
+					value: '<?= $v_etime ?>',
+					type: 'time'
+
+				});
+			});
+
+			form = layui.form;
+			$ = layui.jquery;
+			layer = layui.layer;
+
+			form.on('submit(*)', function(data){
+				text = $("#v_id").find("option:selected").text();
+				pos = text.indexOf("(离线)");
+				if(pos>0){
+					vname = text.substring(0,pos);
+	
+					layer.confirm(vname +"：<font color=red>离线中</font>，预约后如果没有及时开启该视频流，<br>将会导致录像失败，是否要继续？", {
+					btn: ['确定','取消'], //按钮
+					icon: 3
+					}, function(){
+						$("#addform").submit();
+					
+					}, function(){
+					
+					});
+					return false; //阻止表单跳转。
+				}	
+			});
+
+			window.editor = KindEditor.create('#editor_id', {
+				uploadJson: 'editor/php/upload_json.php',
+				fileManagerJson: 'editor/php/file_manager_json.php',
+				allowFileManager: true,
+				afterBlur: function() {
+					this.sync();
+				}
+			});
+
+			bindButtonFile('#upButton11', '#v_pic', false, false);
+			bindButtonUpImage('#upButton12', '#v_pic');
+		</script>
+	</body>
+
+</html>

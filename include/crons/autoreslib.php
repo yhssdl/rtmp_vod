@@ -53,8 +53,8 @@ function autoIntoDatabase($url,$page=1)
 	$recordcount = $xml->list['recordcount'];
 	foreach($xml->list->video as $video)
 	{
-		$xmltid =  $video->tid;//影片分类id
-		$name =  $video->name;//影片名称
+		$xmltid =  $video->tid;//视频分类id
+		$name =  $video->name;//视频名称
 		$localId = getBindedLocalIda($rid1.'_'.$xmltid);//入库后本地id
 		$data = "$$".$video->dl->dd;
 		if(!empty($name)&&!empty($data))

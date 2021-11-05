@@ -12,7 +12,7 @@ if($action=="add")
 {
 	if(empty($tname))
 	{
-		ShowMsg("剧情分类名称没有填写，请返回检查","-1");
+		ShowMsg("课程分类名称没有填写，请返回检查","-1");
 		exit();
 	}
 	
@@ -23,7 +23,7 @@ if($action=="add")
 		exit();
 	}
 	clearTypeCache();
-	ShowMsg("成功创建一个剧情分类！","admin_jqtype.php");
+	ShowMsg("成功创建一个课程分类！","admin_jqtype.php");
 	exit();
 }
 elseif($action=="hide")
@@ -155,18 +155,17 @@ function typeList($topId,$separateStr,$span="")
 	$tlist=getjqTypeListsOnCache();
 	foreach($tlist as $row)
 	{
-
-?>
-	<tr>
-            <td height="30" bgcolor="#FFFFFF" class="td_border"><?php  echo $span;?>&nbsp;<input type="checkbox" name="e_id[]" id="E_ID"  value="<?php  echo $row->tid;?>" class="checkbox"/><?php  echo $row->tid;?>.<a href="admin_video.php?jqtype=<?php  echo $row->tname;?>"><?php  echo $row->tname;?></a>(<font color="red"><?php  echo getjqnumber($row->tname);?></font>)</td>
-            <td height="30" align="left" bgcolor="#FFFFFF"  class="td_border"><input size="13" type="text" name="tname<?php  echo $row->tid;?>" value="<?php  echo $row->tname;?>"></td>
-			 <td height="30" align="left" bgcolor="#FFFFFF"  class="td_border">
+	?>
+	<tr align="center">
+            <td><?php  echo $span;?>&nbsp;<input type="checkbox" name="e_id[]" id="E_ID"  value="<?php  echo $row->tid;?>" class="checkbox"/>&nbsp;<?php  echo $row->tid;?>.<a href="admin_video.php?jqtype=<?php  echo $row->tname;?>"><?php  echo $row->tname;?></a>(<font color="red"><?php  echo getjqnumber($row->tname);?></font>)</td>
+            <td ><input size="13" type="text" name="tname<?php  echo $row->tid;?>" value="<?php  echo $row->tname;?>"></td>
+			 <td >
 			 <select name="upid<?php  echo $row->tid;?>" id="v_type">
                 <option value="0">顶级分类</option>
                 <?php  makeTypeOptionSelected(0,"&nbsp;|&nbsp;&nbsp;","",$row->upid,0);?>
               </select>
 			 </td>
-            <td height="30" align="center" bgcolor="#FFFFFF" class="td_border"><?php  if($row->ishidden==0){?><input type="button" value="隐藏"  onClick="location.href='?action=hide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }else{?> <input type="button" value="取消隐藏"  onClick="location.href='?action=nohide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }?> <input type="button" value="删除" onclick="del(<?php  echo $row->tid;?>)" class="rb1"></td>
+            <td align="center"><?php  if($row->ishidden==0){?><input type="button" value="隐藏"  onClick="location.href='?action=hide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }else{?> <input type="button" value="取消隐藏"  onClick="location.href='?action=nohide&id=<?php  echo $row->tid;?>';" class="rb1"><?php  }?> <input type="button" value="删除" onclick="del(<?php  echo $row->tid;?>)" class="rb1"></td>
 	</tr>
 <?php 
 		

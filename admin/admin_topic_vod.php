@@ -10,7 +10,7 @@ if(empty($action))
 {
 	$action = '';
 }
-	$sql="select * from sea_topic where id=$tid"; //获取之前的影片id'数据
+	$sql="select * from sea_topic where id=$tid"; //获取之前的视频id'数据
 	$dsql->SetQuery($sql);
 	$dsql->Execute('al') ;
 	while($row=$dsql->GetObject('al'))
@@ -99,7 +99,7 @@ elseif($action=="save")
 {
 	if(trim($v_name) == '')
 	{
-		ShowMsg("影片名不能为空！","-1");
+		ShowMsg("视频名不能为空！","-1");
 		exit();
 	}
 	if(empty($v_type))
@@ -176,17 +176,17 @@ elseif($action=="save")
 			$updateSql = "update sea_data set ".$updateSql." where v_id=".$v_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{
-				ShowMsg('更新影片出错，请检查',-1);
+				ShowMsg('更新视频出错，请检查',-1);
 				exit();
 			}
 			if(!$dsql->ExecuteNoneQuery("update `sea_content` set `body`='$v_content' where v_id='$v_id'"))
 			{
-				ShowMsg("更新影片内容时出错，请检查原因！",-1);
+				ShowMsg("更新视频内容时出错，请检查原因！",-1);
 				exit();
 			}
 			if(!$dsql->ExecuteNoneQuery("update `sea_playdata` set `body`='$v_playdata',`body1`='$v_downdata' where v_id='$v_id'"))
 			{
-				ShowMsg("更新影片播放数据时出错，请检查原因！",-1);
+				ShowMsg("更新视频播放数据时出错，请检查原因！",-1);
 				exit();
 			}
 			$v_oldtags = $v_oldtags ? strtolower(addslashes($v_oldtags)) : '';
@@ -194,14 +194,14 @@ elseif($action=="save")
 			if($cfg_runmode=='0'){
 				$trow = $dsql->GetOne("select ishidden from sea_type where tid=".$tid);
 				if($trow['ishidden']==1){
-					ShowMsg("影片更新成功",$v_back);
+					ShowMsg("视频更新成功",$v_back);
 					exit();
 				}else{
-					ShowMsg("影片更新成功，转向生成页面！","admin_makehtml.php?action=single&id=".$v_id."&from=".$v_back);
+					ShowMsg("视频更新成功，转向生成页面！","admin_makehtml.php?action=single&id=".$v_id."&from=".$v_back);
 					exit();
 				}
 			}else{
-				ShowMsg("影片更新成功",$v_back);
+				ShowMsg("视频更新成功",$v_back);
 				exit();
 			}
 			break;
@@ -212,7 +212,7 @@ elseif($action=="lock")
 	$back=$Pirurl;
 	$id = isset($id) && is_numeric($id) ? $id : 0;
 	$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '1' where v_id='$id'");
-	ShowMsg("影片锁定成功",$back);
+	ShowMsg("视频锁定成功",$back);
 	exit();
 }
 elseif($action=="unlock")
@@ -220,7 +220,7 @@ elseif($action=="unlock")
 	$back=$Pirurl;
 	$id = isset($id) && is_numeric($id) ? $id : 0;
 	$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '0' where v_id='$id'");
-	ShowMsg("影片解锁成功",$back);
+	ShowMsg("视频解锁成功",$back);
 	exit();
 }
 elseif($action=="lockall")
@@ -228,7 +228,7 @@ elseif($action=="lockall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要锁定/解锁的影片","-1");
+		ShowMsg("请选择需要锁定/解锁的视频","-1");
 		exit();
 	}
 	$dsql->SetQuery("select v_id,v_isunion from `sea_data` where v_id in (".implode(',',$e_id).")");
@@ -237,7 +237,7 @@ elseif($action=="lockall")
 	{
 		$dsql->ExecuteNoneQuery("update `sea_data` set v_isunion = '".($rs['v_isunion']==1?0:1)."' where v_id=".$rs['v_id']);
 	}
-	ShowMsg("影片锁定/解锁成功",$back);
+	ShowMsg("视频锁定/解锁成功",$back);
 	exit();
 }
 elseif($action=="del")
@@ -253,7 +253,7 @@ elseif($action=="del")
 	$dsql->ExecuteNoneQuery("delete From `sea_content` where v_id='$id'");
 	$dsql->ExecuteNoneQuery("delete From `sea_playdata` where v_id='$id'");
 	clearTypeCache();
-	ShowMsg("影片删除成功",$back);
+	ShowMsg("视频删除成功",$back);
 	exit();
 }
 elseif($action=="restoreall")
@@ -261,7 +261,7 @@ elseif($action=="restoreall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要还原的影片","-1");
+		ShowMsg("请选择需要还原的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -277,7 +277,7 @@ elseif($action=="delall")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要删除的影片","-1");
+		ShowMsg("请选择需要删除的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -292,7 +292,7 @@ elseif($action=="delall")
 	$dsql->ExecuteNoneQuery("delete From `sea_content` where v_id in(".$ids.")");
 	$dsql->ExecuteNoneQuery("delete From `sea_playdata` where v_id in(".$ids.")");
 	clearTypeCache();
-	ShowMsg("影片删除成功",$back);
+	ShowMsg("视频删除成功",$back);
 	exit();
 }
 elseif($action=="psettopic")
@@ -300,7 +300,7 @@ elseif($action=="psettopic")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要设置专题的影片","-1");
+		ShowMsg("请选择需要设置专题的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
@@ -313,12 +313,12 @@ elseif($action=="psettype")
 	$back=$Pirurl;
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要移动分类的影片","-1");
+		ShowMsg("请选择需要移动分类的视频","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("update sea_data set tid=".$movetype." where v_id in(".$ids.")");
-	ShowMsg("批量移动影片成功",$back);
+	ShowMsg("批量移动视频成功",$back);
 	exit();
 }
 elseif($action=="deltypedata")
@@ -334,11 +334,11 @@ elseif($action=="hide")
 	$back=$Pirurl;
 	if(empty($id))
 	{
-		ShowMsg("请选择需要隐藏的影片","-1");
+		ShowMsg("请选择需要隐藏的视频","-1");
 		exit();
 	}
 	$dsql->ExecuteNoneQuery("update sea_data set v_recycled=1 where v_id=".$id);
-	ShowMsg("隐藏影片成功",$back);
+	ShowMsg("隐藏视频成功",$back);
 	exit();
 	
 		
@@ -348,11 +348,11 @@ elseif($action=="restore")
 	$back=$Pirurl;
 	if(empty($id))
 	{
-		ShowMsg("请选择需要还原的影片","-1");
+		ShowMsg("请选择需要还原的视频","-1");
 		exit();
 	}
 	$dsql->ExecuteNoneQuery("update sea_data set v_recycled=0 where v_id=".$id);
-	ShowMsg("还原影片成功",$back);
+	ShowMsg("还原视频成功",$back);
 	exit();	
 }
 else

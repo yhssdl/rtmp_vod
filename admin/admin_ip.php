@@ -17,7 +17,7 @@ if($action=="set")
 	$str.=" ?>";
 	fwrite($open,$str);
 	fclose($open);
-	ShowMsg("成功保存设置!","admin_ip.php");
+	ShowMsg("成功保存设置!","admin_ip.php?v=$v");
 	exit;
 }
 
@@ -27,63 +27,44 @@ if($action=="set")
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>后台IP安全设置</title>
-<link  href="img/style.css" rel="stylesheet" type="text/css" />
-<link  href="img/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="css/x.css"/>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script src="layui/layui.js" type="text/javascript"></script>
 </head>
 <body>
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;管理员&nbsp;&raquo;&nbsp;后台IP安全设置 ';</script>
-<div class="r_main">
-  <div class="r_content">
-    <div class="r_content_1">
-<form action="admin_ip.php?action=set" method="post">	
-<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tb_style">
-<tbody><tr class="thead">
-<td colspan="5" class="td_title">后台IP安全设置</td>
-</tr>
-<tr>
-<td width="80%" align="left" height="30" class="td_border">
+<div class="layui-fluid">
+  <div class="r_content pd15">
+    <div style="overflow-x: auto">
+<form action="admin_ip.php?action=set" method="post"class="layui-form">	
 <?php  require_once("../data/admin/ip.php"); ?>
-功能开关：
-<input type="radio" name="v" value="0" <?php  if($v==0) echo 'checked';?>>关闭
-&nbsp;&nbsp;
-<input type="radio" name="v" value="1" <?php  if($v==1) echo 'checked';?>>开启
- * 是否启用ip限制，启用后非登记ip无法访问网站后台 
-</td>
-</tr>
-
-<tr>
-<td width="80%" align="left" height="30" class="td_border">
-允许IP：<textarea name="ip" style="width:500px; height:100px;"><?php  echo $ip;?></textarea>
- * 允许设置多个ip，每行一个
-</td>
-</tr>
-
-<tr>
-<td width="10%" align="left" height="30" class="td_border">
-<input type="submit" value="确 认" class="btn" >
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 开启该功能后，将只允许已登记的ip地址访问后台，如上网ip不固定，请勿开启。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 如果上网ip变化导致无法登陆后台，请手动修改/data/admin/ip.php文件内容，$v = "0"表示关闭该功能。
-</td>
-</tr>
-</tbody></table>	
+  <div class="layui-form-item">
+    <label class="layui-form-label">功能开关：</label>
+    <div class="layui-input-block">
+      <input type="radio" name="v" value="1" title="开启" <?php  if($v==1) echo 'checked';?>>
+      <input type="radio" name="v" value="0" title="关闭" <?php  if($v==0) echo 'checked';?>>
+    </div>
+  </div>
+  
+	<div class="layui-form-item">
+		<label class="layui-form-label">允许IP：</label>
+		<div class="layui-input-block">
+			<textarea id="ip" name="ip" class="layui-textarea"><?php  echo $ip;?></textarea>
+		</div>
+		
+	</div> 
+	<div class="layui-word-aux">*允许设置多个ip，每行一个<br>开启该功能后，将只允许已登记的ip地址访问后台，如上网ip不固定，请勿开启。<br>如果上网ip变化导致无法登陆后台，请手动修改/data/admin/ip.php文件内容，$v = "0"表示关闭该功能。<br><br><br></div>
 	
-
+	
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+		<input type="submit" name="Submit" value="确定提交" lay-submit="" class="layui-btn"/>
+		</div>
+	</div>  
 </form>
 </div>
-	</div>
 </div>
-<?php 
-viewFoot();
-?>
+</div>
 </body>
 </html>

@@ -108,6 +108,12 @@ class MainClass_Template {
 		}
 	}
 	function parseGlobal($content) {
+		
+		$year = date('Y');
+		
+		$content = str_replace ( "{seacms:year}", $year, $content );
+		$content = str_replace ( "{seacms:year-1}", $year-1, $content );
+		$content = str_replace ( "{seacms:year-2}", $year-2, $content );
 		if (strpos ( $content, '{seacms:letterlist}' ) > 0)
 			$content = str_replace ( "{seacms:letterlist}", getletterlist (), $content );
 		if (strpos ( $content, '{seacms:indexlink}' ) > 0)

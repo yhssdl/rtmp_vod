@@ -869,10 +869,22 @@ function ctrlRecord(vid,commandid) {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
+				layer.msg('1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。', {
+					icon: 1,
+					time: 6000
+				  }, function(){
+					//do something
+				  }); 
 			}else if (obj.responseText == "record") {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'><font color='green'>开始录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_green"); 
+				layer.msg('录制结束，您可以到“管理预约”中查看录制的项目，并进行下一步处理。', {
+					icon: 7,
+					time: 6000
+				  }, function(){
+					//do something
+				  }); 
 			}  
 			else {
 				set(document.getElementById("ctrlm"+vid), obj.responseText);
@@ -882,15 +894,22 @@ function ctrlRecord(vid,commandid) {
 }
 
 function publish_vod(vid) {
-	if(confirm("首页发布后，用户就可以在网站前台直接观看直播视频，以确定要将该直播视频流发布到网站前台首页吗？")){
+
+	layer.confirm('首页发布后，用户就可以在网站前台直接观看直播视频，以确定要将该直播视频流发布到网站前台首页吗？', {
+		btn: ['确定','取消'] //按钮
+	  }, function(){
 		ajax.get(
 			"admin_ajax.php?id=" + vid  + "&action=publish",
 			function (obj) {
-				alert(obj.responseText);
-
+				layer.msg(obj.responseText, {
+					icon: 1,
+					time: 6000
+				  }, function(){
+				  }); 
 			}
 		);
-	}
+	  }, function(){
+	  });
 
 }
 
@@ -994,7 +1013,7 @@ function getVodStat(id_group,stat_group){
 
 							var title=new Array("text_gray","text_green","text_red");
 							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
-							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除吗\")'>　删除　</a>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'><font color='green'>开始录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'><font color='red'>停止录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>")
+							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>　删除　</a>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'><font color='green'>开始录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'><font color='red'>停止录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod("+subs[0]+");'><font color='green'>首页发布</font></span></span>")
 							
 							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);

@@ -250,9 +250,16 @@ function zzget($txt)
 	elseif($txt=='ver'){$txt=sea_DATA."/admin/verlist.txt";}
 	else{return '<option value=0>无内容</option>';exit();}
 	$cc = array();
-	if(filesize($txt)>0)
+	if(filesize($txt)>2)
 	{
 		$cc = file($txt);
+	}
+	if($txt=='year'){
+		$sum = count($cc);
+		if($sum<1){
+			$year = date('Y');
+			$cc = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
+		}
 	}
 	$str = "";
 	if(!empty($strSelect)) $str .= "<option value=''>".$strSelect."</option>";

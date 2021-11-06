@@ -208,10 +208,16 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 				{
 				$publishyeartxt=sea_DATA."/admin/publishyear.txt";
 						$publishyear = array();
-						if(filesize($publishyeartxt)>0)
+						if(filesize($publishyeartxt)>2)
 						{
 							$publishyear = file($publishyeartxt);
 						}
+						$sum = count($publishyear);
+						if($sum<1){
+							$year = date('Y');
+							$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9,$year-10,$year-11,$year-12,$year-13,$year-14);
+						}
+
 						$yearArray=$publishyear;
 						$yeartxt= implode(',',$yearArray);
 						$whereStr.=" and v_publishyear not in ($yeartxt)";

@@ -1092,9 +1092,14 @@ function getYearSelect($selectName,$strSelect,$yearId)
 {
 	$publishyeartxt=sea_DATA."/admin/publishyear.txt";
 	$publishyear = array();
-	if(filesize($publishyeartxt)>0)
+	if(filesize($publishyeartxt)>2)
 	{
 		$publishyear = file($publishyeartxt);
+	}
+	$sum = count($publishyear);
+	if($sum<1){
+		$year = date('Y');
+		$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
 	}
 	$str = "<select name='".$selectName."' >";
 	if(!empty($strSelect)) $str .= "<option value=''>".$strSelect."</option>";

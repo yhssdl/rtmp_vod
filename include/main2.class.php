@@ -198,8 +198,13 @@ class MainClass_Template {
 				case "year" :
 					$publishyeartxt = sea_DATA . "/admin/publishyear.txt";
 					$publishyear = array ();
-					if (filesize ( $publishyeartxt ) > 0) {
+					if (filesize ( $publishyeartxt ) > 2) {
 						$publishyear = file ( $publishyeartxt );
+					}
+					$sum = count($publishyear);
+					if($sum<1){
+						$year = date('Y');
+						$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
 					}
 					$rsArray = $publishyear;
 					array_push ( $rsArray, "more" );
@@ -384,8 +389,13 @@ class MainClass_Template {
 				case "year" :
 					$publishyeartxt = sea_DATA . "/admin/publishyear.txt";
 					$publishyear = array ();
-					if (filesize ( $publishyeartxt ) > 0) {
+					if (filesize ( $publishyeartxt ) > 2) {
 						$publishyear = file ( $publishyeartxt );
+					}
+					$sum = count($publishyear);
+					if($sum<1){
+						$year = date('Y');
+						$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
 					}
 					$rsArray = $publishyear;
 					array_push ( $rsArray, "more" );
@@ -1987,8 +1997,13 @@ class MainClass_Template {
 					if ($year == "more") {
 						$publishyeartxt = sea_DATA . "/admin/publishyear.txt";
 						$publishyear = array ();
-						if (filesize ( $publishyeartxt ) > 0) {
+						if (filesize ( $publishyeartxt ) > 2) {
 							$publishyear = file ( $publishyeartxt );
+						}
+						$sum = count($publishyear);
+						if($sum<1){
+							$year = date('Y');
+							$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
 						}
 						$yearArray = $publishyear;
 						$yeartxt = implode ( ',', $yearArray );

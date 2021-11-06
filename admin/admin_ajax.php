@@ -308,6 +308,35 @@ elseif($action=='vod'){
 
 	
 }
+elseif($action=='publish'){
+	$row=$dsql->GetOne("select title,app_name,stream_name from sea_vod where id='$id'");
+	$title = $row['title'];
+	$app_name=$row['app_name'];
+	$stream_name = $row['stream_name'];
+	$url = makeUrl($app_name,$stream_name);
+
+	$v_pic ="/pic/vod.jpg";
+	$year =date('Y');
+	$t = time();
+	$tid = 23;
+	$v_enname = Pinyin($title);
+	$v_letter = strtoupper(substr($v_enname,0,1));
+
+	#加入直播到数据库
+	$insertSql = "insert into sea_data(tid,v_name,v_letter,v_state,v_topic,v_hit,v_money,v_vip,v_rank,v_actor,v_color,v_publishyear,v_publisharea,v_pic,v_spic,v_gpic,v_addtime,v_note,v_tags,v_lang,v_score,v_scorenum,v_director,v_enname,v_commend,v_extratype,v_jq,v_nickname,v_reweek,v_douban,v_mtime,v_imdb,v_tvs,v_company,v_dayhit,v_weekhit,v_monthhit,v_len,v_total,v_daytime,v_weektime,v_monthtime,v_ver,v_psd,v_try,v_longtxt,v_digg,v_tread) values ('$tid','$title','$v_letter','0','0','0','0','','0','','#FF0000','$year','','$v_pic','$v_pic','','$t','','','','0','0','','$v_enname','5','','','','','0','0','0','','','0','0','0','','','$t','$t','$t','','','0','','0','0')";
+	if($dsql->ExecuteNoneQuery($insertSql))
+	{
+		$v_id = $dsql->GetLastID();
+		$v_playdata = 'Xgplayer$$第1集$'.$url.'$xg';
+		$dsql->ExecuteNoneQuery("INSERT INTO `sea_playdata`(`v_id`,`tid`,`body`,`body1`) VALUES ('$v_id','$tid','$v_playdata','')");
+		cache_clear(sea_ROOT.'/data/cache');
+		echo "直播视频《".$title."》已经成功发布到了前台首页，您可以在后台视频管理中继续编辑详细的参数。";
+	} else
+	{
+		echo "直播视频发布失败！";
+	}
+	
+}
 elseif($action=="updatepic")
 {
 	require_once(sea_DATA."/config.ftp.php");
@@ -393,6 +422,17 @@ function makeStopUrl($app_name, $stream_name){
 	return $cfg_basehost."/control/record/stop?app=$app_name&name=$stream_name&rec=all";
 }	
 
+function makeUrl($app,$stream){
+	if($app=="flv"){
+		$url = "/flv?app=flv&stream=".$stream."&s=.flv";
+	} else if($app=="hls") {
+		$url = "/hls/".$stream."/index.m3u8";
+	}else if($app=="dash") {
+		$url = "/dash/".$stream."/index.mpd";
+	}
+	return $url;
+}
+
 
 //根据相对路径，获取完整路径。
 function getFullPath($filename){
@@ -414,8 +454,8 @@ function image_resize($filename, $x, $y,$width,$height){
     }
 
 	$src_img = imagecreatefromjpeg($filename);
-	$w = imagesx($src_img);
-    $h = imagesy($src_img);
+	//$w = imagesx($src_img);
+    //$h = imagesy($src_img);
 	$new_img = imagecreatetruecolor($width, $height);
 	if(!imagecopyresampled($new_img, $src_img,0, 0, $x, $y, $width, $height, $width, $height)){
 		echo "图片裁剪失败！";

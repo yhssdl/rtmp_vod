@@ -73,7 +73,6 @@ else{
 	}else{
 		$page = $_GET['page'];
 	}
-
 	include(sea_ADMIN.'/templets/admin_vod.htm');
 	exit();
 }

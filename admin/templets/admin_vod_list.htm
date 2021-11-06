@@ -62,13 +62,13 @@ select {
         <table class="layui-table" style="min-width:1170px;">
         <tr style="background-color: #F6F6F6;" align="center" >
           <td width="6%" align="center">ID</td>
-          <td width="20%">频道名称</td>
+          <td width="15%">频道名称</td>
           <td width="8%">状态</td>                
           <td width="10%">直播流</td>
           <td width="10%">分辨率</td>
           <td width="8%">可否录像</td>
-          <td width="28%">文件名</td>     
-          <td width="10%">操作</td>
+          <td width="28%">直播流信息</td>     
+          <td width="15%">操作</td>
         </tr>
         <form method="post" name="vodlistform">
           <?php
@@ -78,6 +78,7 @@ $dsql->SetQuery($sqlStr);
 $dsql->Execute('vod_list');
 $idgroup = "";
 $statgroup = "";
+$rtmp_url = "推流地址：rtmp://".$_SERVER['HTTP_HOST'].":1935/";
 while($row=$dsql->GetObject('vod_list'))
 {
 $id=$row->id;
@@ -87,6 +88,11 @@ if($idgroup!='') {
 }
 $idgroup = $idgroup . $id;
 $statgroup = $statgroup . $row->stat;
+$trmp_info = "";
+if($row->stat==0 || $row->file_name=="") 
+  $trmp_info =  $rtmp_url.$row->app_name."/".$row->stream_name; 
+else
+  $trmp_info =  "录像文件：".$row->file_name;
 ?>
 
           <tr align="center">
@@ -96,20 +102,20 @@ $statgroup = $statgroup . $row->stat;
             <td id='stat<?= $id ?>'><?= $stats[$row->stat] ?></td>
             <td><?= $row->app_name ?>/<?= $row->stream_name ?></td>
             <td><?php if($row->width!=0 && $row->height!=0) echo $row->width.'*'.$row->height;?></td>
-            <td><?php if($row->can_rec) echo '可录像'; else echo '不能录像'?></td>
-            <td><?= $row->file_name ?></td>
+            <td><?php if($row->can_rec) echo '可录像'; else echo '不能录像'; ?></td>
+            <td><?= $trmp_info ?></td>
 
 
             <td align="center" id="action<?= $id ?>">
 
               <?php 
                 if($row->stat==1){ 
-                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>"; 
+                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod($id);'><font color='green'>首页发布</font></span></span>"; 
                 } 
                 else if($row->stat==2) {
-                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>"; 
+                  echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod($id);'><font color='green'>首页发布</font></span></span>"; 
                 }else{
-                  echo "<a href='?action=del&id=$id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";
+                  echo "<a href='?action=del&id=$id' onClick='return confirm(\"确定要删除吗\")'>　删除　</a>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod($id);'><font color='green'>首页发布</font></span></span>";
 
                 }
               ?>

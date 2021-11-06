@@ -40,7 +40,8 @@ INSERT INTO `sea_type` VALUES
 (19,3,'运动会','yundong',19,'channel.html','content.html','play.html','','','',0,'',0),
 (20,3,'各类活动','huodong',20,'channel.html','content.html','play.html','','','',0,'',0),
 (21,4,'电影','dianying',21,'channel.html','content.html','play.html','','','',0,'',0),
-(22,4,'记录片','jilupian',22,'channel.html','content.html','play.html','','','',0,'',0);
+(22,4,'记录片','jilupian',22,'channel.html','content.html','play.html','','','',0,'',0),
+(23,4,'直播','zhibo',23,'channel.html','content.html','play.html','','','',0,'',0);
 ;
 
 INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('1', '游客用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2', '0');

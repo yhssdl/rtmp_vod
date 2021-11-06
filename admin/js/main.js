@@ -895,8 +895,10 @@ function ctrlRecord(vid,commandid) {
 
 function publish_vod(vid) {
 
-	layer.confirm('首页发布后，用户就可以在网站前台直接观看直播视频，以确定要将该直播视频流发布到网站前台首页吗？', {
+	layer.confirm('首页发布后，用户就可以在网站前台直接观看直播视频，确定要将该直播视频流发布到网站前台首页吗？', {
 		btn: ['确定','取消'] //按钮
+		,title:'首页发布'
+		,icon: 3
 	  }, function(){
 		ajax.get(
 			"admin_ajax.php?id=" + vid  + "&action=publish",

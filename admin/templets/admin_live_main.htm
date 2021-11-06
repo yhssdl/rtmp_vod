@@ -172,7 +172,7 @@ while($row=$dsql->GetObject('vod_list'))
           </tr>
   <?php }?>
           <tr>
-            <td colspan="11"><label>全选&nbsp;&nbsp;<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" /></label>
+            <td colspan="12"><label>全选&nbsp;&nbsp;<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" /></label>
               &nbsp;&nbsp;<label>反选&nbsp;&nbsp;<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /></label>
               &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="批量删除" onclick="if(confirm('确定要删除吗')){vodlistform.action='?action=delall';}else{return false}" class="rb1"  />
 			</td>

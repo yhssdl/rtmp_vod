@@ -151,18 +151,29 @@ function startcut(filename,mode,id){
 		else
 			msg = "确定要剪切掉开头与结尾部分视频，保留中间的 "+s1+"秒的视频？\n\n剪切时间可能较长，请不要关闭网页。";	
 
-		if(confirm(msg)){
-			player.pause();
-			document.getElementById('waiting').style.display = "block";
-			runCutTask(filename,stime,etime,1,id);
-		}
+
+		layer.confirm(msg, {
+			btn: ['确定','取消'] //按钮
+			,title:'视频剪切'
+			,icon: 3
+			}, function(){
+				player.pause();
+				document.getElementById('waiting').style.display = "block";
+				runCutTask(filename,stime,etime,1,id);
+			}, function(){
+		});	
 	}else{
 		
 		player.pause();
 		msg = "确定截取当前播放处的图像作为视频封面图片吗？";	
-		if(confirm(msg)){
-			runCutTask(filename,player.currentTime,0,0,id);
-		}
+		layer.confirm(msg, {
+			btn: ['确定','取消'] //按钮
+			,title:'封面截图'
+			,icon: 3
+			}, function(){
+				runCutTask(filename,player.currentTime,0,0,id);
+			}, function(){
+		});
 	}
 }
 

@@ -168,7 +168,7 @@ if($cuserLogin->getUserID()==-1 OR $_SESSION['hashstr'] !== $hashstr)
 
 require('class/connect.php');
 require('class/functions.php');
-
+CheckPurview();
 $link=db_connect();
 $empire=new mysqlquery();
 $mypath=$_GET['mypath'];

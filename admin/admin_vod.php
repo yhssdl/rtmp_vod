@@ -31,6 +31,7 @@ if($action=="save")
 	include(sea_ADMIN.'/templets/admin_vod_cut.htm');
 	exit();
 }else if($action=="list"){
+	CheckPurview();
 	include(sea_ADMIN.'/templets/admin_vod_list.htm');
 	exit();
 }

@@ -1,7 +1,6 @@
 <?php 
 error_reporting(0);
 session_start();
-
 function CheckPurview()
 {
 	if($GLOBALS['cuserLogin']->getUserRank()<>1)
@@ -174,5 +173,6 @@ if($_GET['toform'])
 {
 	$form=$_GET['toform'];
 }
+CheckPurview();
 require LoadAdminTemp('eChangePath.php');
  ?>

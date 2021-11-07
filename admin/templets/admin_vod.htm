@@ -185,7 +185,13 @@ function makeUrl($app,$stream){
 				跳转	<select name="v_page" id="v_page" onchange="self.location.href='?&page='+this.options[this.selectedIndex].value">
 						<option value="">请选择频道</option>
 						  <?php
-							$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc;";
+
+						  	if($groupid==3 && $vodlist!='0'){
+								$csqlStr = "SELECT * FROM `sea_vod` where id in($vodlist) and stat!=0 order by id asc";
+							}else{
+								$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc";
+							}
+					
 							$dsql->SetQuery($csqlStr);
 							$dsql->Execute('vod_list');
 							$value = 1;

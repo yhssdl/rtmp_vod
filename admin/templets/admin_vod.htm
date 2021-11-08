@@ -142,10 +142,10 @@ function makeUrl($app,$stream){
 				<span id="action<?= $id ?>">
 					<?php 
 						if($stat==1){ 
-							echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod($id);'><font color='green'>首页发布</font></span></span>"; 
+							echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'><font color='green'>开始录制</font></span></span>"; 
 						} 
 						else if($stat==2) {
-							echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>　<span style='cursor:pointer' ><span title='点击将该直播发布到前台首页' onclick='publish_vod($id);'><font color='green'>首页发布</font></span></span>"; 
+							echo "<span style='cursor:pointer' id='ctrlm$id'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'><font color='red'>停止录制</font></span></span>"; 
 						} 
 					?></span>　<a href="admin_live.php?action=add&vid=<?= $id ?>">我要预约</a>
 					

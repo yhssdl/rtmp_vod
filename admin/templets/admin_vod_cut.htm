@@ -156,7 +156,8 @@ function startcut(filename,mode,id){
 			btn: ['确定','取消'] //按钮
 			,title:'视频剪切'
 			,icon: 3
-			}, function(){
+			}, function(t){
+				layer.close(t);
 				player.pause();
 				document.getElementById('waiting').style.display = "block";
 				runCutTask(filename,stime,etime,1,id);
@@ -170,7 +171,8 @@ function startcut(filename,mode,id){
 			btn: ['确定','取消'] //按钮
 			,title:'封面截图'
 			,icon: 3
-			}, function(){
+			}, function(t){
+				layer.close(t);
 				runCutTask(filename,player.currentTime,0,0,id);
 			}, function(){
 		});

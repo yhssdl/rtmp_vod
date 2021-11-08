@@ -30,6 +30,7 @@ select:hover, select:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2
 		border:1px solid rgba(0, 0, 0, 0.5);
 		padding: 40px 80px;
 		border-radius:5px;
+		text-align:center;
 		display: none;
 	}
 .text_gray {

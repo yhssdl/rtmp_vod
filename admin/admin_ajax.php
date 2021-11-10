@@ -130,12 +130,12 @@ else if($action=='cut_pic'){
 }
 else if($action=='nickname'){
 
-	$groupid = $cuserLogin->getgroupid();
+	$userid = $cuserLogin->getUserID();
 	$oldname = $cuserLogin->getNickName();
 	if($oldname==$nickname){
 		echo "新的昵称不能与旧的相同";
 	}else{
-		$upquery="update `sea_admin` set nickname='$nickname' where id='$groupid'";
+		$upquery="update `sea_admin` set nickname='$nickname' where id='$userid'";
 		if(!$dsql->ExecuteNoneQuery($upquery))
 		{
 			echo "err";
@@ -145,6 +145,32 @@ else if($action=='nickname'){
 		}
 	}
 
+
+}
+else if($action=='repassword'){
+	$userid = $cuserLogin->getUserID();
+	$dsql->SetQuery("Select password From `sea_admin` where id='$userid' and state='1'");
+	$dsql->Execute();
+	$row = $dsql->GetObject();	
+	$pwd = substr(md5($old_pass),5,20);
+	if(!isset($row->password))
+	{
+		echo "修改密码错误。";
+		exit();
+	}
+	else if($pwd!=$row->password)
+	{
+		echo "旧密码错误，请重新尝试。";
+		exit();
+	}
+	$pwd = substr(md5($new_pass),5,20);
+	$upquery="update `sea_admin` set password='$pwd' where id='$userid'";
+	if(!$dsql->ExecuteNoneQuery($upquery))
+	{
+		echo "数据库写入错误。";
+		exit();
+	}
+	echo "密码修改成功。";
 
 }
 elseif($action=='live_main'){

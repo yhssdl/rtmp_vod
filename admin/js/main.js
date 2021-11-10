@@ -1117,3 +1117,15 @@ function runNickName(nickname){
 		}
 	);
 }
+
+
+function runRePassword(old_password,new_password){
+	ajax.get(
+		"admin_ajax.php?old_pass=" + old_password  + "&new_pass=" + new_password +  "&action=repassword",
+		function (obj) {
+			layer.msg(obj.responseText);
+		}
+	);
+}
+
+

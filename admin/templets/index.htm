@@ -46,6 +46,7 @@
                     <dl class="layui-nav-child">
 						<dd><a onClick="clearCache()">更新缓存</a></dd>
                         <dd><a onClick="nickName()">修改昵称</a></dd>
+                        <dd><a onClick="rePassword()">修改密码</a></dd>
                         <dd><a href="./exit.php">退出</a></dd>
                     </dl>
                 </li>
@@ -253,6 +254,46 @@
                     runNickName(val);
                 });
            }
+           function rePassword(){
+                layer.open({
+                    type: 1 //Page层类型
+                    ,btn:["确定","取消"]
+                    ,title: '修改密码'
+                    ,skin: 'layui-layer-prompt'
+                    ,content: "<div><input type='password' id='old_password' type='text' class='layui-layer-input' value='' placeholder='旧的密码'><input type='password' style='margin-top:10px;' id='new_password' type='text' class='layui-layer-input' value='' placeholder='新的密码'><input type='password' style='margin-top:10px;' id='re_password' type='text' class='layui-layer-input' value='' placeholder='重复密码'></div>"
+                    ,yes: function(index, layero){
+                        //按钮【按钮一】的回调
+                        old_password = $(layero).find("#old_password").val();
+                        new_password = $(layero).find("#new_password").val();
+                        re_password = $(layero).find("#re_password").val();
+                        if(old_password=="") {
+                            layer.msg('请输入旧的密码。', {
+                                icon: 2,
+                                time: 2000
+                            }, function(){
+                                
+                            }); 
+                        }else if(new_password=="") {
+                            layer.msg('请输入新的密码。', {
+                                icon: 2,
+                                time: 2000
+                            }, function(){
+                               
+                            }); 
+                        }else if(new_password!=re_password) {
+                            layer.msg('两次输入的密码不一致，请重新输入。', {
+                                icon: 2,
+                                time: 2000
+                            }, function(){
+                            }); 
+                        }else{
+                            layer.close(index);
+                            runRePassword(old_password,new_password);
+                        }
+                    }
+                });
+           }
+
         </script>
     </body>
 

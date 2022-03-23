@@ -78,7 +78,7 @@ else if($action=='cut'){
 			die;
 		}
 	
-		$command = "ffmpeg -ss $stime -t $etime -accurate_seek -i $newname -codec copy -avoid_negative_ts 1 $fullname";
+		$command = "ffmpeg -ss $stime -accurate_seek -i $newname -to $etime -codec copy -copyts -avoid_negative_ts 1 $fullname";
 		exec($command);
 	
 		if(file_exists($fullname)){

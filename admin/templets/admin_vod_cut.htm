@@ -94,17 +94,6 @@ function createPlayer(videoUrl) {
 	return xg;
 }
 
-function getstarttime(t1,idname){
-
-	hour = Math.floor(player.currentTime / 3600);
-	t1 = t1 - hour * 3600;
-	minute = Math.floor(t1 / 60);
-	t1 = t1 - minute*60;
-
-	text = ""+pad(hour)+":"+pad(minute)+":"+pad(t1);
-	document.getElementById(idname).value=text;
-
-}
 
 function pad(num){
 	if(num<10) return "0"+num;

@@ -1036,6 +1036,18 @@ function getVodStat(id_group,stat_group){
 	);	
 }
 
+function getstarttime(t1,idname){
+
+	hour = Math.floor(player.currentTime / 3600);
+	t1 = t1 - hour * 3600;
+	minute = Math.floor(t1 / 60);
+	t1 = t1 - minute*60;
+
+	text = ""+pad(hour)+":"+pad(minute)+":"+pad(t1);
+	document.getElementById(idname).value=text;
+}
+
+
 function runCutTask(filename,stime,etime,mode,id){
 	ajax.get(
 		"admin_ajax.php?filename=" + filename + "&stime=" + stime + "&etime=" + etime +"&mode=" + mode+ "&id="+ id + "&action=cut",
@@ -1044,6 +1056,7 @@ function runCutTask(filename,stime,etime,mode,id){
 				if(mode==1){	
 					layer.msg(obj.responseText);
 					player.once('play',function(){
+						getstarttime(0,'v_stime');
 						getstarttime(player.duration,'v_etime');
 					});
 					player.src = player.src+'8';

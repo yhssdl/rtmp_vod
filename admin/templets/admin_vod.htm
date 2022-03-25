@@ -69,7 +69,7 @@ if($playid==0) {
 }
 
 $row = $dsql->GetOne($csqlStr);
-
+$starttime = 0;
 if(is_array($row)){
 	$id = $row['id'];
 	$title = $row['title'];
@@ -90,7 +90,25 @@ if(is_array($row)){
 		$info = "状态：<span id='stat$id'>$stats[$stat]</span>";	
 	}
 
+
+	
+
+	if($stat==2){
+		$file_name = $row['file_name'];
+		$csqlStr = "SELECT start FROM `sea_subscribe` where file_name = '$file_name'";
+		$row = $dsql->GetOne($csqlStr);
+		if(is_array($row)){
+			$starttime =  strtotime($row['start']);
+		}
+
+	}
+
 	$url = makeUrl($app_name,$stream_name);
+
+
+
+
+
 }else{
 	$TotalResult = 0;
 	if($playid==0){
@@ -125,7 +143,7 @@ function makeUrl($app,$stream){
 
 		<?php if($TotalResult!=0): ?>		
 		<div id="" class="layui-col-sm12 layui-col-md4 pd15">
-			<?= $info; ?>
+			<?= $info; ?><span id="rec_time"></span>
 		</div>
 		
 		<div id="" class="layui-col-sm12 layui-col-md4 text_center pd15">
@@ -254,6 +272,8 @@ function createPlayer(videoUrl) {
 				});
 			}
     }
+
+
     
     
 	<?php
@@ -261,6 +281,11 @@ function createPlayer(videoUrl) {
     		echo "setInterval(getVodStat,3000,'id_group','stat_group');";
 			echo "videoUrl = '$url';";
     		echo "createPlayer(videoUrl);";
+		}
+
+		if($starttime != 0){
+				echo "StartTime = $starttime;";
+				echo "Interval=window.setInterval('ShowRecTime(true)',1000);";
 		}
 		
 	?>
@@ -283,5 +308,9 @@ function createPlayer(videoUrl) {
 	      }
 	    });
 	  });
+
+
+	  
+
 	</script>
 </html>

@@ -1,6 +1,6 @@
 var ajax = new AJAX(); ajax.setcharset("utf-8");
-
-
+var StartTime;
+var Interval;
 
 function bindButtonFile(buttonid, inputbox, bVideo, bAdd) {
 	KindEditor(buttonid).click(function () {
@@ -859,6 +859,32 @@ function getSelect_Value(obj_id) {
 	return value;
 }
 
+function FormatMyTime(t){
+	var s = t % 60;
+	var i = parseInt((t / 60) % 60);
+	var h = parseInt(t / 3600);
+	str = "" + s;
+	if(s<10) str = "0" + str;
+	str = i + ":" + str;
+	if(i<10) str = "0" + str;
+	str = h + ":" + str;
+	if(h<10) str = "0" + str;
+	return " [" + str + "]";
+}
+
+function ShowRecTime(bShow) {
+	if(bShow){
+		var t = parseInt(Date.parse(new Date())/1000) - StartTime;
+		var str = FormatMyTime(t)
+		document.getElementById("rec_time").innerHTML = str;
+
+	} else {
+		document.getElementById("rec_time").innerHTML = "";
+		
+	}
+}
+
+
 
 function ctrlRecord(vid,commandid) {
 	ajax.get(
@@ -869,6 +895,9 @@ function ctrlRecord(vid,commandid) {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
+				StartTime = parseInt(Date.parse(new Date())/1000);
+				Interval=window.setInterval('ShowRecTime(true)',1000);
+				
 				layer.msg('1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。', {
 					icon: 1,
 					time: 6000
@@ -879,6 +908,8 @@ function ctrlRecord(vid,commandid) {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'><font color='green'>开始录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_green"); 
+				ShowRecTime(false);
+				window.clearInterval(Interval)
 				layer.msg('录制结束，您可以到“管理预约”中查看录制的项目，并进行下一步处理。', {
 					icon: 7,
 					time: 6000

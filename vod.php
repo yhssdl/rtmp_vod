@@ -177,8 +177,8 @@
 			if($cfg_movevodfile){
 				$path = dirname($flvfile)."/".getTidName($row->tid);
 				mkdirs($path);
-				$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->user);
-				$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->title);
+				$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&',';'],'_',$row->user);
+				$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&',';'],'_',$row->title);
 				$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".mp4";
 				if($cfg_screenshot && $row->v_pic=="") $jpgfile = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".jpg";
 			}else{

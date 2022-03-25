@@ -183,8 +183,8 @@ elseif($action=='flv2mp4'){
 		if($cfg_movevodfile){
 			$path = dirname($fullname)."/".$row->tname;
 			mkdirs($path);
-			$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->user);
-			$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->title);
+			$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&',';'],'_',$row->user);
+			$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&',';'],'_',$row->title);
 			$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".mp4";
 		}else{
 			$mp4file = substr($fullname,0,strrpos($fullname, '.')).".mp4";

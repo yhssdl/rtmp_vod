@@ -1,6 +1,6 @@
 var ajax = new AJAX(); ajax.setcharset("utf-8");
-var StartTime;
-var Interval;
+var StartTime=0;
+var Interval=0;
 
 function bindButtonFile(buttonid, inputbox, bVideo, bAdd) {
 	KindEditor(buttonid).click(function () {
@@ -890,14 +890,12 @@ function ctrlRecord(vid,commandid) {
 	ajax.get(
 		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid + "&action=vod",
 		function (obj) {
-
 			if (obj.responseText == "stop") {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
 				StartTime = parseInt(Date.parse(new Date())/1000);
 				Interval=window.setInterval('ShowRecTime(true)',1000);
-				
 				layer.msg('1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。', {
 					icon: 1,
 					time: 6000
@@ -914,7 +912,6 @@ function ctrlRecord(vid,commandid) {
 					icon: 7,
 					time: 6000
 				  }, function(){
-					//do something
 				  }); 
 			}  
 			else {
@@ -925,7 +922,6 @@ function ctrlRecord(vid,commandid) {
 }
 
 function publish_vod(vid) {
-
 	layer.confirm('首页发布后，用户就可以在网站前台直接观看直播视频，<br>确定要将该直播视频流发布到网站前台首页吗？', {
 		btn: ['确定','取消'] //按钮
 		,title:'首页发布'
@@ -1051,6 +1047,14 @@ function getVodStat(id_group,stat_group){
 							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);
 							set(document.getElementById("action"+subs[0]),  action[subs[2]]);
+							if(subs[2]==2){
+								StartTime = parseInt(Date.parse(new Date())/1000);
+								Interval=window.setInterval('ShowRecTime(true)',1000);
+							}else{
+								ShowRecTime(false);
+								if(Interval!=0) window.clearInterval(Interval);							
+							}
+
 						}
 						if(new_id_group!=="")new_id_group += ",";
 						if(new_stat_group!=="")new_stat_group += ",";
@@ -1116,7 +1120,6 @@ function runCutTask(filename,stime,etime,mode,id){
 								src_data.width = Math.round(src_data.width);
 								src_data.height = Math.round(src_data.height);
 								runCutPicTask(obj.responseText,src_data.x,src_data.y,src_data.width,src_data.height);
-								//console.log(src_data);
 							  }
 						});
 						var image = document.querySelector('#cropperImg');
@@ -1126,21 +1129,11 @@ function runCutTask(filename,stime,etime,mode,id){
 							  zoomable:false,
 							  zoomOnTouch:false,
 							  zoomOnWheel:false,
-						   
 						  });
-						  
-						
-						//$('#crop').on('click', function() {
-						//	console.log(cropper.getData());
-						//})
-							
-
 					}else{
 						layer.msg(obj.responseText);
 					}
-
 				}
-
 			}
 		}
 	);

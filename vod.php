@@ -166,7 +166,7 @@
 	//处理FLV录像转为MP4格式
 	function runFlv2Mp4(){
 		global $dsql,$cfg_movevodfile,$cfg_screenshot;
-		$csqlStr = "SELECT id,tid,title,user,file_name FROM sea_subscribe WHERE stat=2 and tid>0  ORDER BY id ASC LIMIT 1";
+		$csqlStr = "SELECT id,tid,title,user,v_pic,start,file_name FROM sea_subscribe WHERE stat=2 and tid>0  ORDER BY id ASC LIMIT 1";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
@@ -177,11 +177,11 @@
 			if($cfg_movevodfile){
 				$path = dirname($flvfile)."/".getTidName($row->tid);
 				mkdirs($path);
-				$mp4file = $path."/".date("YmdHi")."_".$row->user."_".fixFileName($row->title).".mp4";
-				if($cfg_screenshot) $jpgfile = $path."/".date("YmdHi")."_".$row->user."_".fixFileName($row->title).".jpg";
+				$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".fixFileName($row->title).".mp4";
+				if($cfg_screenshot && $row->v_pic=="") $jpgfile = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".fixFileName($row->title).".jpg";
 			}else{
 				$mp4file = substr($flvfile,0,strrpos($flvfile, '.')).".mp4";		
-				if($cfg_screenshot) $jpgfile = substr($flvfile,0,strrpos($flvfile, '.')).".jpg";		
+				if($cfg_screenshot && $row->v_pic=="") $jpgfile = substr($flvfile,0,strrpos($flvfile, '.')).".jpg";		
 			}
 
 			$updateSql = "UPDATE sea_subscribe SET stat = '3' WHERE stat = 2 AND id = $id";
@@ -211,7 +211,7 @@
 			}
 
 
-			if($cfg_screenshot) {
+			if($cfg_screenshot && $row->v_pic=="") {
 				if($row->v_pic==""){
 					$command = "$ffmpeg -ss 1.0 -t 0.001 -loglevel quiet -i $outfile -f image2 -y $jpgfile";
 					exec($command);
@@ -228,7 +228,7 @@
 
 			$outfile = getRelativePath($outfile);
 
-			if($cfg_screenshot) 
+			if($cfg_screenshot  && $row->v_pic=="") 
 				$updateSql = "UPDATE sea_subscribe SET file_name = '$outfile',v_pic = '$jpgfile', stat = '4' WHERE stat = 3 AND id = $id";
 			else
 				$updateSql = "UPDATE sea_subscribe SET file_name = '$outfile', stat = '4' WHERE stat = 3 AND id = $id";

@@ -59,9 +59,18 @@
     $limitstart = ($page-1) * $numPerPage;
     if($limitstart<0) $limitstart=0;
     
-    $sqlStr="select d.id,d.tid,d.pid,d.publish,d.title,d.vid,v.title as vt,v.stat as vs,t.tname,d.v_pic,sd.v_addtime,sd.v_enname,d.start,d.end,d.v_publisharea,d.v_director,d.user,d.stat,a.nickname from sea_subscribe d left join `sea_vod` v on v.id=d.vid left join `sea_type` t on t.tid=d.tid left join `sea_data` sd on sd.v_id=d.pid left join `sea_admin` a on a.id=d.aid ".$whereorder." limit $limitstart,$numPerPage";
+    $sqlStr="select d.id,d.tid,d.pid,d.publish,d.title,d.vid,v.title as vt,v.stat as vs,t.tname,d.v_pic,sd.v_addtime,sd.v_enname,d.start,d.end,d.v_publisharea,d.v_director,d.user,d.file_name,d.stat,a.nickname from sea_subscribe d left join `sea_vod` v on v.id=d.vid left join `sea_type` t on t.tid=d.tid left join `sea_data` sd on sd.v_id=d.pid left join `sea_admin` a on a.id=d.aid ".$whereorder." limit $limitstart,$numPerPage";
 	  $jumpurl = "&action=$action&order=$order&type=$type&area=$area&keyword=$keyword";
 
+    // $str:原字符串，$suffix:子字符串（区分大小写）
+    function endWith($str, $suffix)
+    {   
+        $length = strlen($suffix);
+        if ($length == 0) {
+            return true;
+        }   
+        return (substr($str, -$length) === $suffix);
+    } 
 ?>
 <div class="layui-fluid">
   <div class="r_content pd15">
@@ -165,6 +174,8 @@ while($row=$dsql->GetObject('vod_list'))
                 <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a></span>
               <?php } else if($row->stat==4){ ?>
                 <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><span id="herf<?= $id ?>"><a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a></span>
+              <?php } else if($row->stat==5 && endWith($row->file_name,".flv")){ ?>
+                <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="#"  onClick="flv2mp4(<?= $id ?>,<?php echo $row->pid;?>)" title="尝试将 <?php echo $row->file_name;?> 转码到mp4格式"><font color=red>转码</font></a></span>
               <?php } else { ?>
                 <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a></span>
               <?php } ?>

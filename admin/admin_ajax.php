@@ -173,6 +173,52 @@ else if($action=='repassword'){
 	echo "密码修改成功。";
 
 }
+elseif($action=='flv2mp4'){
+	$dsql->SetQuery("SELECT sea_subscribe.id,sea_subscribe.tid,sea_subscribe.start,sea_subscribe.title,sea_subscribe.user,sea_subscribe.file_name,sea_type.tname FROM sea_subscribe  LEFT JOIN sea_type ON sea_subscribe.tid = sea_type.tid WHERE id=$sid");
+	$dsql->Execute();
+	$row = $dsql->GetObject();
+	if($row){
+		$fullname =  getFullPath($row->file_name);
+		if($cfg_movevodfile){
+			$path = dirname($fullname)."/".$row->tname;
+			mkdirs($path);
+			$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".$row->title.".mp4";
+	
+		}else{
+			$mp4file = substr($fullname,0,strrpos($fullname, '.')).".mp4";
+		}	
+
+		if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+			$ffmpeg = str_replace('\\','/',realpath(dirname(__FILE__)))."/ffmpeg";
+		}else{
+			$ffmpeg = "ffmpeg";
+		}
+
+		$command = "$ffmpeg -loglevel quiet -i $fullname -vcodec copy -acodec copy $mp4file";
+		exec($command) ;
+		if(file_exists($mp4file)){
+			$flvsize = filesize($flvfile);
+			$mp4size = filesize($mp4file);
+			if($mp4size*2>$flvsize){
+				$outfile = $mp4file;
+				
+				$outfile = getRelativePath($outfile);
+
+				$updateSql = "UPDATE sea_subscribe SET file_name = '$outfile' WHERE id = $sid";
+				$dsql->ExecuteNoneQuery($updateSql);
+
+				$v_playdata = 'Xgplayer$$第1集$'.$outfile.'$xg';
+				$updateSql = "UPDATE sea_playdata SET body = '$v_playdata' WHERE v_id = $pid";
+				if($dsql->ExecuteNoneQuery($updateSql))
+				{
+					unlink($fullname);
+				}
+				exit("转码成功。");
+			}
+		}	
+	}
+	echo "转码出现错误。";
+}
 elseif($action=='live_main'){
 	$sqlStr="select id, stat ,tid,pid,publish from sea_subscribe where id in ($idgroup)  ORDER BY FIND_IN_SET( id, '$idgroup')";
 	$dsql->SetQuery($sqlStr);
@@ -466,6 +512,20 @@ function getFullPath($filename){
 	return $wwwroot.$filename;
 }
 
+//根据完整路径，获取相对路径。
+function getRelativePath($filename){
+	if(strlen($cfg_cmspath)>0){
+		$wwwroot = str_replace('\\','/',realpath(dirname(__FILE__).'/../../'));
+	}else{
+		$wwwroot = str_replace('\\','/',realpath(dirname(__FILE__).'/../'));	
+	}
+	$wwwlen = strlen($wwwroot);
+	if(strncmp($wwwroot,$filename,$wwwlen)==0){
+		return substr($filename,$wwwlen);
+	}
+	return $filename;
+}
+
 //图片裁剪
 function image_resize($filename, $x, $y,$width,$height){
 	if ($width < 1 || $height < 1)
@@ -496,5 +556,11 @@ function image_resize($filename, $x, $y,$width,$height){
 	return true;
 }
 
+function mkdirs($dir, $mode = 0777)
+{
+	if (is_dir($dir) || @mkdir($dir, $mode)) return TRUE;
+	if (!mkdirs(dirname($dir), $mode)) return FALSE;
+	return @mkdir($dir, $mode);
+}
 
 ?>

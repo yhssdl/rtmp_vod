@@ -1049,9 +1049,17 @@ function getstarttime(t1,idname){
 
 
 function runCutTask(filename,stime,etime,mode,id){
+	var ll  = layer.open({
+		type: 1,
+		title: false,
+		closeBtn: 0,
+		shadeClose: false,
+		content: '<div class="wait"><img src="img/wait.gif"><p><br>裁剪中，请等待...</p></div>'
+	});	
 	ajax.get(
 		"admin_ajax.php?filename=" + filename + "&stime=" + stime + "&etime=" + etime +"&mode=" + mode+ "&id="+ id + "&action=cut",
 		function (obj) {
+			layer.close(ll);
 			if (obj.responseText != "") {
 				if(mode==1){	
 					layer.msg(obj.responseText);
@@ -1142,3 +1150,23 @@ function runRePassword(old_password,new_password){
 }
 
 
+function flv2mp4(id,pid){
+	var ll  = layer.open({
+		type: 1,
+		title: false,
+		closeBtn: 0,
+		shadeClose: false,
+		content: '<div class="wait"><img src="img/wait.gif"><p><br>正在转转码中，请等待...</p></div>'
+	});
+	ajax.get(
+		"admin_ajax.php?sid=" + id + "&pid=" + pid + "&action=flv2mp4",
+		function (obj) {
+			layer.close(ll);
+			layer.msg(obj.responseText);
+			if(obj.responseText=="转码成功。"){
+				var htmls = "<a href='admin_vod.php?action=cut&id=1' title='对视频进行播放与裁剪操作'><font color='green'>播放</font></a>";
+				set(document.getElementById("herf"+id),htmls);
+			}
+		}
+	);
+}

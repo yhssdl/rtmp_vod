@@ -55,7 +55,7 @@ if(is_array($row)){
   		</div>	 
   		<div class="layui-row">
   			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
-  			<div class="layui-col-md8"><div id="playerCnt"></div><div id="waiting"><img src="img/wait.gif"><p><br>裁剪中，请等待...</p></div></div>
+  			<div class="layui-col-md8"><div id="playerCnt"></div></div>
   			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
   		</div>
   		<div class="layui-row">
@@ -148,7 +148,6 @@ function startcut(filename,mode,id){
 			}, function(t){
 				layer.close(t);
 				player.pause();
-				document.getElementById('waiting').style.display = "block";
 				runCutTask(filename,stime,etime,1,id);
 			}, function(){
 		});	

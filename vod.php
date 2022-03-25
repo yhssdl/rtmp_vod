@@ -184,9 +184,9 @@
 				if($cfg_screenshot && $row->v_pic=="") $jpgfile = substr($flvfile,0,strrpos($flvfile, '.')).".jpg";		
 			}
 
-			$mp4file = str_replace(" ","_",$mp4file);
-			$jpgfile = str_replace(" ","_",$jpgfile);
-
+			$mp4file = str_replace([' ',':','?','"','<','>','|'],'_',$mp4file);
+			$jpgfile = str_replace([' ',':','?','"','<','>','|'],'_',$jpgfile);
+	
 			$updateSql = "UPDATE sea_subscribe SET stat = '3' WHERE stat = 2 AND id = $id";
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{

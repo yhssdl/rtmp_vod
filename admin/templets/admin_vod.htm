@@ -90,9 +90,6 @@ if(is_array($row)){
 		$info = "状态：<span id='stat$id'>$stats[$stat]</span>";	
 	}
 
-
-	
-
 	if($stat==2){
 		$file_name = $row['file_name'];
 		$csqlStr = "SELECT start FROM `sea_subscribe` where file_name = '$file_name'";
@@ -102,12 +99,7 @@ if(is_array($row)){
 		}
 
 	}
-
 	$url = makeUrl($app_name,$stream_name);
-
-
-
-
 
 }else{
 	$TotalResult = 0;
@@ -285,7 +277,7 @@ function createPlayer(videoUrl) {
 
 		if($starttime != 0){
 				echo "StartTime = $starttime;";
-				echo "ShowRecTime(true);"
+				echo "ShowRecTime(true);";
 				echo "Interval=window.setInterval('ShowRecTime(true)',1000);";
 		}
 		

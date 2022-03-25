@@ -178,18 +178,17 @@ elseif($action=='flv2mp4'){
 	$dsql->Execute();
 	$row = $dsql->GetObject();
 	if($row){
+		
 		$fullname =  getFullPath($row->file_name);
 		if($cfg_movevodfile){
 			$path = dirname($fullname)."/".$row->tname;
 			mkdirs($path);
-			$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".$row->title.".mp4";
-	
+			$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->user);
+			$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->title);
+			$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".mp4";
 		}else{
 			$mp4file = substr($fullname,0,strrpos($fullname, '.')).".mp4";
-		}	
-
-		$mp4file = str_replace([' ',':','?','"','<','>','|'],'_',$mp4file);
-
+		}
 		if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
 			$ffmpeg = str_replace('\\','/',realpath(dirname(__FILE__)))."/ffmpeg";
 		}else{

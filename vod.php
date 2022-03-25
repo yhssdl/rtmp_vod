@@ -177,16 +177,15 @@
 			if($cfg_movevodfile){
 				$path = dirname($flvfile)."/".getTidName($row->tid);
 				mkdirs($path);
-				$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".fixFileName($row->title).".mp4";
-				if($cfg_screenshot && $row->v_pic=="") $jpgfile = $path."/".date("YmdHi",strtotime($row->start))."_".$row->user."_".fixFileName($row->title).".jpg";
+				$str_user = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->user);
+				$str_title = str_replace([' ',':','?','"','<','>','|','\\','/','*','$','&'],'_',$row->title);
+				$mp4file = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".mp4";
+				if($cfg_screenshot && $row->v_pic=="") $jpgfile = $path."/".date("YmdHi",strtotime($row->start))."_".$str_user."_".$str_title.".jpg";
 			}else{
 				$mp4file = substr($flvfile,0,strrpos($flvfile, '.')).".mp4";		
 				if($cfg_screenshot && $row->v_pic=="") $jpgfile = substr($flvfile,0,strrpos($flvfile, '.')).".jpg";		
 			}
 
-			$mp4file = str_replace([' ',':','?','"','<','>','|'],'_',$mp4file);
-			$jpgfile = str_replace([' ',':','?','"','<','>','|'],'_',$jpgfile);
-	
 			$updateSql = "UPDATE sea_subscribe SET stat = '3' WHERE stat = 2 AND id = $id";
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{
@@ -258,22 +257,6 @@
 			
 		}
 		return "默认";
-	}
-
-	function fixFileName($filename){
-		$filename = strtr($filename," ","_");
-		$filename = strtr($filename,"/","_");
-		$filename = strtr($filename,"\\","_");
-		$filename = strtr($filename,":","_");
-		$filename = strtr($filename,"?","_");
-		$filename = strtr($filename,"*","_");
-		$filename = strtr($filename,">","_");
-		$filename = strtr($filename,"<","_");
-		$filename = strtr($filename,"|","_");
-		$filename = strtr($filename,"\"","_");
-		$filename = strtr($filename,"$","_");
-		$filename = strtr($filename,"&","_");
-		return $filename;			
 	}
 
 	function mkdirs($dir, $mode = 0777)

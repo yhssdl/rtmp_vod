@@ -895,6 +895,7 @@ function ctrlRecord(vid,commandid) {
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
 				StartTime = parseInt(Date.parse(new Date())/1000);
+				ShowRecTime(true);
 				Interval=window.setInterval('ShowRecTime(true)',1000);
 				layer.msg('1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。', {
 					icon: 1,
@@ -1049,6 +1050,7 @@ function getVodStat(id_group,stat_group){
 							set(document.getElementById("action"+subs[0]),  action[subs[2]]);
 							if(subs[2]==2){
 								StartTime = parseInt(Date.parse(new Date())/1000);
+								ShowRecTime(true);
 								Interval=window.setInterval('ShowRecTime(true)',1000);
 							}else{
 								ShowRecTime(false);
@@ -1188,7 +1190,7 @@ function flv2mp4(id,pid){
 			layer.close(ll);
 			layer.msg(obj.responseText);
 			if(obj.responseText=="转码成功。"){
-				var htmls = "<a href='admin_vod.php?action=cut&id=1' title='对视频进行播放与裁剪操作'><font color='green'>播放</font></a>";
+				var htmls = "<a href='admin_vod.php?action=cut&id="+id+"' title='对视频进行播放与裁剪操作'><font color='green'>播放</font></a>";
 				set(document.getElementById("herf"+id),htmls);
 			}
 		}

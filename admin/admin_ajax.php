@@ -188,6 +188,8 @@ elseif($action=='flv2mp4'){
 			$mp4file = substr($fullname,0,strrpos($fullname, '.')).".mp4";
 		}	
 
+		$mp4file = str_replace(" ","_",$mp4file);
+
 		if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
 			$ffmpeg = str_replace('\\','/',realpath(dirname(__FILE__)))."/ffmpeg";
 		}else{

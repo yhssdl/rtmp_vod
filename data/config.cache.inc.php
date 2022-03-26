@@ -94,5 +94,5 @@ $cfg_cli_time = '8';
 $cfg_sitevisitejs = '';
 $cfg_description = '';
 $cfg_site_notice = '';
-$cfg_powerby = 'Copyright © 2015-2020  All Rights Reserved';
+$cfg_powerby = 'Copyright © 2015-2021  All Rights Reserved';
 ?>

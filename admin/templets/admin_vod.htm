@@ -168,10 +168,9 @@ function makeUrl($app,$stream){
 			<h3>深蓝视频管理系统支持RTMP协议推送的视频流的直播与预约录制功能。</h3>
 			<h3>电脑上推流软件可以使用OBS，网站地址：<a href="https://obsproject.com/zh-cn" target="_blank">https://obsproject.com/zh-cn</a></h3>
 			<h3>录播教室设备如奥威亚录播或市场上部分摄像头也支持RTMP推流功能。</h3>
+			<h3>FLV协议推流地址：<font color='red'>rtmp://<?= $_SERVER['HTTP_HOST'] ?>:1935/flv/vod</font>(推荐，实时性好)</h3>				
 			<h3>HLS协议推流地址：<font color='red'>rtmp://<?= $_SERVER['HTTP_HOST'] ?>:1935/hls/vod</font>(推荐，稳定性好)</h3>
-			<h3>FLV协议推流地址：<font color='red'>rtmp://<?= $_SERVER['HTTP_HOST'] ?>:1935/flv/vod</font>(快速，稳定性差)</h3>	
 			<h3>DASH协议推流地址：<font color='red'>rtmp://<?= $_SERVER['HTTP_HOST'] ?>:1935/dash/vod</font></h3>
-			
 			<h3>推流地址中的<font color='red'>vod</font>可以任意命名，用于同时支持多个视频推流。</h3>						
 			<br><br></div>
 	</div>	

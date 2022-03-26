@@ -16,7 +16,7 @@ if($action=="save")
 	$page = $_GET['page'];
 	$v_name = $_POST["v_name"];
 	$playid = $_POST["playid"];
-	$updateSql = "UPDATE `seacms`.`sea_vod` SET `title` = '$v_name' WHERE `sea_vod`.`id` = $id";
+	$updateSql = "UPDATE `sea_vod` SET `title` = '$v_name' WHERE `sea_vod`.`id` = $id";
 	$dsql->SetQuery($updateSql);
 
 	if(!$dsql->ExecuteNoneQuery($updateSql))

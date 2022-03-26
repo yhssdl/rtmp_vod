@@ -40,7 +40,7 @@ function updateVod(){
 	$url = $cfg_basehost."/xstat";
 	$content = curl_get($url);
 
-	$updateSql = "UPDATE `seacms`.`sea_vod` SET `stat` = '0'";
+	$updateSql = "UPDATE `sea_vod` SET `stat` = '0'";
 	if(!$dsql->ExecuteNoneQuery($updateSql))
 	{
 		return;

@@ -118,7 +118,7 @@ $cfg_cli_time = '8';
 $cfg_sitevisitejs = '';
 $cfg_description = '';
 $cfg_site_notice = '';
-$cfg_powerby = 'Copyright &#169; 2015-2021  All Rights Reserved';
+$cfg_powerby = 'Copyright &#169; 2015-2022  All Rights Reserved';
 $cfg_cjtime = '3';
 $cfg_cjjump = '';
 ?>

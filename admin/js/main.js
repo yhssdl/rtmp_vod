@@ -960,20 +960,18 @@ function runStatTask(){
 	ajax.get(
 		"admin_ajax.php?&action=get_stat",
 		function (obj) {
-			if (obj.responseText != "") {
-				strs=obj.responseText.split(";");
-				if(strs.length==2){
-					yy = parseInt(strs[0]);
-					vod = parseInt(strs[1]);
-					yy_tip = document.getElementById("yy_tip");
-					vod_tip = document.getElementById("vod_tip");
-					yy_tip.style.display=yy>0?"inline-block":"none";
-					vod_tip.style.display=vod>0?"inline-block":"none";
-					yy_tip.innerHTML = yy;
-					vod_tip.innerHTML = vod;
-				}
-				 window.setTimeout(runStatTask,10000);
+			strs=obj.responseText.split(";");
+			if(strs.length==2){
+				yy = parseInt(strs[0]);
+				vod = parseInt(strs[1]);
+				yy_tip = document.getElementById("yy_tip");
+				vod_tip = document.getElementById("vod_tip");
+				yy_tip.style.display=yy>0?"inline-block":"none";
+				vod_tip.style.display=vod>0?"inline-block":"none";
+				yy_tip.innerHTML = yy;
+				vod_tip.innerHTML = vod;
 			}
+				window.setTimeout(runStatTask,5000);
 		}
 	);
 }
@@ -1079,7 +1077,7 @@ function getstarttime(t1,idname){
 	t1 = t1 - hour * 3600;
 	minute = Math.floor(t1 / 60);
 	t1 = t1 - minute*60;
-
+	t1 = t1.toFixed(2);
 	text = ""+pad(hour)+":"+pad(minute)+":"+pad(t1);
 	document.getElementById(idname).value=text;
 }

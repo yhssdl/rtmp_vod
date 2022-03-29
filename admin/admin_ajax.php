@@ -195,7 +195,7 @@ elseif($action=='flv2mp4'){
 			$ffmpeg = "ffmpeg";
 		}
 
-		$command = "$ffmpeg -loglevel quiet -i $fullname -vcodec copy -acodec copy $mp4file";
+		$command = "$ffmpeg -loglevel quiet -i $fullname -c copy $mp4file";
 		exec($command) ;
 		if(file_exists($mp4file)){
 			$flvsize = filesize($flvfile);
@@ -320,15 +320,30 @@ elseif($action=='vod'){
 	$title = $row['title'];
 	$app_name=$row['app_name'];
 	$stream_name = $row['stream_name'];
+
+
 	
 	
 	if($commendid){
+
 		$url = makeStartUrl($app_name, $stream_name);
 		$filename = curl_get_html($url);
-		$stat = 1;
 		if(strlen($filename) <= 0){
-			$stat = 0;
+			exit("录像失败，请稍后再尝试。");
+		}
+		$stat = 1;
+		$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '$stat' WHERE id = $id";
+		$dsql->ExecuteNoneQuery($updateSql);	
+
+		$row=$dsql->GetOne("SELECT id,file_name FROM sea_subscribe  WHERE vid='$id' AND stat=1 AND NOW() BETWEEN start AND end");
+		if(is_array($row)){
+			$new_filename = $row["file_name"]."*".$filename;
+			$sid = $row["id"];
+			$updateSql = "update sea_subscribe set file_name = '$new_filename' where id=$sid";
+			$dsql->ExecuteNoneQuery($updateSql);
+			echo "continue";
 		}else{
+
 			$v_name = $title.date('YmdHi',time());
 			$v_stime =date('Y-m-d H:i:s',time());
 			$v_etime = date('Y-m-d H:i:s', strtotime('+1 hours'));
@@ -344,21 +359,17 @@ elseif($action=='vod'){
 			$publish = 0;
 			$insertSql = "insert into sea_subscribe(title,vid,tid,aid,publish,start,v_pic,end,v_publisharea,v_director,user,file_name,stat) values ('$v_name','$id','$tid','$userid','$publish','$v_stime','','$v_etime','','','$user','$filename','1')";
 			$dsql->ExecuteNoneQuery($insertSql);
+			echo "record";
 		}
-		$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '$stat' WHERE id = $id";
-		if(!$dsql->ExecuteNoneQuery($updateSql))
-		{
-			echo "更新数据库错误！";
-		}else{
-			echo "stop";
-		}	
+		
+	
 	}
 	else{
 		$url = makeStopUrl($app_name, $stream_name);
 		$filename = curl_get_html($url);
 		if(strlen($filename) > 0){
-			$row=$dsql->GetOne("select id from sea_subscribe where stat = '1' and file_name='$filename'");
-			if($row){
+			$row=$dsql->GetOne("select id from sea_subscribe where vid='$id' and stat = '1' and file_name like '%$filename%'");
+			if(is_array($row)){
 				$id=$row['id'];
 				$v_etime = date('Y-m-d H:i:s',time());
 				$updateSql = "update sea_subscribe set end = '$v_etime', stat = '2' where id=$id";
@@ -375,7 +386,7 @@ elseif($action=='vod'){
 		{
 			echo "更新数据库错误！";
 		}else{
-			echo "record";
+			echo "stop";
 		}	
 	}
 

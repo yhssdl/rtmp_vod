@@ -890,34 +890,34 @@ function ctrlRecord(vid,commandid) {
 	ajax.get(
 		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid + "&action=vod",
 		function (obj) {
-			if (obj.responseText == "stop") {
+			if (obj.responseText == "record" || obj.responseText == "continue")  {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
 				StartTime = parseInt(Date.parse(new Date())/1000);
 				ShowRecTime(true);
 				Interval=window.setInterval('ShowRecTime(true)',1000);
-				layer.msg('1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。', {
-					icon: 1,
-					time: 6000
-				  }, function(){
-					//do something
-				  }); 
-			}else if (obj.responseText == "record") {
+				if (obj.responseText == "record" ){
+					$msg = '1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。';
+				}else {
+					$msg = '在预约中找到一个正在录制中的项目，继续该项的录制。';
+				}
+			}else if (obj.responseText == "stop") {
 				set(document.getElementById("ctrlm"+vid), "<span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'><font color='green'>开始录制</font></span>");
 				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_green"); 
 				ShowRecTime(false);
 				window.clearInterval(Interval)
-				layer.msg('录制结束，您可以到“管理预约”中查看录制的项目，并进行下一步处理。', {
-					icon: 7,
-					time: 6000
-				  }, function(){
-				  }); 
-			}  
-			else {
-				set(document.getElementById("ctrlm"+vid), obj.responseText);
+				$msg = '录制结束，您可以到“管理预约”中查看录制的项目，并进行下一步处理。';
 			}
+			else {
+				$msg = obj.responseText;
+			}
+			layer.msg($msg, {
+				icon: 1,
+				time: 6000
+			}, function(){
+			}); 
 		}
 	);
 }

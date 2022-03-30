@@ -1050,7 +1050,7 @@ function getVodStat(id_group,stat_group,page){
 							if(page==0 && subs[2]!=0){//有直接出现时，从刷新界面
 								document.location.reload();
 								return;
-							}else if(page==1 && subs[2]!=0){
+							}else if(page==1 && subs[1]==0 && subs[2]!=0){
 								document.location.reload();
 							}
 							

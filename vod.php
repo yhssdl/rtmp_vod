@@ -28,6 +28,9 @@
 	if($admin) $_SESSION['admin_time']= time();
 	session_commit();
 
+	//处理因网络不稳定或推流暂停等原因造成录像暂停后的继续录制
+	runContinueRecord();
+
 	//处理预约录课的自动结束
 	$st = getNextStopTime();
 	if($mt<=0){
@@ -43,6 +46,7 @@
 
 	//将录制下来的flv文件转为MP4文件
 	runFlv2Mp4();
+
 	//将录制的结果发布到网站
 	runPublish();
 
@@ -77,15 +81,12 @@
 	//获取最近预约的开始时间
 	function getNextStartTime(){
 		global $dsql;
-		$t1 = date('Y-m-d H:i:s',strtotime("-300 second"));
-		$t2 = date('Y-m-d H:i:s');
-		$csqlStr = "SELECT start FROM sea_subscribe WHERE stat=0 AND start BETWEEN '$t1' AND '$t2' ORDER BY start ASC  LIMIT 1";
+		$csqlStr = "SELECT start FROM sea_subscribe WHERE stat=0 AND now() BETWEEN start AND end ORDER BY start ASC  LIMIT 1";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
 		{
-			$t1 = strtotime($row->start) - time();
-			return $t1;
+			return strtotime($row->start) - time();
 		}
 		return false;
 	}
@@ -108,37 +109,63 @@
 	//处理预约录像的开始任务
 	function runStartRecord(){
 		global $dsql;
-		$t1 = date('Y-m-d H:i:s',strtotime("-300 second"));
-		$t2 = date('Y-m-d H:i:s');
-		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.title,sea_subscribe.start,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE sea_subscribe.stat=0 AND sea_subscribe.start BETWEEN '$t1' AND '$t2' ORDER BY sea_subscribe.start ASC";
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE sea_subscribe.stat=0 AND now() BETWEEN sea_subscribe.start AND sea_subscribe.end ORDER BY sea_subscribe.start ASC";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
 		{
 			$id = $row->id;
+			$vid =  $row->vid;
 			$app_name = $row->app_name;
 			$stream_name = $row->stream_name;
 			$url = makeStartUrl($app_name, $stream_name);
 			$filename = curl_get($url);
-			$stat = 1;
+
 			if(strlen($filename) <= 0){
 				$stat = 6;
+			} else {
+				$stat = 1;
+				$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '2' WHERE id = $vid";
+				$dsql->ExecuteNoneQuery($updateSql);	
 			}
 			$updateSql = "UPDATE sea_subscribe SET file_name = '$filename', stat = '$stat' WHERE stat =0 and id = $id";
-			if(!$dsql->ExecuteNoneQuery($updateSql))
-			{
-				//echo "更新预约数据库错误！";
-			}else{
-				//echo "开始录像:$stat  $app_name/$stream_name   ";
+			$dsql->ExecuteNoneQuery($updateSql);
+		}
+	}
+
+
+	//检测录像因推流暂停或网络不稳定被暂停的继续录制问题
+	function runContinueRecord(){
+		global $dsql;
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_subscribe.file_name,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE (sea_subscribe.stat=1 OR sea_subscribe.stat=6)  AND NOW() BETWEEN sea_subscribe.start AND sea_subscribe.end";
+		$dsql->SetQuery($csqlStr);
+		$dsql->Execute('vod_list');
+		while($row=$dsql->GetObject('vod_list'))
+		{
+			$id = $row->id;
+			$vid =  $row->vid;
+			$app_name = $row->app_name;
+			$stream_name = $row->stream_name;
+			$url = makeStartUrl($app_name, $stream_name);
+			$filename = curl_get($url);
+			if(strlen($filename) > 0){
+				$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '2' WHERE id = $vid";
+				$dsql->ExecuteNoneQuery($updateSql);
+				if(strlen($row->file_name) > 0)
+					$new_file_name = $row->file_name."*".$filename;
+				else
+				$new_file_name = $filename;
+				$updateSql = "UPDATE sea_subscribe SET file_name = '$new_file_name', stat = '1' WHERE id = $id";
+				$dsql->ExecuteNoneQuery($updateSql);
 			}
 		}
 	}
 
 			
-	//处理预约录像的开始任务
+	//处理预约录像的结束任务
 	function runStopRecord(){
 		global $dsql;
-		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.title,sea_subscribe.tid,sea_subscribe.file_name,sea_subscribe.start,sea_subscribe.v_pic,sea_subscribe.end,sea_subscribe.v_publisharea,sea_subscribe.v_director,sea_subscribe.user,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE  sea_subscribe.stat=1 AND unix_timestamp(NOW()) >= unix_timestamp(sea_subscribe.end) ORDER BY sea_subscribe.end ASC";
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_subscribe.title,sea_subscribe.tid,sea_subscribe.file_name,sea_subscribe.start,sea_subscribe.v_pic,sea_subscribe.end,sea_subscribe.v_publisharea,sea_subscribe.v_director,sea_subscribe.user,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE  sea_subscribe.stat=1 AND unix_timestamp(NOW()) >= unix_timestamp(sea_subscribe.end) ORDER BY sea_subscribe.end ASC";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
@@ -148,32 +175,92 @@
 			$stream_name = $row->stream_name;
 			$url = makeStopUrl($app_name, $stream_name);
 			$filename = curl_get($url);
-			if(strlen($filename) <= 0){
+			if(strlen($row->file_name) > 0){
 				$filename = $row->file_name;
 			}
 
+			$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '1' WHERE id = $row->vid";
+			$dsql->ExecuteNoneQuery($updateSql);	
+
 			$updateSql = "UPDATE sea_subscribe SET file_name = '$filename', stat = '2' WHERE stat = 1 and id = $id";
-			if(!$dsql->ExecuteNoneQuery($updateSql))
-			{
-				//echo "更新预约数据库错误！";
-			}else{
-				//echo "停止录像:$title  $app_name/$stream_name  ";
-			}
-			
+			$dsql->ExecuteNoneQuery($updateSql);
 		}
 	}
 
+
+	//因续录造成多个文件的合并处理。
+	function mergeFlv($files,$mp4file,$ffmpeg){
+
+		$size = count($files);
+		if($size>1){
+			$basename = getFullPath($files[0]);
+			$basename = substr($basename,0,strrpos($basename, '.'));
+			$txtname = $basename.".txt";
+			$handle = fopen($txtname, "w");
+
+			for($i=0;$i<$size;$i++){
+				if(strlen($files[$i])>4){
+					$flvname = getFullPath($files[$i]);
+					if(file_exists($flvname)){
+						$flvname =  basename($files[$i]);
+						fwrite($handle,"file '");
+						fwrite($handle,$flvname);
+						fwrite($handle,"'\n");
+					}
+				}
+			}
+			fclose($handle);
+			$command = "$ffmpeg -f concat -safe 0 -loglevel quiet -i $txtname -c copy $mp4file";
+			echo $command;
+			exec($command) ;
+			unlink($txtname);
+	
+			if(file_exists($mp4file)){
+				for($i=0;$i<$size;$i++){
+					unlink(getFullPath($files[$i]));
+				}
+				return $mp4file;
+			}
+			return getFullPath($files[0]);
+		} else {
+			$flvname = getFullPath($files[0]);
+			$command = "$ffmpeg -loglevel quiet -i $flvname -c copy $mp4file";
+			echo $command;
+			exec($command) ;
+			
+			if(file_exists($mp4file)){
+				
+				$flvsize = filesize($flvname);
+				$mp4size = filesize($mp4file);
+				if($mp4size*2>$flvsize){
+					unlink($flvname);
+					return $mp4file;
+				}
+			}
+			return $flvname;
+		}
+	}
+
+
 	//处理FLV录像转为MP4格式
 	function runFlv2Mp4(){
+
 		global $dsql,$cfg_movevodfile,$cfg_screenshot;
 		$csqlStr = "SELECT id,tid,title,user,v_pic,start,file_name FROM sea_subscribe WHERE stat=2 and tid>0  ORDER BY id ASC LIMIT 1";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
+		if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
+			$ffmpeg = str_replace('\\','/',realpath(dirname(__FILE__)))."/setup/ffmpeg";
+		}else{
+			$ffmpeg = "ffmpeg";
+		}
 		while($row=$dsql->GetObject('vod_list'))
 		{
 			$id = $row->id;
-			$flvfile = getFullPath($row->file_name);
-	
+
+			$files = explode('*',$row->file_name);
+			$flvfile = getFullPath($files[0]);
+
 			if($cfg_movevodfile){
 				$path = dirname($flvfile)."/".getTidName($row->tid);
 				mkdirs($path);
@@ -192,27 +279,8 @@
 				return "更新预约数据库错误！";
 			}
 
-
-			if(strtoupper(substr(PHP_OS,0,3))==='WIN'){
-				$ffmpeg = str_replace('\\','/',realpath(dirname(__FILE__)))."/setup/ffmpeg";
-			}else{
-				$ffmpeg = "ffmpeg";
-			}
-
-
-			$command = "$ffmpeg -loglevel quiet -i $flvfile -vcodec copy -acodec copy $mp4file";
-			$outfile = $flvfile;
-			exec($command) ;
-			if(file_exists($mp4file)){
-				$flvsize = filesize($flvfile);
-				$mp4size = filesize($mp4file);
-				if($mp4size*2>$flvsize){
-					$outfile = $mp4file;
-					unlink($flvfile);
-				}
-			}
-
-
+			$outfile = mergeFlv($files,$mp4file,$ffmpeg);
+			
 			if($cfg_screenshot && $row->v_pic=="") {
 				if($row->v_pic==""){
 					$command = "$ffmpeg -ss 1.0 -t 0.001 -loglevel quiet -i $outfile -f image2 -y $jpgfile";
@@ -241,7 +309,6 @@
 				//echo "转码成功。   ";
 			}
 		}
-		//return "";
 	}
 
 	#根据目录号，获取目录名

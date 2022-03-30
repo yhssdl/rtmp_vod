@@ -891,7 +891,7 @@ function ctrlRecord(vid,commandid) {
 		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid + "&action=vod",
 		function (obj) {
 			if (obj.responseText == "record" || obj.responseText == "continue")  {
-				set(document.getElementById("ctrlm"+vid), "<span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'><font color='red'>停止录制</font></span>");
+				set(document.getElementById("ctrlm"+vid), "<span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'>停止录制</span>");
 				set(document.getElementById("stat"+vid), "<font color='red'>正在录制</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_red"); 
 				StartTime = parseInt(Date.parse(new Date())/1000);
@@ -903,7 +903,7 @@ function ctrlRecord(vid,commandid) {
 					$msg = '在预约中找到一个正在录制中的项目，继续该项的录制。';
 				}
 			}else if (obj.responseText == "stop") {
-				set(document.getElementById("ctrlm"+vid), "<span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'><font color='green'>开始录制</font></span>");
+				set(document.getElementById("ctrlm"+vid), "<span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'>开始录制</span>");
 				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_green"); 
 				ShowRecTime(false);
@@ -1056,7 +1056,7 @@ function getVodStat(id_group,stat_group,page){
 
 							var title=new Array("text_gray","text_green","text_red");
 							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
-							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'><font color='green'>开始录制</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'><font color='red'>停止录制</font></span></span>")
+							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span id='ctrlm"+subs[0]+"'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'>开始录制</span></span>","<span id='ctrlm"+subs[0]+"'><span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'>停止录制</span></span>")
 							
 							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);

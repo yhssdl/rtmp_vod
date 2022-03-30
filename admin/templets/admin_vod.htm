@@ -162,6 +162,46 @@ function makeUrl($app,$stream){
 			</div>
 		</div>	
 	  </div>
+	  <div class="layui-row">
+		<div class="layui-col-md12" style="padding-bottom: 15px;"><hr></div>
+	</div>	 
+	<div class="layui-row">
+		<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
+		<div class="layui-col-md8"><div class="layui-panel" style="padding:8px;"><div id="playerCnt"></div></div></div>
+		<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
+	</div>	 	  
+	<div class="layui-row">
+		<div class="layui-col-md12 text_center pd15">
+		<div class="cuspages">
+		<div class="layui-inline" id="new_pages">
+			</div>
+				<div class="layui-inline" >
+			跳转	<select name="v_page" id="v_page" onchange="self.location.href='?&page='+this.options[this.selectedIndex].value">
+					<option value="">请选择频道</option>
+					  <?php
+
+						  if($groupid==3 && $vodlist!='0'){
+							$csqlStr = "SELECT * FROM `sea_vod` where id in($vodlist) and stat!=0 order by id asc";
+						}else{
+							$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc";
+						}
+				
+						$dsql->SetQuery($csqlStr);
+						$dsql->Execute('vod_list');
+						$value = 1;
+						while($row=$dsql->GetObject('vod_list'))
+						{
+							$title = $row->title;
+							$stat = $row->stat;
+							echo "<option value='$value'>$title</option>";
+							$value++;
+						}
+					  ?>                  
+					</select>
+				</div>
+			</div>	
+		</div>	 
+	</div>	 	  
 	  <?php  else: ?>	
 	  <div class="layui-row">
 		<div class="layui-col-md12 text_center pd15" style="line-height: 40px;"><br><font color='red'><h1>当前无直播内容</h1></font><br>
@@ -175,60 +215,18 @@ function makeUrl($app,$stream){
 			<h3>推流地址中的<font color='red'>vod</font>可以任意命名，用于同时支持多个视频推流。</h3>						
 			<br><br></div>
 	</div>	
-
 	  <?php  endif; ?>	  			  
 
-	  <?php if(!($playid==0 && $TotalResult==0)): ?>
-		<div class="layui-row">
-			<div class="layui-col-md12" style="padding-bottom: 15px;"><hr></div>
-		</div>	 
-		<div class="layui-row">
-			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>
-			<div class="layui-col-md8"><div class="layui-panel" style="padding:8px;"><div id="playerCnt"></div></div></div>
-			<div class="layui-col-md2 layui-hide-xs">&nbsp;</div>	 
-		</div>	 	  
-		<div class="layui-row">
-			<div class="layui-col-md12 text_center pd15">
-			<div class="cuspages">
-			<div class="layui-inline" id="new_pages">
-				</div>
-					<div class="layui-inline" >
-				跳转	<select name="v_page" id="v_page" onchange="self.location.href='?&page='+this.options[this.selectedIndex].value">
-						<option value="">请选择频道</option>
-						  <?php
-
-						  	if($groupid==3 && $vodlist!='0'){
-								$csqlStr = "SELECT * FROM `sea_vod` where id in($vodlist) and stat!=0 order by id asc";
-							}else{
-								$csqlStr = "SELECT * FROM `sea_vod` where stat!=0 order by id asc";
-							}
-					
-							$dsql->SetQuery($csqlStr);
-							$dsql->Execute('vod_list');
-							$value = 1;
-							while($row=$dsql->GetObject('vod_list'))
-							{
-								$title = $row->title;
-								$stat = $row->stat;
-								echo "<option value='$value'>$title</option>";
-								$value++;
-							}
-						  ?>                  
-						</select>
-					</div>
-				</div>	
-			</div>	 
-		</div>	 
-		<?php  endif; ?>
 	</div>
 	<?php if($idgroup!="") echo "<div style='display:none'><div id='id_group'>$idgroup</div><div id='stat_group'>$statgroup</div></div>"; ?>
 	</form>
 
 </body>
 <script type="text/javascript">
+var xgplayer;
 function createPlayer(videoUrl) {
 			if (videoUrl.indexOf('.m3u8') > -1) {
-				var xg = new HlsJsPlayer({
+				xgplayer = new HlsJsPlayer({
 					"id": "playerCnt",
 					"autoplay": true,
 					"url": videoUrl,
@@ -238,7 +236,7 @@ function createPlayer(videoUrl) {
 				});
 			}
 			else if (videoUrl.indexOf('.flv') > -1) {
-				var xg = new FlvJsPlayer({
+				xgplayer = new FlvJsPlayer({
 					"id": "playerCnt",
 					"autoplay": true,
 					"url": videoUrl,
@@ -248,7 +246,7 @@ function createPlayer(videoUrl) {
 				});
 			}
 			else if (videoUrl.indexOf('.mpd') > -1) {
-				var xg = new ShakaJsPlayer({
+				xgplayer = new ShakaJsPlayer({
 					"id": "playerCnt",
 					"autoplay": true,
 					"url": videoUrl,
@@ -256,7 +254,7 @@ function createPlayer(videoUrl) {
 					"playsinline": true,
 				});
 			} else {
-				var xg = new Player({
+				xgplayer = new Player({
 					"id": "playerCnt",
 					"autoplay": true,
 					"url": videoUrl,

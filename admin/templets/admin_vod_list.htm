@@ -99,7 +99,16 @@ else
           <tr align="center">
             <td style="text-align:left"><input type="checkbox" value="<?php echo $id;?>" name="e_id[]" class="checkbox" />
               <?php echo $id;?></td>
-            <td><a href="admin_vod.php?playid=<?= $row->id ?>"><span id="title<?= $id ?>" class="<?= $title_css[$row->stat] ?>"> <?= $row->title ?></span></a></a></td>
+            <td>
+              <?php 
+                $class = $title_css[$row->stat];
+                if($row->stat>0){
+                  echo "<a id='title$id' href='admin_vod.php?playid=$id' title='点击查看直播' class='$class'>$row->title</a>"; 
+                }else{
+                  echo "<a id='title$id' class='$class'>$row->title</a>"; 
+                }
+              ?>
+            </td>
             <td id='stat<?= $id ?>'><?= $stats[$row->stat] ?></td>
             <td><?= $row->app_name ?>/<?= $row->stream_name ?></td>
             <td><?php if($row->width!=0 && $row->height!=0) echo $row->width.'*'.$row->height;?></td>

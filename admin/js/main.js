@@ -986,13 +986,13 @@ function getLiveStat(id_group,stat_group){
 		"admin_ajax.php?idgroup=" + idgroup + "&stats=" + stats +  "&action=live_main",
 		function (obj) {
 			if(obj.responseText!=""){
-				strs=obj.responseText.split(";");
+				strs=obj.responseText.split("{;}");
 				var new_id_group = "";
 				var new_stat_group = "";
 				var len = strs.length;
 				var hasChanged = false;
 				for(var i=0;i<len;i++){
-					subs = strs[i].split(",");
+					subs = strs[i].split("{|}");
 					if(subs.length==5){
 						if(subs[1]!=subs[2]){
 							set(document.getElementById("stat"+subs[0]),  subs[4]);
@@ -1025,10 +1025,9 @@ function getVodStat(id_group,stat_group,page){
 		var topstyle = window.parent.document.getElementById('vod_tip').style.display;
 		if((topstyle!="none" && page==0) || (topstyle=="none" && page==1)){
 			window.location.reload();
-		}
-		return;
+			return;
+		}	
 	}
-
 	idgroup = document.getElementById(id_group).innerHTML;
 	stats =  document.getElementById(stat_group).innerHTML;
 	if(id_group==="") return;
@@ -1048,19 +1047,32 @@ function getVodStat(id_group,stat_group,page){
 						if(subs[1]!=subs[2]){
 							hasChanged = true;
 
-							if(page==0 && subs[2]!=0){//无直播内容时
+							if(page==0 && subs[2]!=0){//有直接出现时，从刷新界面
 								document.location.reload();
 								return;
+							}else if(page==1 && subs[2]!=0){
+								document.location.reload();
 							}
 							
-
-							var title=new Array("text_gray","text_green","text_red");
 							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
+							var title=new Array("text_gray","text_green","text_red");
 							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span id='ctrlm"+subs[0]+"'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'>开始录制</span></span>","<span id='ctrlm"+subs[0]+"'><span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'>停止录制</span></span>")
-							
-							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
+
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);
 							set(document.getElementById("action"+subs[0]),  action[subs[2]]);
+							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]);
+							if(page==2){
+								if(subs[2]>0){
+									var el = document.getElementById("title"+subs[0]);
+									el.href = "admin_vod.php?playid=" + subs[0];
+									el.title = "点击查看直播";
+								}
+								else{
+									var el = document.getElementById("title"+subs[0]);
+									el.removeAttribute("href");
+									el.removeAttribute("title");
+								}
+							}							
 
 							if(page==1){//查看直播界面
 								if(subs[2]==2){

@@ -221,7 +221,7 @@ elseif($action=='flv2mp4'){
 	echo "转码出现错误。";
 }
 elseif($action=='live_main'){
-	$sqlStr="select id, stat ,tid,pid,publish from sea_subscribe where id in ($idgroup)  ORDER BY FIND_IN_SET( id, '$idgroup')";
+	$sqlStr="select id, stat ,vid,tid,pid,publish from sea_subscribe where id in ($idgroup)  ORDER BY FIND_IN_SET( id, '$idgroup')";
 	$dsql->SetQuery($sqlStr);
 	$dsql->Execute('vod_list');
 	$stats = explode(",",$stats);
@@ -237,11 +237,11 @@ elseif($action=='live_main'){
 				$text = "<font color='green'>预约</font>";
 				break;
 			case 1:
-				$text = "<font color='red'>正在录制</font>";
+				$text = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' onclick='ctrlRecord($row->vid,0)' title = '点击停止录像'>停止录制</a>";
 				break;
 			case 2:
 				if($row->tid==0)
-					$text = "<a href='?action=edit&id=$row->id&publish=1'><font color='fuchsia'>等待分类</font></a>";
+					$text = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$row->id&publish=1'>等待分类</a>";
 				else
 					$text = "<font color='ORANGE'>等待转码</font>";
 				break;
@@ -258,7 +258,7 @@ elseif($action=='live_main'){
 					if($row->publish==1)
 						$text = "<font color='#FF00FF'>等待发布</font>";
 					else
-						$text = "<a href='?action=edit&id=$row->id&publish=1'><font color='fuchsia'>点击发布</font></a>";
+						$text = "<a class='layui-btn layui-btn-xs layui-btn-radius' href='?action=edit&id=$row->id&publish=1'>点击发布</a>";
 				}
 					
 				break;
@@ -272,7 +272,7 @@ elseif($action=='live_main'){
 				break;																			
 		}
 
-		$msg = $msg . $row->id .",".$stats[$i].",".$row->stat.",".$row->pid.",".$text.";";
+		$msg = $msg . $row->id ."{|}".$stats[$i]."{|}".$row->stat."{|}".$row->pid."{|}".$text."{;}";
 		$i++;
 	}
 	echo $msg;

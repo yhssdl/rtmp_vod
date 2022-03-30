@@ -271,9 +271,11 @@ function createPlayer(videoUrl) {
     
 	<?php
 		if($TotalResult>0){
-    		echo "setInterval(getVodStat,3000,'id_group','stat_group');";
+    		echo "setInterval(getVodStat,3000,'id_group','stat_group',1);";
 			echo "videoUrl = '$url';";
     		echo "createPlayer(videoUrl);";
+		}else {
+			echo "setInterval(getVodStat,3000,'id_group','stat_group',0);";
 		}
 
 		if($starttime != 0){

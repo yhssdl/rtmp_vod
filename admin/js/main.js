@@ -1020,10 +1020,19 @@ function getLiveStat(id_group,stat_group){
 }
 
 
-function getVodStat(id_group,stat_group){
+function getVodStat(id_group,stat_group,page){
+	if(page<2){
+		var topstyle = window.parent.document.getElementById('vod_tip').style.display;
+		if((topstyle!="none" && page==0) || (topstyle=="none" && page==1)){
+			window.location.reload();
+		}
+		return;
+	}
+
 	idgroup = document.getElementById(id_group).innerHTML;
 	stats =  document.getElementById(stat_group).innerHTML;
 	if(id_group==="") return;
+
 	ajax.get(
 		"admin_ajax.php?idgroup=" + idgroup + "&stats=" + stats +  "&action=vod_list",
 		function (obj) {
@@ -1039,6 +1048,12 @@ function getVodStat(id_group,stat_group){
 						if(subs[1]!=subs[2]){
 							hasChanged = true;
 
+							if(page==0 && subs[2]!=0){//无直播内容时
+								document.location.reload();
+								return;
+							}
+							
+
 							var title=new Array("text_gray","text_green","text_red");
 							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
 							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'><font color='green'>开始录制</font></span></span>","<span style='cursor:pointer' id='ctrlm"+subs[0]+"'><span title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'><font color='red'>停止录制</font></span></span>")
@@ -1046,14 +1061,18 @@ function getVodStat(id_group,stat_group){
 							document.getElementById("title"+subs[0]).setAttribute("class", title[subs[2]]); 
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);
 							set(document.getElementById("action"+subs[0]),  action[subs[2]]);
-							if(subs[2]==2){
-								StartTime = parseInt(Date.parse(new Date())/1000);
-								ShowRecTime(true);
-								Interval=window.setInterval('ShowRecTime(true)',1000);
-							}else{
-								ShowRecTime(false);
-								if(Interval!=0) window.clearInterval(Interval);							
+
+							if(page==1){//查看直播界面
+								if(subs[2]==2){
+									StartTime = parseInt(Date.parse(new Date())/1000);
+									ShowRecTime(true);
+									Interval=window.setInterval('ShowRecTime(true)',1000);
+								}else{
+									ShowRecTime(false);
+									if(Interval!=0) window.clearInterval(Interval);							
+								}
 							}
+
 
 						}
 						if(new_id_group!=="")new_id_group += ",";

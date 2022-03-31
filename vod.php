@@ -10,6 +10,12 @@
 		$admin = $_GET['admin'];
 	}
 
+	//每分钟通过计划任务调用时
+	$task = 0;
+	if(!empty ($_GET['task'])){
+		$task = $_GET['task'];
+	}
+
 	session_start();
 	if(isset($_SESSION['admin_time'])){
 		$t1 = time() - $_SESSION['admin_time'];
@@ -17,7 +23,7 @@
 			//前台显示网页时，后台已经调用在调用，就不再处理，直接返回。
 			$dt = date("H:i:s");
 			$t1 = 60 - (time() % 60);
-			echo "<div style='text-align:center;padding:20px;'><h2>当前服务器时间:$dt</h2>本页面用于处理自动预约录像，请不要关闭，$t1 秒后会自动刷新。<br>当前后台正在自动处理预约录像中。</div>";
+			echo "<div style='text-align:center;padding:20px;'>本页面用于处理自动预约录像，请不要关闭，$t1 秒后会自动刷新。<br>当前后台正在自动处理预约录像中。<p><h3>当前服务器时间:$dt</h3></p></div>";
 			fresh_page($t1*1000);
 			die;
 		}
@@ -25,7 +31,11 @@
 
 	$msg = "";
 
-	if($admin) $_SESSION['admin_time']= time();
+	if($admin){
+		$_SESSION['admin_time']= time();
+	}else{
+		echo "<div style='text-align:center;padding:20px;'>";
+	}
 	session_commit();
 
 	//处理因网络不稳定或推流暂停等原因造成录像暂停后的继续录制
@@ -37,12 +47,16 @@
 		runStopRecord();
 	}
 
-	//处理自动开始预约录课
+	//检测最近的一次录课开始时间。
 	$et = getNextStartTime();
-	if($et<=0)
+	if($admin==0 && $et<60 && $et>0 && $task)
 	{
-		runStartRecord();
+		sleep($et);
+		$et = 0;
 	}
+
+	//处理预约预约录课的自动开始
+	runStartRecord();
 
 	//将录制下来的flv文件转为MP4文件
 	runFlv2Mp4();
@@ -59,7 +73,9 @@
 	}else{		
 		$dt = date("H:i:s");
 		$t1 = 60 - (time() % 60);
-		echo "<div style='text-align:center;padding:20px;'><h2>当前服务器时间:$dt</h2>页面用于处理自动预约录像，请不要关闭，$t1 秒后会自动刷新。</div>";
+		if($et<$t1 && $et>0) $t1 = $et;
+		if($st<$t1 && $st>0) $t1 = $st;
+		echo "<p>页面用于处理自动预约录像，请不要关闭，$t1 秒后会自动刷新。</p><h3>当前服务器时间:$dt</h3></div>";		
 		fresh_page($t1*1000);
 	}
 
@@ -81,12 +97,14 @@
 	//获取最近预约的开始时间
 	function getNextStartTime(){
 		global $dsql;
-		$csqlStr = "SELECT start FROM sea_subscribe WHERE stat=0 AND now() BETWEEN start AND end ORDER BY start ASC  LIMIT 1";
+		$csqlStr = "SELECT title,start FROM sea_subscribe WHERE stat=0 AND start > now() ORDER BY start ASC  LIMIT 1";		
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
 		{
-			return strtotime($row->start) - time();
+			if($admin==0) echo "<p>下一预约时间：$row->start    名称：$row->title</p>";
+			$t1 = strtotime($row->start) - time();
+			return $t1;
 		}
 		return false;
 	}
@@ -109,7 +127,7 @@
 	//处理预约录像的开始任务
 	function runStartRecord(){
 		global $dsql;
-		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE sea_subscribe.stat=0 AND now() BETWEEN sea_subscribe.start AND sea_subscribe.end ORDER BY sea_subscribe.start ASC";
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.title,sea_subscribe.vid,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE sea_subscribe.stat=0 AND now() BETWEEN sea_subscribe.start AND sea_subscribe.end ORDER BY sea_subscribe.start ASC";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
@@ -120,6 +138,8 @@
 			$stream_name = $row->stream_name;
 			$url = makeStartUrl($app_name, $stream_name);
 			$filename = curl_get($url);
+
+			if($admin==0) echo "<p>开始自动录制：$row->title</p>";
 
 			if(strlen($filename) <= 0){
 				$stat = 6;
@@ -137,7 +157,7 @@
 	//检测录像因推流暂停或网络不稳定被暂停的继续录制问题
 	function runContinueRecord(){
 		global $dsql;
-		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_subscribe.file_name,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE (sea_subscribe.stat=1 OR sea_subscribe.stat=6)  AND NOW() BETWEEN sea_subscribe.start AND sea_subscribe.end";
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.title,sea_subscribe.vid,sea_subscribe.file_name,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE (sea_subscribe.stat=1 OR sea_subscribe.stat=6)  AND NOW() BETWEEN sea_subscribe.start AND sea_subscribe.end";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
@@ -149,6 +169,9 @@
 			$url = makeStartUrl($app_name, $stream_name);
 			$filename = curl_get($url);
 			if(strlen($filename) > 0){
+
+				if($admin==0) echo "<p>继续录制因网络原因造成中断的项目：$row->title</p>";
+
 				$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '2' WHERE id = $vid";
 				$dsql->ExecuteNoneQuery($updateSql);
 				if(strlen($row->file_name) > 0)
@@ -165,7 +188,7 @@
 	//处理预约录像的结束任务
 	function runStopRecord(){
 		global $dsql;
-		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.vid,sea_subscribe.title,sea_subscribe.tid,sea_subscribe.file_name,sea_subscribe.start,sea_subscribe.v_pic,sea_subscribe.end,sea_subscribe.v_publisharea,sea_subscribe.v_director,sea_subscribe.user,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE  sea_subscribe.stat=1 AND unix_timestamp(NOW()) >= unix_timestamp(sea_subscribe.end) ORDER BY sea_subscribe.end ASC";
+		$csqlStr = "SELECT sea_subscribe.id,sea_subscribe.title,sea_subscribe.vid,sea_subscribe.title,sea_subscribe.tid,sea_subscribe.file_name,sea_subscribe.start,sea_subscribe.v_pic,sea_subscribe.end,sea_subscribe.v_publisharea,sea_subscribe.v_director,sea_subscribe.user,sea_vod.app_name,sea_vod.stream_name  FROM sea_subscribe LEFT JOIN sea_vod ON sea_subscribe.vid = sea_vod .id WHERE  sea_subscribe.stat=1 AND unix_timestamp(NOW()) >= unix_timestamp(sea_subscribe.end) ORDER BY sea_subscribe.end ASC";
 		$dsql->SetQuery($csqlStr);
 		$dsql->Execute('vod_list');
 		while($row=$dsql->GetObject('vod_list'))
@@ -178,6 +201,8 @@
 			if(strlen($row->file_name) > 0){
 				$filename = $row->file_name;
 			}
+
+			if($admin==0) echo "<p>自动结束预约录像：$row->title</p>";
 
 			$updateSql = "UPDATE sea_vod SET file_name = '$filename', stat = '1' WHERE id = $row->vid";
 			$dsql->ExecuteNoneQuery($updateSql);	
@@ -359,6 +384,7 @@
 			$insertSql = "insert into sea_data(tid,v_name,v_letter,v_state,v_topic,v_hit,v_money,v_vip,v_rank,v_actor,v_color,v_publishyear,v_publisharea,v_pic,v_spic,v_gpic,v_addtime,v_note,v_tags,v_lang,v_score,v_scorenum,v_director,v_enname,v_commend,v_extratype,v_jq,v_nickname,v_reweek,v_douban,v_mtime,v_imdb,v_tvs,v_company,v_dayhit,v_weekhit,v_monthhit,v_len,v_total,v_daytime,v_weektime,v_monthtime,v_ver,v_psd,v_try,v_longtxt,v_digg,v_tread) values ('$row->tid','$row->title','$v_letter','0','0','0','0','','0','$row->user','#FF0000','$year','$row->v_publisharea','$row->v_pic','','','$t','','','$v_lang','0','0','$row->v_director','$v_enname','0','','','','','0','0','0','','','0','0','0','','','$t','$t','$t','','','0','','0','0')";
 			if($dsql->ExecuteNoneQuery($insertSql))
 			{
+				if($admin==0) echo "<p>自动前台发布：$row->title</p>";
 				$v_id = $dsql->GetLastID();
 				$v_playdata = 'Xgplayer$$第1集$'.$row->file_name.'$xg';
 				$dsql->ExecuteNoneQuery("INSERT INTO `sea_playdata`(`v_id`,`tid`,`body`,`body1`) VALUES ('$v_id','$row->tid','$v_playdata','')");

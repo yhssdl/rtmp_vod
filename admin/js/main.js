@@ -995,7 +995,9 @@ function getLiveStat(id_group,stat_group){
 					subs = strs[i].split("{|}");
 					if(subs.length==5){
 						if(subs[1]!=subs[2]){
-							set(document.getElementById("stat"+subs[0]),  subs[4]);
+							set(document.getElementById("stat"+subs[0]),  subs[3]);
+							node = document.getElementById("action"+subs[0]);
+							node.innerHTML = subs[4];
 							hasChanged = true;
 						}
 						if(subs[2]<5){
@@ -1004,10 +1006,6 @@ function getLiveStat(id_group,stat_group){
 							new_id_group += subs[0];
 							new_stat_group += subs[2];
 						} 
-						if(subs[2]>3 && subs[2]!=6){
-							node = document.getElementById("herf"+subs[0]);
-							node.innerHTML = "<a href='admin_vod.php?action=cut&id="+subs[0]+"' title='对视频进行播放与裁剪操作'><font color=green>播放</font></span>";
-						}
 					}
 				}
 				if(hasChanged){

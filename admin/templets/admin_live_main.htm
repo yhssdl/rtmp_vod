@@ -157,7 +157,7 @@ while($row=$dsql->GetObject('vod_list'))
           <tr align="center">
             <td><input type="checkbox" value="<?php echo $id;?>" name="e_id[]" class="checkbox" />
               <?php echo $id;?></td>
-            <td id="stat<?= $id ?>"><?php if($row->tid==0 && $row->stat==2){echo "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$id'>等待分类</a>";} else if($row->publish==0 && $row->stat==4 && $groupid!=3){echo "<a class='layui-btn layui-btn-xs layui-btn-radius' href='?action=edit&id=$id&publish=1'>点击发布</a>";} else if($row->stat==1){echo "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' onclick='ctrlRecord($row->vid,0);' title = '点击停止录像'>停止录制</a>";} else if($row->stat==5){echo "<a href='$contentUrl' title='查看' target='_blank'>".$stats[$row->stat]."</a>";} else {echo $stats[$row->stat];}?></td>
+            <td id="stat<?= $id ?>"><?php if($row->tid==0 && $row->stat==2){echo "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$id'>等待分类</a>";} else if($row->publish==0 && $row->stat==4 && $groupid!=3){echo "<a class='layui-btn layui-btn-xs layui-btn-radius' href='?action=edit&id=$id&publish=1'>点击发布</a>";}  else if($row->stat==5){echo "<a href='$contentUrl' title='查看' target='_blank'>".$stats[$row->stat]."</a>";} else {echo $stats[$row->stat];}?></td>
             <td align="left"><?php echo $row->title;?></td>
             <td>
               <?php if($row->vs >0) { ?>
@@ -175,15 +175,17 @@ while($row=$dsql->GetObject('vod_list'))
             <td><?php echo $row->v_director;?></td>
 
 
-            <td align="center">
-              <?php if($row->stat<4 || $row->stat==6){ ?>
-                <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a></span>
+            <td align="center" id="action<?= $id ?>">
+              <?php if($row->stat==1){ ?>
+                <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' onclick='ctrlRecord(<?php echo $row->vid;?>,0)' title = '点击停止录像'>停止录制</a>
+              <?php } else if($row->stat<4 || $row->stat==6){ ?>
+                <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a>
+              <?php } else if( ($row->stat==4 || $row->stat==5) && endWith($row->file_name,".flv")){ ?>
+                  <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<a href="#"  onClick="flv2mp4(<?= $id ?>,<?php echo $row->pid;?>)" title="尝试将 <?php echo $row->file_name;?> 转码到mp4格式"><font color=red>转码</font></a>  
               <?php } else if($row->stat==4){ ?>
-                <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><span id="herf<?= $id ?>"><a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a></span>
-              <?php } else if($row->stat==5 && endWith($row->file_name,".flv")){ ?>
-                <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="#"  onClick="flv2mp4(<?= $id ?>,<?php echo $row->pid;?>)" title="尝试将 <?php echo $row->file_name;?> 转码到mp4格式"><font color=red>转码</font></a></span>
+                <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a>
               <?php } else { ?>
-                <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<span id="herf<?= $id ?>"><a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a></span>
+                <a href="admin_video.php?action=edit&id=<?php echo $row->pid;?>" >编辑</a>&nbsp;&nbsp;<a href="admin_vod.php?action=cut&id=<?php echo $id ?>" title="对视频进行播放与裁剪操作"><font color=green>播放</font></a>
               <?php } ?>
               </td>
           </tr>

@@ -228,6 +228,7 @@ elseif($action=='live_main'){
 	$i =0;
 	$msg="";
 	$groupid = $cuserLogin->getgroupid();
+	$publish = $cuserLogin->getpublish();
 	while($row=$dsql->GetObject('vod_list'))
 	{		
 		
@@ -256,7 +257,7 @@ elseif($action=='live_main'){
 				$action = "<a href='?action=edit&id=$row->id'>编辑</a>&nbsp;&nbsp;<a href='?action=del&id=$row->id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";				
 				break;
 			case 4:
-				if($groupid ==3){
+				if($groupid ==3 && $publish!=1){
 					$text = "<font color='BLUE'>录制完毕</font>";
 					if(endWith($row->file_name,".flv")){
 						$action = "<a href='admin_video.php?action=edit&id=<$row->pid' >编辑</a>&nbsp;&nbsp;<a href='#' onClick='flv2mp4($id,$row->pid)' title='尝试将 $row->file_name 转码到mp4格式'><font color=red>转码</font></a>";

@@ -28,6 +28,7 @@
 
     $groupid = $cuserLogin->getgroupid();
     $userid =  $cuserLogin->getUserID();
+    $publish = $cuserLogin->getpublish();
 
     if($groupid==3){
       $whereStr=" d.aid='$userid'";
@@ -157,7 +158,7 @@ while($row=$dsql->GetObject('vod_list'))
   else
     $stats[2] = "<font color='ORANGE'>等待转码</font>";
 
-  if($groupid==3) 
+  if($groupid==3 && $publish !=1 ) 
     $stats[4] = "<font color='BLUE'>录制完毕</font>";
   else if($row->publish==1 && $row->stat==4) 
     $stats[4] = "<font color='ORANGE'>正在发布</font>";
@@ -165,7 +166,6 @@ while($row=$dsql->GetObject('vod_list'))
     $stats[4] = "<font color='#FF00FF'>等待发布</font>";
 
 ?>
-
 
           <tr align="center">
             <td><input type="checkbox" value="<?php echo $id;?>" name="e_id[]" class="checkbox" />
@@ -193,7 +193,7 @@ while($row=$dsql->GetObject('vod_list'))
                 <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="#" onclick='ctrlRecord(<?php echo $row->vid;?>,0)' title = '点击停止录像'><font color=red>停止</font></a>
               <?php } else if($row->tid==0 && $row->stat==2){ ?>
                 <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=<?= $row->id ?>&publish=1'>点击分类</a>
-              <?php } else if($row->publish==0 && $row->stat==4){ ?>
+              <?php } else if($row->publish==0 && $row->stat==4 &&($groupid!=3 || ($publish==1 && $groupid==3))){ ?>
                 <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=<?=$row->id ?>&publish=1'>点击发布</a>
               <?php } else if($row->stat<4 || $row->stat==6){ ?>
                 <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a>

@@ -130,7 +130,7 @@ if($TotalResult==0){
         </tr>
         <form method="post" name="vodlistform">
           <?php
-$stats=array("<font color='green'>预约</font>","<font color='red'>正在录制</font>","","<font color='ORANGE'>正在转码</font>","<font color='ORANGE'>正在发布</font>","<font color='BLUE'>发布完毕</font>","<font color='GRAY'>录制错误</font>");
+$stats=array("<font color='green'>预约</font>","<font color='red'>正在录制</font>","","<font color='ORANGE'>正在转码</font>","<font color='ORANGE'>正在发布</font>","","<font color='GRAY'>录制错误</font>");
 $colors=array("<font color='gray'>","<font color='green'>","<font color='red'>");
 
 
@@ -164,6 +164,10 @@ while($row=$dsql->GetObject('vod_list'))
     $stats[4] = "<font color='ORANGE'>正在发布</font>";
   else
     $stats[4] = "<font color='#FF00FF'>等待发布</font>";
+
+    if($row->stat==5){
+      $stats[5] = "<a href='$contentUrl' title='查看' target='_blank'><font color='BLUE'>发布完毕</font></a>";
+    }
 
 ?>
 

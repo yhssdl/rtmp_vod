@@ -1000,7 +1000,7 @@ function getLiveStat(id_group,stat_group){
 							node.innerHTML = subs[4];
 							hasChanged = true;
 						}
-						if(subs[2]<5){
+						if(subs[2]!=5){
 							if(new_id_group!=="")new_id_group += ",";
 							if(new_stat_group!=="")new_stat_group += ",";
 							new_id_group += subs[0];

@@ -129,10 +129,10 @@ if($TotalResult==0){
         </tr>
         <form method="post" name="vodlistform">
           <?php
-$stats=array("<font color='green'>预约</font>","<font color='red'>正在录制</font>","<font color='ORANGE'>等待转码</font>","<font color='ORANGE'>正在转码</font>","<font color='#FF00FF'>等待发布</font>","<font color='BLUE'>发布完毕</font>","<font color='GRAY'>录制错误</font>");
+$stats=array("<font color='green'>预约</font>","<font color='red'>正在录制</font>","","<font color='ORANGE'>正在转码</font>","<font color='ORANGE'>正在发布</font>","<font color='BLUE'>发布完毕</font>","<font color='GRAY'>录制错误</font>");
 $colors=array("<font color='gray'>","<font color='green'>","<font color='red'>");
 
-if($groupid==3) $stats[4] = "<font color='BLUE'>录制完毕</font>";
+
 
 $dsql->SetQuery($sqlStr);
 $dsql->Execute('vod_list');
@@ -143,7 +143,7 @@ while($row=$dsql->GetObject('vod_list'))
   $id=$row->id;
   $contentUrl=getContentLink($row->tid,$row->pid,"",date('Y-n',$row->v_addtime),$row->v_enname);
 
-  if($row->stat<5){
+  if($row->stat！=5){
     if($idgroup!='') {
       $idgroup = $idgroup.",";
       $statgroup = $statgroup.",";
@@ -151,13 +151,26 @@ while($row=$dsql->GetObject('vod_list'))
     $idgroup = $idgroup . $id;
     $statgroup = $statgroup . $row->stat;
   }
+
+  if($row->tid==0 && $row->stat==2) 
+    $stats[2] = "<font color='#FF00FF'>等待分类</font>";
+  else
+    $stats[2] = "<font color='ORANGE'>等待转码</font>";
+
+  if($groupid==3) 
+    $stats[4] = "<font color='BLUE'>录制完毕</font>";
+  else if($row->publish==1 && $row->stat==4) 
+    $stats[4] = "<font color='ORANGE'>正在发布</font>";
+  else
+    $stats[4] = "<font color='#FF00FF'>等待发布</font>";
+
 ?>
 
 
           <tr align="center">
             <td><input type="checkbox" value="<?php echo $id;?>" name="e_id[]" class="checkbox" />
               <?php echo $id;?></td>
-            <td id="stat<?= $id ?>"><?php if($row->tid==0 && $row->stat==2){echo "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$id'>等待分类</a>";} else if($row->publish==0 && $row->stat==4 && $groupid!=3){echo "<a class='layui-btn layui-btn-xs layui-btn-radius' href='?action=edit&id=$id&publish=1'>点击发布</a>";}  else if($row->stat==5){echo "<a href='$contentUrl' title='查看' target='_blank'>".$stats[$row->stat]."</a>";} else {echo $stats[$row->stat];}?></td>
+            <td id="stat<?= $id ?>"><?php echo $stats[$row->stat]; ?></td>
             <td align="left"><?php echo $row->title;?></td>
             <td>
               <?php if($row->vs >0) { ?>
@@ -177,7 +190,11 @@ while($row=$dsql->GetObject('vod_list'))
 
             <td align="center" id="action<?= $id ?>">
               <?php if($row->stat==1){ ?>
-                <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' onclick='ctrlRecord(<?php echo $row->vid;?>,0)' title = '点击停止录像'>停止录制</a>
+                <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="#" onclick='ctrlRecord(<?php echo $row->vid;?>,0)' title = '点击停止录像'><font color=red>停止</font></a>
+              <?php } else if($row->tid==0 && $row->stat==2){ ?>
+                <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=<?= $row->id ?>&publish=1'>点击分类</a>
+              <?php } else if($row->publish==0 && $row->stat==4){ ?>
+                <a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=<?=$row->id ?>&publish=1'>点击发布</a>
               <?php } else if($row->stat<4 || $row->stat==6){ ?>
                 <a href="?action=edit&id=<?php echo $id ?>">编辑</a>&nbsp;&nbsp;<a href="?action=del&id=<?php echo $id ?>" onClick="return confirm('确定要删除吗')">删除</a>
               <?php } else if( ($row->stat==4 || $row->stat==5) && endWith($row->file_name,".flv")){ ?>

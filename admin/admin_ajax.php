@@ -239,41 +239,52 @@ elseif($action=='live_main'){
 				break;
 			case 1:
 				$text = "<font color='red'>正在录制</font>";
-				$action = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' onclick='ctrlRecord($row->vid,0)' title = '点击停止录像'>停止录制</a>";
+				$action = "<a href='?action=edit&id=<?php echo $id ?>'>编辑</a>&nbsp;&nbsp;<a href='#' onclick='ctrlRecord(<?php echo $row->vid;?>,0)' title = '点击停止录像'><font color=red>停止</font></a>";
 				break;
 			case 2:
-				if($row->tid==0)
-					$text = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$row->id&publish=1'>等待分类</a>";
-				else
+				if($row->tid==0){
+					$text = "<font color='#FF00FF'>等待分类</font>";
+					$action = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$row->id&publish=1'>点击分类</a>";
+				}
+				else{
 					$text = "<font color='ORANGE'>等待转码</font>";
-
-				$action = "<a href='?action=edit&id=$row->id'>编辑</a>&nbsp;&nbsp;<a href='?action=del&id=$row->id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";
+					$action = "<a href='?action=edit&id=$row->id'>编辑</a>&nbsp;&nbsp;<a href='?action=del&id=$row->id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";
+				}
 				break;
 			case 3:
 				$text = "<font color='ORANGE'>正在转码</font>";
 				$action = "<a href='?action=edit&id=$row->id'>编辑</a>&nbsp;&nbsp;<a href='?action=del&id=$row->id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";				
 				break;
 			case 4:
-				if($groupid ==3)
+				if($groupid ==3){
 					$text = "<font color='BLUE'>录制完毕</font>";
+					if(endWith($row->file_name,".flv")){
+						$action = "<a href='admin_video.php?action=edit&id=<$row->pid' >编辑</a>&nbsp;&nbsp;<a href='#' onClick='flv2mp4($id,$row->pid)' title='尝试将 $row->file_name 转码到mp4格式'><font color=red>转码</font></a>";
+					}else{
+						$action = "<a href='admin_video.php?action=edit&id=$row->pid' >编辑</a>&nbsp;&nbsp;<a href='admin_vod.php?action=cut&id=$row->id' title='对视频进行播放与裁剪操作'><font color=green>播放</font></a>";
+					}
+				}
 				else
 				{
-					if($row->publish==1)
+					if($row->publish==1){
+						$text = "<font color='ORANGE'>正在发布</font>";
+						$action = "<a href='?action=edit&id=$row->id'>编辑</a>&nbsp;&nbsp;<a href='?action=del&id=$row->id' onClick='return confirm(\"确定要删除吗\")'>删除</a>";	
+					}
+					else{
 						$text = "<font color='#FF00FF'>等待发布</font>";
-					else
-						$text = "<a class='layui-btn layui-btn-xs layui-btn-radius' href='?action=edit&id=$row->id&publish=1'>点击发布</a>";
+						$action = "<a class='layui-btn layui-btn-xs layui-btn-radius layui-btn-normal' href='?action=edit&id=$row->id&publish=1'>点击发布</a>";
+					}
 				}
-				if(endWith($row->file_name,".flv")){
-					$action = "<a href='admin_video.php?action=edit&id=<$row->pid' >编辑</a>&nbsp;&nbsp;<a href='#' onClick='flv2mp4($id,$row->pid)' title='尝试将 $row->file_name 转码到mp4格式'><font color=red>转码</font></a>";
-				}else{
-					$action = "<a href='admin_video.php?action=edit&id=$row->pid' >编辑</a>&nbsp;&nbsp;<a href='admin_vod.php?action=cut&id=$row->id' title='对视频进行播放与裁剪操作'><font color=green>播放</font></a>";
-				}	
 				break;
 			case 5:
 				$cc=$dsql->GetOne("select  v_addtime,v_enname from  `sea_data`  where v_id = $row->pid");
 				$contentUrl=getContentLink($row->tid,$row->pid,"",date('Y-n',$cc['v_addtime']),$cc['v_enname']);
 				$text = "<a href='$contentUrl' title='查看' target='_blank'><font color='BLUE'>发布完毕</font></a>";
-				$action = "<a href='admin_video.php?action=edit&id=$row->pid' >编辑</a>&nbsp;&nbsp;<a href='admin_vod.php?action=cut&id=$row->id' title='对视频进行播放与裁剪操作'><font color=green>播放</font></a>";
+				if(endWith($row->file_name,".flv")){
+					$action = "<a href='admin_video.php?action=edit&id=<$row->pid' >编辑</a>&nbsp;&nbsp;<a href='#' onClick='flv2mp4($id,$row->pid)' title='尝试将 $row->file_name 转码到mp4格式'><font color=red>转码</font></a>";
+				}else{
+					$action = "<a href='admin_video.php?action=edit&id=$row->pid' >编辑</a>&nbsp;&nbsp;<a href='admin_vod.php?action=cut&id=$row->id' title='对视频进行播放与裁剪操作'><font color=green>播放</font></a>";
+				}
 				break;		
 			case 6:
 				$text = "<font color='GRAY'>录制错误</font>";

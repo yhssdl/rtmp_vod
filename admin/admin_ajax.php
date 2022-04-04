@@ -302,8 +302,34 @@ elseif($action=='live_main'){
 		$i++;
 	}
 	echo $msg;
-}
-elseif($action=='get_stat'){
+} elseif($action=='qrcode'){
+	if($isopen=='false'){
+		$upquery="update `sea_vod` set pub_rec='0' where id='$vid'";
+		if($dsql->ExecuteNoneQuery($upquery)){
+			echo "0{|}预约二维码功能已经关闭。";
+		}else {
+			echo "0{|}关闭预约二维码失败，请联系管理员。";	
+		}
+	} else {
+
+		$query="select uniqid from `sea_vod` where id='$vid'";
+		$row=$dsql->GetOne($query);
+		if(is_array($row)){
+			if($row['uniqid']== '')
+				$key = uniqid();
+			else
+				$key = $row['uniqid'];
+
+			$upquery="update `sea_vod` set pub_rec='1',uniqid ='$key' where id='$vid'";
+			$dsql->ExecuteNoneQuery($upquery);
+			$url= GetQRcodeUrl($vid,$key); 
+			echo "1{|}请用手机扫码，即可进行预约录课。{|}$url";	
+		}else{
+			echo "0{|}开启预约二维码失败，请联系管理员。";	
+		}
+	}
+
+}elseif($action=='get_stat'){
 	require_once(dirname(__FILE__)."/admin_vod_update_inc.php");
 	$groupid = $cuserLogin->getgroupid();
 	$userid = $cuserLogin->getUserID();
@@ -384,8 +410,6 @@ elseif($action=='vod'){
 			$dsql->ExecuteNoneQuery($insertSql);
 			echo "record";
 		}
-		
-	
 	}
 	else{
 		$url = makeStopUrl($app_name, $stream_name);
@@ -412,8 +436,6 @@ elseif($action=='vod'){
 			echo "stop";
 		}	
 	}
-
-	
 }
 elseif($action=='publish'){
 	$row=$dsql->GetOne("select title,app_name,stream_name from sea_vod where id='$id'");
@@ -607,5 +629,22 @@ function endWith($str, $suffix)
 	}   
 	return (substr($str, -$length) === $suffix);
 } 
+
+//获得当前的脚本网址 
+function GetQRcodeUrl($vid,$key) 
+{
+	global $cfg_cmspath;
+	$path = $_SERVER['PHP_SELF'];
+	$path= substr( $path , 0,strrpos($path , '/')); 
+
+
+	if(strlen($cfg_cmspath)>0){
+		$nowurl = "http://".$_SERVER['HTTP_HOST']."/$cfg_cmspath".$path."/vod_reserve.php?id=$vid&key=$key";
+	}else {
+		$nowurl = "http://".$_SERVER['HTTP_HOST']."$path/vod_reserve.php?id=$vid&key=$key";
+	}
+	
+	return $nowurl;
+}
 
 ?>

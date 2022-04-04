@@ -782,7 +782,6 @@ function clearCache() {
 }
 
 function JsonMenu(resid) {
-
 }
 
 function selecPlan(selecVal) {
@@ -846,7 +845,6 @@ function submitBindType(tid, curid, oldtype) {
 	);
 }
 
-
 function hideBind() {
 	document.body.removeChild(document.getElementById("msg"));
 	document.body.removeChild(document.getElementById("bg"));
@@ -883,8 +881,6 @@ function ShowRecTime(bShow) {
 		
 	}
 }
-
-
 
 function ctrlRecord(vid,commandid) {
 	ajax.get(
@@ -943,7 +939,6 @@ function publish_vod(vid) {
 
 }
 
-
 function runVodTask(){
 	ajax.get(
 		"../vod.php?admin=1",
@@ -975,8 +970,6 @@ function runStatTask(){
 		}
 	);
 }
-
-
 
 function getLiveStat(id_group,stat_group){
 	idgroup = document.getElementById(id_group).innerHTML;
@@ -1016,7 +1009,6 @@ function getLiveStat(id_group,stat_group){
 		}
 	);	
 }
-
 
 function getVodStat(id_group,stat_group,page){
 	if(page<2){
@@ -1179,6 +1171,36 @@ function runCutPicTask(filename,x,y,width,height){
 	);
 }
 
+function switchQRcode(vid,isopen){
+	ajax.get(
+		"admin_ajax.php?vid=" + vid + "&isopen="+ isopen + "&action=qrcode",
+		function (obj) {
+			if (obj.responseText != "") {
+				subs = obj.responseText.split("{|}");
+				if(subs[0]=='0'){
+					layer.msg(subs[1]);
+				}
+				else{
+					layer.open({
+						title: '预约二维码',
+						offset: '50px',
+						content: "<div id='qrcode' style='width:256px;' ></div><div style='text-align:center'><br>"+subs[1]+"</div>"
+					});
+
+					var qrcode = new QRCode('qrcode', {
+						text: subs[2],
+						width: 256,
+						height: 256,
+						colorDark : "#000000",
+						colorLight : "#ffffff",
+						correctLevel : QRCode.CorrectLevel.H
+					});						
+				}
+			}
+		}
+	);
+}
+
 function runNickName(nickname){
 	ajax.get(
 		"admin_ajax.php?nickname=" + nickname  + "&action=nickname",
@@ -1192,7 +1214,6 @@ function runNickName(nickname){
 	);
 }
 
-
 function runRePassword(old_password,new_password){
 	ajax.get(
 		"admin_ajax.php?old_pass=" + old_password  + "&new_pass=" + new_password +  "&action=repassword",
@@ -1201,7 +1222,6 @@ function runRePassword(old_password,new_password){
 		}
 	);
 }
-
 
 function flv2mp4(id,pid){
 	var ll  = layer.open({

@@ -12,7 +12,9 @@
 <title>直播频道列表</title>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="layui/layui.js" type="text/javascript"></script>
+<script src="js/qrcode.min.js" type="text/javascript"></script>
 <style type="text/css">
 select {
 	font-size:12px;
@@ -64,14 +66,15 @@ select {
           <td width="6%" align="center">ID</td>
           <td width="15%">频道名称</td>
           <td width="8%">状态</td>                
-          <td width="10%">直播流</td>
-          <td width="10%">分辨率</td>
-          <td width="8%">可否录像</td>
+          <td width="8%">直播流</td>
+          <td width="8%">分辨率</td>
+          <td width="12%">预约二维码</td>
           <td width="28%">直播流信息</td>     
           <td width="8%">操作</td>
           <td width="7%">发布</td>
         </tr>
         <form method="post" name="vodlistform">
+          
           <?php
 $stats=array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录像</font>");
 $title_css = array("text_gray","text_green","text_red");
@@ -112,7 +115,11 @@ else
             <td id='stat<?= $id ?>'><?= $stats[$row->stat] ?></td>
             <td><?= $row->app_name ?>/<?= $row->stream_name ?></td>
             <td><?php if($row->width!=0 && $row->height!=0) echo $row->width.'*'.$row->height;?></td>
-            <td><?php if($row->can_rec) echo '可录像'; else echo '不能录像'; ?></td>
+            <td>  
+              <div class="layui-form" >
+                <input  type="checkbox"  value="<?= $id ?>"  <?php if($row->pub_rec) echo "checked=''"; ?> name="switch" lay-skin="switch" lay-filter="switchQRcode" lay-text="开启|关闭"/>
+              </div>
+            </td>
             <td><?= $trmp_info ?></td>
 
 
@@ -156,9 +163,10 @@ else
 	<?php if($idgroup!=""): ?>
     setInterval(getVodStat,3000,'id_group','stat_group',2);
 	<?php endif; ?>
-	layui.use(['laypage', 'layer'], function(){
-	  var laypage = layui.laypage
-	  ,layer = layui.layer;
+	layui.use(['form','laypage', 'layer'], function(){
+	  var form = layui.form,
+    laypage = layui.laypage,
+	  layer = layui.layer;
 	  laypage.render({
 	      elem: 'new_pages'
 	      ,count: <?php echo $TotalResult;?>
@@ -166,12 +174,20 @@ else
 		  ,curr:<?php echo $page;?>
 	      ,layout: ['count', 'prev', 'page', 'next', 'skip']
 	      ,jump: function(obj,first){
-			  if(!first){
-				location.href = '?page='+ obj.curr +'&action=list';
-			}
+          if(!first){
+          location.href = '?page='+ obj.curr +'&action=list';
+			    }
 	      }
 	    });
+
+      //监听指定开关
+      form.on('switch(switchQRcode)', function(data){
+        switchQRcode(data.value,this.checked);
+    });
+
+
 	  });
+
 </script>
 
 </html>

@@ -640,6 +640,8 @@ CREATE TABLE IF NOT EXISTS `sea_vod` (
   `height` int(11) NOT NULL DEFAULT 0 COMMENT '视频分辨率Y',
   `can_rec` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否可录像',
   `file_name` text DEFAULT NULL COMMENT '正在录像的文件名',
+  `pub_rec` tinyint(4) NOT NULL COMMENT '预约二维码功能开关',
+  `uniqid` varchar(16) NOT NULL COMMENT '预约二维码key',
   `stat` int(11) NOT NULL DEFAULT 0 COMMENT '状态：0为没推送，1为直播中，2为录制中',
    PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

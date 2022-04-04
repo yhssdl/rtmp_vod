@@ -13,7 +13,7 @@
 <!--当前导航-->
 <?php
     require_once(dirname(__FILE__)."/../../data/config.plus.inc.php");
-    $sqlStr="select  * from sea_class_time order by week1s asc";
+    $sqlStr="select  * from sea_class_time";
     $groupid = $cuserLogin->getgroupid();
     $vodlist = $cuserLogin->getUserVodList();
     if($groupid==3 && $vodlist!='0'){

@@ -115,18 +115,18 @@ if($TotalResult==0){
 }
 ?> <tbody>
         <tr style="background-color: #F6F6F6;" align="center">
-          <td width="6%" align="center">&nbsp;<a href="?order=id&page=<?php echo $page;?>&type=<?php echo $type;?>&area=<?php echo $area;?>&keyword=<?php echo $keyword;?>">ID<img src="img/minus.gif" title="按ID排序" /></a></td>
+          <td width="5%" align="center">&nbsp;<a href="?order=id&page=<?php echo $page;?>&type=<?php echo $type;?>&area=<?php echo $area;?>&keyword=<?php echo $keyword;?>">ID<img src="img/minus.gif" title="按ID排序" /></a></td>
           <td width="7%">状态</td>
-          <td width="18%">标题</td>
-          <td width="7%">视频来源</td>
+          <td width="15%">标题</td>
+          <td width="8%">视频来源</td>
           <?php if($groupid!=3) echo "<td width='7%'>创建人</td>" ?>
           <td width="11%"><a href="?order=start&page=<?php echo $page;?>&type=<?php echo $type;?>&area=<?php echo $area;?>&keyword=<?php echo $keyword;?>">开始时间<img src="img/minus.gif" title="按开始时间排序" /></a></td>
           <td width="11%"><a href="?order=end&page=<?php echo $page;?>&type=<?php echo $type;?>&area=<?php echo $area;?>&keyword=<?php echo $keyword;?>">结束时间<img src="img/minus.gif" title="按结束排序" /></a></td>
           <td width="7%"><a href="?order=tid&page=<?php echo $page;?>&type=<?php echo $type;?>&area=<?php echo $area;?>&keyword=<?php echo $keyword;?>">分类<img src="img/minus.gif" title="按分类排序" /></a></td>             
           <td width="7%">执教</td>         
-          <td width="6%">年级</td>
-          <td width="5%">班级</td>                 
-          <td width="8%">操作</td>
+          <td width="7%">年级</td>
+          <td width="6%">班级</td>                 
+          <td width="9%">操作</td>
         </tr>
         <form method="post" name="vodlistform">
           <?php

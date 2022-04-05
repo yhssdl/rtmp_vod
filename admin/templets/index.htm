@@ -13,6 +13,7 @@
         <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
         <script src="layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="./js/xadmin.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
         <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -246,6 +247,15 @@
         <!-- 右侧主体结束 -->
         <!-- 中部结束 -->
         <script>
+        <?php 
+            if(!function_exists("exec")){ ?>
+                layer.alert("　　函数<font color=red>exec</font>在PHP中被禁用，会造成转码与视频<br>裁剪等功能不可用，请在PHP设置中启用该函数。",{
+                    time: 5*1000,
+                    title: '警告',
+                    icon:5
+                });
+        <?php   } ?>
+
            runVodTask();
            runStatTask();
            function nickName(){

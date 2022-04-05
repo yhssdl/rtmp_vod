@@ -766,16 +766,13 @@ function selectCache(value) {
 }
 
 function clearCache() {
-	//set(document.getElementById("upcacheresult"), '加载中...')
 	ajax.get(
 		"admin_ajax.php?action=updatecache",
 		function (obj) {
 			if (obj.responseText == 'ok') {
-				//set(document.getElementById("upcacheresult"), '缓存更新成功')
 				layer.msg('缓存更新成功');
 			} else {
 				layer.msg('缓存更新失败');
-				//set(document.getElementById("upcacheresult"), '缓存更新失败')
 			}
 		}
 	);

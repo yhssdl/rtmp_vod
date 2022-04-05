@@ -141,7 +141,7 @@ $tp_dsh = $dsql->GetOne("select count(*) as dd from sea_type");
                                     <tr>
                                         <th>其它必须函数检测</th>
                                         <td><?php
-          $needfunc = array('dir','phpinfo','fsockopen','iconv');
+          $needfunc = array('exec', 'dir','phpinfo','fsockopen','iconv');
           $n = 0;
           foreach($needfunc as $k) {
           	if(!function_exists($k)) {
@@ -153,7 +153,7 @@ $tp_dsh = $dsql->GetOne("select count(*) as dd from sea_type");
           	echo "符合要求";
           }
           else {
-          	echo "部分禁用";
+          	echo "<font color=red>部分禁用</font>";
           }
        ?></td></tr>
                                     <tr>

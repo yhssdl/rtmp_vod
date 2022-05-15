@@ -22,21 +22,27 @@ function bindButtonFile(buttonid, inputbox, bVideo, bAdd) {
 }
 
 
-function bindButtonUpImage(buttonid, inputbox) {
-	KindEditor(buttonid).click(function () {
-		window.editor.loadPlugin('image', function () {
-			window.editor.plugin.imageDialog({
-				showLocal: true,
-				showRemote: false,
-				imageUrl: KindEditor(inputbox).val(),
-				clickFn: function (url, title, width, height, border, align) {
-					KindEditor(inputbox).val(url);
-					window.editor.hideDialog();
-				}
-			});
-		});
+function bindButtonUpImage(buttonid,formid, inputbox) {
+	$(buttonid).click(function() {
+		$(formid).find('[name="imgFile"]').trigger('click');
 	});
+
+	$(formid).find('[name="imgFile"]').change(function() {
+		if ($(this).val()) {
+			$(formid).ajaxSubmit(function(message) {
+				var obj = JSON.parse(message);
+				if(obj.error!=0)
+					layer.msg(obj.message);
+				else
+					$(inputbox).val(obj.url);
+
+			});
+		}
+	});
+	
 }
+
+
 
 var getElementById = function (el) {
 	var id = el;

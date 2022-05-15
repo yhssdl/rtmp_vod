@@ -7,6 +7,8 @@
 <title>编辑专题</title>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/jquery-form.js" type="text/javascript"></script>	
 <script charset="utf-8" src="editor/kindeditor-min.js"></script>
 <script charset="utf-8" src="editor/lang/zh-CN.js"></script>
 <script src="layui/layui.js" type="text/javascript"></script>
@@ -19,6 +21,17 @@
 ?>
   <!--当前导航-->
   <div class="layui-card">
+
+    <form id="upload_from1" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+    <form id="upload_from2" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+    <form id="upload_from3" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+
     <div class="layui-card-header">编辑专题</div>
       <div class="layui-card-body">
   
@@ -128,13 +141,13 @@
       });
   
       bindButtonFile('#upButton11', '#pic',false,false);
-      bindButtonUpImage('#upButton12', '#pic');
-  
+      bindButtonUpImage('#upButton12','#upload_from1', '#pic');
+
       bindButtonFile('#upButton21', '#spic',false,false);
-      bindButtonUpImage('#upButton22', '#spic');
-  
+      bindButtonUpImage('#upButton22','#upload_from2', '#spic');
+
       bindButtonFile('#upButton31', '#gpic',false,false);
-      bindButtonUpImage('#upButton32', '#gpic');
+      bindButtonUpImage('#upButton32','#upload_from3', '#gpic');
     </script>
 </body>
 </html>

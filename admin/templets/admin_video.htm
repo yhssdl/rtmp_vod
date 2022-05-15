@@ -13,6 +13,7 @@
   <script src="editor/lang/zh-CN.js" type="text/javascript"></script>
   <script src="js/common.js" type="text/javascript"></script>
   <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/jquery-form.js" type="text/javascript"></script>	
   <script src="../webuploader/webuploader.js" type="text/javascript"></script>  
   <script src="../webuploader/vupload.js" type="text/javascript"></script>  
   <script src="js/main.js" type="text/javascript"></script>
@@ -22,6 +23,17 @@
 <body>
   <!--当前导航-->
   <div class="layui-card">
+
+    <form id="upload_from1" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+    <form id="upload_from2" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+    <form id="upload_from3" action="editor/php/upload_json.php" style="display:none" method="post" enctype="multipart/form-data">
+      <input type="file" name="imgFile" value="">
+    </form>
+
     <div class="layui-card-header">添加视频</div>
     <div class="layui-card-body">
         <form action="?action=save&acttype=add" method="post" name="addform" id="addform" class="layui-form">
@@ -305,13 +317,13 @@
     });
 
     bindButtonFile('#upButton11', '#v_pic',false,false);
-    bindButtonUpImage('#upButton12', '#v_pic');
+    bindButtonUpImage('#upButton12','#upload_from1', '#v_pic');
 
     bindButtonFile('#upButton21', '#v_spic',false,false);
-    bindButtonUpImage('#upButton22', '#v_spic');
+    bindButtonUpImage('#upButton22','#upload_from2', '#v_spic');
 
     bindButtonFile('#upButton31', '#v_gpic',false,false);
-    bindButtonUpImage('#upButton32', '#v_gpic');
+    bindButtonUpImage('#upButton32','#upload_from3', '#v_gpic');
 
 
 

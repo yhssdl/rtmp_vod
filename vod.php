@@ -227,10 +227,13 @@
 				if(strlen($files[$i])>4){
 					$flvname = getFullPath($files[$i]);
 					if(file_exists($flvname)){
-						$flvname =  basename($files[$i]);
-						fwrite($handle,"file '");
-						fwrite($handle,$flvname);
-						fwrite($handle,"'\n");
+						$flvsize = filesize($flvname);
+						if($flvsize>1024){
+							$flvname =  basename($files[$i]);
+							fwrite($handle,"file '");
+							fwrite($handle,$flvname);
+							fwrite($handle,"'\n");							
+						}
 					}
 				}
 			}

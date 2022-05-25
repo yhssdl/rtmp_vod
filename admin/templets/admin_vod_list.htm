@@ -127,7 +127,7 @@ else
 
               <?php 
                 if($row->stat==1){ 
-                  echo "<span id='ctrlm$id'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord($id,1);'>开始录制</span></span>"; 
+                  echo "<span id='ctrlm$id'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='showRecodeDlg($id);'>开始录制</span></span>"; 
                 } 
                 else if($row->stat==2) {
                   echo "<span id='ctrlm$id'><span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord($id,0);'>停止录制</span></span>"; 

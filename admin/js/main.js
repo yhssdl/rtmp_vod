@@ -885,9 +885,31 @@ function ShowRecTime(bShow) {
 	}
 }
 
-function ctrlRecord(vid,commandid) {
+function showRecodeDlg(vid){
+
+
+	layer.open({
+		type: 1 //Page层类型
+		,btn:["确定","取消"]
+		,title: '选择录像时长'
+		,skin: 'layui-layer-prompt'
+		,content: '<label><input type="radio" name="hour" value="1" checked>&nbsp;1小时</label>　<label><input type="radio" name="hour" value="2">&nbsp;2小时</label>　<label><input type="radio" name="hour" value="3">&nbsp;3小时</label>　<label><input type="radio" name="hour" value="5">&nbsp;5小时</label>　<br><br><br><label><input type="radio" name="hour" value="12">&nbsp;12小时</label>　<label><input type="radio" name="hour" value="24">&nbsp;1整天</label>　<label><input type="radio" name="hour" value="168">&nbsp;1星期</label>　<label><input type="radio" name="hour" value="8760">&nbsp;1整年</label><br><br>'
+		,yes: function(index, layero){
+			val = $(layero).find('input:radio:checked').val();
+			layer.close(index);
+			ctrlRecord(vid,1,val);
+		}
+	});
+
+
+
+}
+
+
+
+function ctrlRecord(vid,commandid,hour=1) {
 	ajax.get(
-		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid + "&action=vod",
+		"admin_ajax.php?id=" + vid  + "&commendid=" + commandid +"&hour=" + hour + "&action=vod",
 		function (obj) {
 			if (obj.responseText == "record" || obj.responseText == "continue")  {
 				set(document.getElementById("ctrlm"+vid), "<span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+vid+",0);'>停止录制</span>");
@@ -897,12 +919,20 @@ function ctrlRecord(vid,commandid) {
 				ShowRecTime(true);
 				Interval=window.setInterval('ShowRecTime(true)',1000);
 				if (obj.responseText == "record" ){
-					$msg = '1小时后自动结束录制，想录制更长时间，请到“管理预约”增加最新项目的录制时间。';
+					if(hour < 24)
+						msg1 = hour + "小时";
+					else if(hour < 720)
+						msg1 = parseInt(hour/24) + "天"
+					else if(hour < 8760)
+						msg1 = parseInt(hour/720) + "个月"
+					else
+						msg1 = parseInt(hour/8760) + "年"
+					$msg = msg1 + '后自动结束录制，您还可以到“管理预约”编辑自动结束时间。';
 				}else {
 					$msg = '在预约中找到一个正在录制中的项目，继续该项的录制。';
 				}
 			}else if (obj.responseText == "stop") {
-				set(document.getElementById("ctrlm"+vid), "<span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+vid+",1);'>开始录制</span>");
+				set(document.getElementById("ctrlm"+vid), "<span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='showRecodeDlg("+vid+");'>开始录制</span>");
 				set(document.getElementById("stat"+vid), "<font color='green'>正在直播</font>");
 				document.getElementById("title"+vid).setAttribute("class","text_green"); 
 				ShowRecTime(false);
@@ -1049,7 +1079,7 @@ function getVodStat(id_group,stat_group,page){
 							
 							var stat=new Array("<font color='gray'>无信号</font>","<font color='green'>正在直播</font>","<font color='red'>正在录制</font>");
 							var title=new Array("text_gray","text_green","text_red");
-							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span id='ctrlm"+subs[0]+"'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='ctrlRecord("+subs[0]+",1);'>开始录制</span></span>","<span id='ctrlm"+subs[0]+"'><span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'>停止录制</span></span>")
+							var action = new Array("<a href='?action=del&id="+subs[0]+"' onClick='return confirm(\"确定要删除该直播视频流吗？\")'>删除</a>","<span id='ctrlm"+subs[0]+"'><span  class='layui-btn layui-btn-xs layui-btn-radius' title='点击开始录制并自动加入预约列表' onclick='showRecodeDlg("+subs[0]+");'>开始录制</span></span>","<span id='ctrlm"+subs[0]+"'><span class='layui-btn layui-btn-xs layui-btn-radius layui-btn-danger' title='点击停止录制后可以到预约列表中发布' onclick='ctrlRecord("+subs[0]+",0);'>停止录制</span></span>")
 
 							set(document.getElementById("stat"+subs[0]),  stat[subs[2]]);
 							set(document.getElementById("action"+subs[0]),  action[subs[2]]);

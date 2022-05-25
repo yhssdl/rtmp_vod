@@ -395,7 +395,7 @@ elseif($action=='vod'){
 
 			$v_name = $title.date('YmdHi',time());
 			$v_stime =date('Y-m-d H:i:s',time());
-			$v_etime = date('Y-m-d H:i:s', strtotime('+1 hours'));
+			$v_etime = date('Y-m-d H:i:s', strtotime('+'.$hour.' hours'));
 			$groupid = $cuserLogin->getgroupid();
 			$userid = $cuserLogin->getUserID();
 			if($groupid==3){

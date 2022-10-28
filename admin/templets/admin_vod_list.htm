@@ -54,7 +54,7 @@ select {
     $limitstart = ($page-1) * $numPerPage;
     if($limitstart<0) $limitstart=0;
     
-    $sqlStr="select * FROM sea_vod limit $limitstart,$numPerPage";
+    $sqlStr="select * FROM sea_vod order by id asc limit $limitstart,$numPerPage";
 	  $jumpurl = "&action=$action";
 
 ?>

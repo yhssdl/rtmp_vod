@@ -163,7 +163,7 @@ while($row=$dsql->GetObject('vod_list'))
   else if($row->publish==1 && $row->stat==4) 
     $stats[4] = "<font color='ORANGE'>正在发布</font>";
   else
-    $stats[4] = "<font color='#FF00FF'>等待发布</font>";
+    $stats[4] = "<a href='admin_vod.php?action=cut&id=".$id."' title='播放视频'><font color='#FF00FF'>等待发布</font></a>";
 
     if($row->stat==5){
       $stats[5] = "<a href='$contentUrl' title='查看' target='_blank'><font color='BLUE'>发布完毕</font></a>";

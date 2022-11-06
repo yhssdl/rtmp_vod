@@ -221,7 +221,6 @@ class MainClass_Template {
 					$rsArray = $publishyear;
 					if($vnum>0 && $vnum<count($rsArray))
 						$rsArray = array_slice ($rsArray, 0,$vnum);
-					array_push ( $rsArray, "更早" );
 					break;
 				case "area" :
 							echo $vnum."/";

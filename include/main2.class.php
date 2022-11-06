@@ -207,7 +207,6 @@ class MainClass_Template {
 						$publishyear = array($year,$year-1,$year-2,$year-3,$year-4,$year-5,$year-6,$year-7,$year-8,$year-9);
 					}
 					$rsArray = $publishyear;
-					array_push ( $rsArray, "更早" );
 					break;
 				case "area" :
 					$publishareatxt = sea_DATA . "/admin/publisharea.txt";

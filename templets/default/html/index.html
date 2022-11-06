@@ -112,15 +112,14 @@
 					</div>
 					<div class="stui-pannel_bd col-pd">
 						<ul class="stui-vodlist__screen clearfix">
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&area=七年级" title="七年级">七年级</a></li>
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&area=八年级" title="八年级">八年级</a></li>
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&area=九年级" title="九年级">九年级</a></li>
+							{seacms:areacaslist num=12}
+							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&area=[areacaslist:value]" title="[areacaslist:value]">[areacaslist:value]</a></li>
+							{/seacms:areacaslist}
 						</ul>
 						<ul class="stui-vodlist__screen top-line-dot clearfix">
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&year={seacms:year}" title="{seacms:year}">{seacms:year}</a></li>
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&year={seacms:year-1}" title="{seacms:year-1}">{seacms:year-1}</a></li>
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&year={seacms:year-2}" title="{seacms:year-2}">{seacms:year-2}</a></li>
-							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&year=more" title="更早">更早</a></li>
+							{seacms:yearcaslist num=3}
+							<li><a href="search.php?searchtype=5&tid=[arealist:typeid]&year=[yearcaslist:value]" title="[yearcaslist:value]">[yearcaslist:value]</a></li>
+							{/seacms:yearcaslist}
 						</ul>
 					</div>
 				</div>

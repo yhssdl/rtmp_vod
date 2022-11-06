@@ -108,12 +108,6 @@ class MainClass_Template {
 		}
 	}
 	function parseGlobal($content) {
-		
-		$year = date('Y');
-		
-		$content = str_replace ( "{seacms:year}", $year, $content );
-		$content = str_replace ( "{seacms:year-1}", $year-1, $content );
-		$content = str_replace ( "{seacms:year-2}", $year-2, $content );
 		if (strpos ( $content, '{seacms:letterlist}' ) > 0)
 			$content = str_replace ( "{seacms:letterlist}", getletterlist (), $content );
 		if (strpos ( $content, '{seacms:indexlink}' ) > 0)
@@ -227,7 +221,7 @@ class MainClass_Template {
 					$rsArray = $publishyear;
 					if($vnum>0 && $vnum<count($rsArray))
 						$rsArray = array_slice ($rsArray, 0,$vnum);
-					array_push ( $rsArray, "more" );
+					array_push ( $rsArray, "更早" );
 					break;
 				case "area" :
 							echo $vnum."/";

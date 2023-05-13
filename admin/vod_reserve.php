@@ -30,26 +30,16 @@ if($action=="save")
 		exit();
 	}
 
-    $week = date("w",strtotime("$v_sdate"));
-    if($week==0) $week = 7;
+	$v_setime = str_replace(" ","",$v_setime);
 
-    $weeks = "week$week"."s";
-    $weeke = "week$week"."e";
+	$tt = explode("-",$v_setime);
+	if(count($tt)!=2){
+		ShowMsg("请正确设置录制时间再提交！".$v_setime,"-1");
+		exit();	
+	}
 
-
-    $sqlStr="select $weeks,$weeke from sea_class_time where id = $v_classtime";
-
-
-    $row = $dsql->GetOne($sqlStr);
-    if(!is_array($row)){
-		ShowMsg("当前课程节次时间获取失败，请联系管理员！","-1");
-		exit();
-    }
-
-	$v_stime = $v_sdate." ".$row[$weeks];
-	$v_etime = $v_sdate." ".$row[$weeke];
-
-
+	$v_stime = $v_sdate." ".$tt[0];
+	$v_etime = $v_sdate." ".$tt[1];
 
 	$ts = strtotime($v_stime);
 	$te = strtotime($v_etime);
@@ -136,13 +126,39 @@ function getAreaSelect($selectName,$strSelect,$areaId)
 function getClassTimeSelect()
 {
     global $dsql;
-    $sqlStr="select id,title from sea_class_time";
+    $sqlStr="select * from sea_class_time";
     $dsql->SetQuery($sqlStr);
     $dsql->Execute('time_list');
-    $str = "<select name='v_classtime' id='v_classtime' lay-verify='required' lay-search><option value=''>请选择课程节次</option>";
+    $str = "<select id='v_classtime' lay-verify='required' lay-filter='v_classtime' lay-search><option value=''>请选择课程节次</option>";
     while($row=$dsql->GetObject('time_list'))
     {
-	    $str .= "<option value='".$row->id."'>$row->title</option>";
+		$week = date("w");
+		$setime = "";
+		switch($week){
+			case 0:
+				$setime = $row->week7s ." - ".$row->week7e;
+				break;
+			case 1:
+				$setime = $row->week1s ." - ".$row->week1e;
+				break;
+			case 2:
+				$setime = $row->week2s ." - ".$row->week2e;
+				break;
+			case 3:
+				$setime = $row->week3s ." - ".$row->week3e;
+				break;
+			case 4:
+				$setime = $row->week4s ." - ".$row->week4e;
+				break;
+			case 5:
+				$setime = $row->week5s ." - ".$row->week5e;
+				break;
+			case 6:
+				$setime = $row->week6s ." - ".$row->week6e;
+				break;
+	}
+
+	    $str .= "<option value='".$setime."'>$row->title</option>";
     }
     $str .= "</select>";
 	return $str;
